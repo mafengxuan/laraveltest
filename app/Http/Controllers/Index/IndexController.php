@@ -18,7 +18,7 @@ class IndexController extends Controller
     {
         //
         $res = DB::table("admin")->get();
-        dump($res);
+        var_dump($res);
         echo 'test';
     }
 
