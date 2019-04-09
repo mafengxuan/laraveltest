@@ -16,8 +16,8 @@ class AdminController extends Controller
         //
 //        dump($request);
 //        echo $request->get('a');
-        $result = Result::error();
-        return response()->json($result);
+//        $result = Result::error();
+//        return response()->json($result);
     }
 
     /**
@@ -43,6 +43,10 @@ class AdminController extends Controller
     public function store(Request $request)
     {
         //
+        $app = app('wechat.official_account');
+        $app->server->push(function($message){
+            return "欢迎关注 overtrue！";
+        });
     }
 
     /**
