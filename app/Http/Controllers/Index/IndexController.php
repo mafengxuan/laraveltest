@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Index;
 
 use App\Http\Controllers\Controller;
-use App\Model\Index;
+use App\Index;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -17,8 +17,8 @@ class IndexController extends Controller
     public function index()
     {
         //
-        $res = DB::table("admin")->get();
-        dump($res);
+//        $res = DB::table("admin")->get();
+//        dump($res);
         echo 'test';
     }
 
