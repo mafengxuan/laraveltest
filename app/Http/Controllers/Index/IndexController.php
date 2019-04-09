@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Index;
 
+use App\Helpers\Result;
 use App\Http\Controllers\Controller;
 use App\Index;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class IndexController extends Controller
         //
 //        $res = DB::table("admin")->get();
 //        dump($res);
-        echo 'test';
+        return response()->json(Result::ok());
     }
 
     /**

@@ -3,20 +3,21 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Admin;
+use App\Helpers\Result;
 use App\Http\Controllers\Controller;
+use DemeterChain\A;
 use Illuminate\Http\Request;
 
 class AdminController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
+
+    public function index(Request $request)
     {
         //
-        echo 'admin';
+//        dump($request);
+//        echo $request->get('a');
+        $result = Result::error();
+        return response()->json($result);
     }
 
     /**
@@ -27,6 +28,10 @@ class AdminController extends Controller
     public function create()
     {
         //
+        Admin::where('')->get();
+        $admin = new Admin();
+        $admin->name = 1;
+        $admin->save();
     }
 
     /**

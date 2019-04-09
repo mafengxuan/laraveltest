@@ -23,11 +23,9 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
 });
 
 
-//后台路由组 控制器在 "App\Http\Controllers\Admin" 命名空间下
 Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
     // 后台的首页
     Route::get('/', [
         'as' => 'index', 'uses' => 'AdminController@index'
     ]);
-
 });

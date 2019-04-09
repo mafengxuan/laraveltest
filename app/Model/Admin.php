@@ -5,14 +5,15 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 
 /**
- * App\Model\Admin
+ * App\Admin
  *
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Admin newModelQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Admin newQuery()
- * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Admin query()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Admin newModelQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Admin newQuery()
+ * @method static \Illuminate\Database\Eloquent\Builder|\App\Admin query()
  * @mixin \Eloquent
  */
 class Admin extends Model
 {
     //
+
 }
