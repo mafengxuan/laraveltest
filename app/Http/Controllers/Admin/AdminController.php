@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Admin;
+use App\Model\Admin;
 use App\Helpers\Result;
 use App\Http\Controllers\Controller;
 use DemeterChain\A;

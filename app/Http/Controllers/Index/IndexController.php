@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Index;
 
 use App\Helpers\Result;
 use App\Http\Controllers\Controller;
-use App\Index;
+use App\Model\Index;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
