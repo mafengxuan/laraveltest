@@ -67,6 +67,13 @@ class ArticleController extends Controller
         return response()->json(Result::ok($article));
     }
 
+    public function showDraftList(Request $request)
+    {
+        //
+        $article = Article::where('userId',$request->userId)->where('status',0)->get();
+        return response()->json(Result::ok($article));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -88,6 +95,13 @@ class ArticleController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $article = Article::find($id);
+        $article->qrCode = $request->qrCode;
+        $article->userId = $request->userId;
+        $article->image = $request->image;
+        $article->content = $request->post('content');
+        $article->save();
+        return response()->json(Result::ok('修改成功'));
     }
 
     /**

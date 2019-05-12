@@ -55,20 +55,20 @@ CREATE TABLE `article` (
   `userId` int(11) NOT NULL COMMENT '用户id',
   `image` text NOT NULL COMMENT '帖子的图片',
   `content` text NOT NULL COMMENT '内容',
-  `auditTime` int(11) NOT NULL COMMENT '审核时间',
+  `auditTime` int(11) DEFAULT NULL COMMENT '审核时间',
   `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '帖子的审核状态0未审核1审核通过2审核未通过',
-  `remark` varchar(255) DEFAULT NULL COMMENT '审核不通过理由',
+  `remark` varchar(255) DEFAULT '' COMMENT '审核不通过理由',
   `viewNum` int(11) NOT NULL DEFAULT '0' COMMENT '阅读量',
-  `likNum` int(11) NOT NULL DEFAULT '0' COMMENT '点攒数',
+  `praiseNum` int(11) NOT NULL DEFAULT '0' COMMENT '点攒数',
   `commentsNum` int(11) NOT NULL DEFAULT '0' COMMENT '评论数',
-  `forwardingNum` int(11) NOT NULL DEFAULT '0' COMMENT '转发数',
+  `forwardNum` int(11) NOT NULL DEFAULT '0' COMMENT '转发数',
   `order` int(11) NOT NULL DEFAULT '0' COMMENT '排序',
   `isTop` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否置顶0未置顶1置顶',
   `isDel` tinyint(2) NOT NULL DEFAULT '0' COMMENT '是否删除',
-  `create_at` int(11) NOT NULL COMMENT '创建时间',
-  `update_at` int(11) NOT NULL COMMENT '修改时间',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -77,7 +77,36 @@ CREATE TABLE `article` (
 
 LOCK TABLES `article` WRITE;
 /*!40000 ALTER TABLE `article` DISABLE KEYS */;
+INSERT INTO `article` VALUES (1,'test666',1,'test4444','test123',NULL,0,NULL,0,0,0,0,0,0,0,'2019-05-12 15:09:39','2019-05-12 07:09:39');
 /*!40000 ALTER TABLE `article` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `message`
+--
+
+DROP TABLE IF EXISTS `message`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `message` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `images` varchar(255) NOT NULL COMMENT '标题图',
+  `title` varchar(255) NOT NULL COMMENT '标题',
+  `describe` varchar(255) DEFAULT NULL COMMENT '导语',
+  `content` text,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `message`
+--
+
+LOCK TABLES `message` WRITE;
+/*!40000 ALTER TABLE `message` DISABLE KEYS */;
+/*!40000 ALTER TABLE `message` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -94,7 +123,8 @@ CREATE TABLE `money` (
   `price` int(11) NOT NULL COMMENT '金额',
   `status` tinyint(2) NOT NULL DEFAULT '0' COMMENT '状态',
   `tradeInfo` varchar(255) DEFAULT NULL,
-  `createTime` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -119,8 +149,8 @@ CREATE TABLE `praise` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `userId` int(11) NOT NULL,
   `articleId` int(11) NOT NULL,
-  `create_at` int(11) NOT NULL,
-  `update_at` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
   PRIMARY KEY (`id`),
   KEY `user_index` (`userId`),
   KEY `article_index` (`articleId`)
@@ -151,8 +181,8 @@ CREATE TABLE `reply` (
   `pid` int(11) NOT NULL DEFAULT '0' COMMENT '回复的id，如果没有为0',
   `rid` int(11) NOT NULL DEFAULT '0' COMMENT '回复回复的用户的id',
   `isDel` tinyint(2) NOT NULL DEFAULT '0',
-  `create_at` int(11) NOT NULL,
-  `update_at` int(11) NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -174,21 +204,21 @@ DROP TABLE IF EXISTS `user`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `user` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL AUTO_INCREMENT,
   `openId` varchar(120) NOT NULL,
   `nickName` varchar(32) NOT NULL DEFAULT '' COMMENT '用户昵称',
-  `name` varchar(255) DEFAULT NULL COMMENT '姓名',
-  `sex` tinyint(2) NOT NULL DEFAULT '0' COMMENT '性别',
-  `province` varchar(64) NOT NULL DEFAULT '' COMMENT '省份',
-  `city` varchar(64) NOT NULL DEFAULT '' COMMENT '城市',
+  `name` varchar(255) DEFAULT '' COMMENT '姓名',
+  `sex` tinyint(2) DEFAULT '0' COMMENT '性别',
+  `province` varchar(64) DEFAULT '' COMMENT '省份',
+  `city` varchar(64) DEFAULT '' COMMENT '城市',
   `imgUrl` varchar(512) DEFAULT '' COMMENT '用户头像',
   `mobile` char(20) NOT NULL DEFAULT '' COMMENT '电话',
-  `created_at` int(11) NOT NULL COMMENT '创建时间',
-  `updated_at` int(11) NOT NULL DEFAULT '0' COMMENT '修改时间',
-  PRIMARY KEY (`id`),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
+  PRIMARY KEY (`userId`),
   KEY `openId_index` (`openId`),
   KEY `nickName_index` (`nickName`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,6 +227,7 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
+INSERT INTO `user` VALUES (1,'xxx','xxx',NULL,1,NULL,NULL,NULL,'123456','2019-05-12 07:41:12','2019-05-12 07:41:12');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -209,4 +240,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-05-08  0:29:51
+-- Dump completed on 2019-05-13  0:40:13

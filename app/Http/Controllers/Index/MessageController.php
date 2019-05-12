@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Index;
 
+use App\Helpers\Result;
+use App\Model\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Praise;
-class PraiseController extends Controller
+
+class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -47,6 +49,13 @@ class PraiseController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function showList()
+    {
+        //
+        $messageList = Message::all();
+        return response()->json(Result::ok($messageList));
     }
 
     /**

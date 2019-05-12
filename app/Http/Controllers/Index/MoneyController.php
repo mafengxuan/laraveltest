@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Index;
 
+use App\Helpers\Result;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Money;
+use App\Model\Money;
 
 class MoneyController extends Controller
 {
@@ -48,6 +49,14 @@ class MoneyController extends Controller
     public function show($id)
     {
         //
+    }
+
+    public function showList($userId)
+    {
+        //
+        $money = Money::where('userId',$userId)->where('status',1)->get();
+        return response()->json(Result::ok($money));
+
     }
 
     /**
