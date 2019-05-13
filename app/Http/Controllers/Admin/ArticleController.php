@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\Index;
+namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Result;
 use Illuminate\Http\Request;
@@ -9,25 +9,6 @@ use App\Model\Article;
 
 class ArticleController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -56,8 +37,7 @@ class ArticleController extends Controller
     public function show($id)
     {
         //
-        $article = Article::where('id',$id)->first();
-        $article->increment('viewNum');
+        $article = Article::find($id);
         return response()->json(Result::ok($article));
     }
 
@@ -80,16 +60,6 @@ class ArticleController extends Controller
         return response()->json(Result::ok($article));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -119,5 +89,41 @@ class ArticleController extends Controller
     public function destroy($id)
     {
         //
+        $article = Article::destroy($id);
+        return response()->json(Result::ok('删除成功'));
+    }
+
+    public function audit($id){
+
+        $article = Article::find($id);
+        $article->status = 1;
+        $article->auditTime = time();
+        $article->save();
+        return response()->json(Result::ok('审核通过'));
+    }
+
+    public function addTop($id){
+        $count = Article::where('isTop',1)->count();
+        if($count>=10){
+            return response()->json(Result::error('1','置顶失败,已经达到最大置顶数量'));
+        }
+        $article = Article::find($id);
+        $article->isTop = 1;
+        $article->save();
+        return response()->json(Result::ok('置顶成功'));
+    }
+
+    public function orderTop(Request $request,$id){
+        $article = Article::find($id);
+        $article->order = $request->order;
+        $article->save();
+        return response()->json(Result::ok('置顶成功'));
+    }
+
+    public function reject(Request $request,$id){
+        $article = Article::find($id);
+        $article->status = 2;
+        $article->remark = $request->remark;
+        $article->save();
     }
 }

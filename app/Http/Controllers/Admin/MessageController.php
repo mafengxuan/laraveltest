@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Index;
+namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Result;
+use App\Model\Message;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\Model\Article;
 
-class ArticleController extends Controller
+class MessageController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -38,13 +38,14 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         //
-        $article = new Article();
-        $article->qrCode = $request->qrCode;
-        $article->userId = $request->userId;
-        $article->image = $request->image;
-        $article->content = $request->post('content');
-        $article->save();
+        $message = new Message();
+        $message->title = $request->title;
+        $message->image = $request->image;
+        $message->describe = $request->describe;
+        $message->content = $request->post('content');
+        $message->save();
         return response()->json(Result::ok('添加成功'));
+
     }
 
     /**
@@ -56,28 +57,13 @@ class ArticleController extends Controller
     public function show($id)
     {
         //
-        $article = Article::where('id',$id)->first();
-        $article->increment('viewNum');
-        return response()->json(Result::ok($article));
     }
 
-    public function showList(Request $request)
+    public function showList()
     {
         //
-        $article = Article::where('userId',$request->userId)->orderBy('isTop','desc')->orderBy('order','desc')->orderBy('created_at','desc')->get();
-        return response()->json(Result::ok($article));
-    }
-
-    public function showDraftList(Request $request)
-    {
-        //
-        $article = Article::where('userId',$request->userId)->where('status',0)->get();
-        return response()->json(Result::ok($article));
-    }
-
-    public function showAll(){
-        $article = Article::where('status',1)->orderBy('isTop','desc')->orderBy('order','desc')->orderBy('created_at','desc')->get();
-        return response()->json(Result::ok($article));
+        $messageList = Message::orderBy('created_at','desc')->get();
+        return response()->json(Result::ok($messageList));
     }
 
     /**
@@ -89,6 +75,7 @@ class ArticleController extends Controller
     public function edit($id)
     {
         //
+
     }
 
     /**
@@ -101,12 +88,12 @@ class ArticleController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $article = Article::find($id);
-        $article->qrCode = $request->qrCode;
-        $article->userId = $request->userId;
-        $article->image = $request->image;
-        $article->content = $request->post('content');
-        $article->save();
+        $message = Message::find($id);
+        $message->title = $request->title;
+        $message->image = $request->image;
+        $message->describe = $request->describe;
+        $message->content = $request->post('content');
+        $message->save();
         return response()->json(Result::ok('修改成功'));
     }
 

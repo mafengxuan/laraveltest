@@ -49,19 +49,29 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
 });
 
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin'], function(){
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['AdminLogin']], function(){
     // 后台的首页
     Route::get('/', [
         'as' => 'index', 'uses' => 'AdminController@index'
     ]);
 
     //对帖子审核通过上线
+    Route::post('/audit/{id}','ArticleController@audit');
     //对审核通过帖子可分批次发放定额红包
+    Route::post('/sendMoney/{id}','MoneyController@send');
     //红包记录页
+    Route::get('/moneyList','MoneyController@showList');
     //帖子列表管理
+    Route::get('/articleList','ArticleController@showAll');
     //评论管理
     //广告区管理
     //对用户发系统通知
     //帖子置顶功能
+    Route::post('/addTop/{id}','ArticleController@addTop');
     //前10帖子排序功能；
+    Route::post('/orderTop/{id}','ArticleController@orderTop');
+
 });
+
+//后台登陆
+Route::post('/admin/login','AdminController@login');
