@@ -29,6 +29,10 @@ class OperationController extends Controller
 
     public function forward(Request $request){
 
+        if(empty($request->articleId)){
+            return response()->json(Result::error('1','false'));
+        }
+
         $article1 = Article::where('id',$request->articleId)->first();
         $article1->increment('forwardNum');
         $article2 = new Article();

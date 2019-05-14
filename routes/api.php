@@ -29,6 +29,9 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
     Route::get('/article/showDraftList/{userId}', 'ArticleController@showDraftList');
 
     //回复
+    Route::get('/addComments', 'ReplyController@addComments');
+    Route::get('/addReply', 'ReplyController@addReply');
+    Route::get('/reply/showList/{articleId}', 'ReplyController@showList');
 
     //点赞
     Route::post('/praise', 'OperationController@praise');
