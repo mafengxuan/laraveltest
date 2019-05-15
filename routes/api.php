@@ -18,6 +18,12 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
+//后台登陆
+Route::group(['namespace' => 'Admin'], function() {
+    Route::get('/loginAdmin','LoginController@login');
+});
+
+
 Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
     Route::get('/', 'IndexController@index');
 
@@ -52,11 +58,11 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
 });
 
 
-Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['AdminLogin']], function(){
+Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['adminLogin']], function(){
     // 后台的首页
-    Route::get('/', [
-        'as' => 'index', 'uses' => 'AdminController@index'
-    ]);
+//    Route::get('/', [
+//        'as' => 'index', 'uses' => 'AdminController@index'
+//    ]);
 
     //对帖子审核通过上线
     Route::post('/audit/{id}','ArticleController@audit');
@@ -76,5 +82,3 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['Admi
 
 });
 
-//后台登陆
-Route::post('/admin/login','AdminController@login');

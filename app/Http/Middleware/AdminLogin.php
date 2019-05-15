@@ -16,7 +16,7 @@ class AdminLogin
      */
     public function handle($request, Closure $next)
     {
-        if(empty(session('adminInfo'))){
+        if(empty($request->session()->get('adminId'))){
             return response()->json(Result::error('001','请登录'));
         }
 

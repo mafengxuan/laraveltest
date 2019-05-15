@@ -9,7 +9,7 @@ use App\Http\Controllers\Controller;
 use App\Model\Praise;
 class OperationController extends Controller
 {
-
+    //点赞
     public function praise(Request $request)
     {
         //
@@ -27,6 +27,7 @@ class OperationController extends Controller
         return response()->json(Result::ok('点赞成功'));
     }
 
+    //转发
     public function forward(Request $request){
 
         if(empty($request->articleId)){
@@ -42,6 +43,22 @@ class OperationController extends Controller
         $article2->content = '转发: '.$article1->content;
         $article2->save();
         return response()->json(Result::ok('转发成功'));
+    }
+
+    //收藏
+    public function collect(Request $request)
+    {
+        //
+        if(empty($request->articleId)){
+            return response()->json(Result::error('1','false'));
+        }
+
+        $praise = new Praise();
+        $praise->userId = $request->userId;
+        $praise->articleId = $request->articleId;
+        $praise->save();
+
+        return response()->json(Result::ok('收藏成功'));
     }
 
 }

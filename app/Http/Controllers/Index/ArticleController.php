@@ -6,6 +6,7 @@ use App\Helpers\Result;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Article;
+use Illuminate\Support\Facades\DB;
 
 class ArticleController extends Controller
 {
@@ -75,8 +76,31 @@ class ArticleController extends Controller
         return response()->json(Result::ok($article));
     }
 
-    public function showAll(){
-        $article = Article::where('status',1)->orderBy('isTop','desc')->orderBy('order','desc')->orderBy('created_at','desc')->get();
+    public function showAll(Request $request){
+        $type = $request->type;
+
+        switch ($type){
+            case 'new':
+                $article = Article::where('status',1)->orderBy('created_at','desc')->get();
+                break;
+            case 'hot':
+                $article = Article::where('status',1)->orderBy('commentsNum','desc');
+                break;
+            case 'top':
+                $article = Article::where('status',1)->orderBy('created_at','desc')->orderBy('isTop','desc');
+                break;
+            case 'collect':
+                $article = DB::table('article')
+                            ->join('collect','article.articleId','=','collect.articleId')
+                            ->join('collect',$request->session()->get('userId'),'=','collect.userId')
+                            ->select('article.*','collect.id as collectId')
+                            ->where('status',1)
+                            ->orderBy('created_at','desc')
+                            ->get();
+                break;
+
+        }
+
         return response()->json(Result::ok($article));
     }
 
