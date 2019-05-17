@@ -31,7 +31,8 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
     Route::post('/article/store', 'ArticleController@store');
     Route::put('/article/update/{id}', 'ArticleController@update');
     Route::get('/article/show/{id}', 'ArticleController@show');
-    Route::get('/article/showList/{userId}', 'ArticleController@showList');
+    Route::get('/article/showMyList/{userId}', 'ArticleController@showMyList');
+    Route::get('/article/showList/{type}', 'ArticleController@showList');
     Route::get('/article/showDraftList/{userId}', 'ArticleController@showDraftList');
 
     //回复

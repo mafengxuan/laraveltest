@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Index;
 
 use App\Helpers\Result;
+use App\Model\Collect;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Article;
@@ -58,11 +59,17 @@ class ArticleController extends Controller
     {
         //
         $article = Article::where('id',$id)->first();
+        if(!empty(session('userId'))){
+            $collect = Collect::where('userId',1)->first();
+            $article['collected'] = $collect['id'];
+        }else{
+            $article['collected'] = '';
+        }
         $article->increment('viewNum');
         return response()->json(Result::ok($article));
     }
 
-    public function showList(Request $request)
+    public function showMyList(Request $request)
     {
         //
         $article = Article::where('userId',$request->userId)->orderBy('isTop','desc')->orderBy('order','desc')->orderBy('created_at','desc')->get();
@@ -76,30 +83,39 @@ class ArticleController extends Controller
         return response()->json(Result::ok($article));
     }
 
-    public function showAll(Request $request){
+    public function showList(Request $request){
         $type = $request->type;
-
+        $article = Article::where('status',1);
         switch ($type){
             case 'new':
-                $article = Article::where('status',1)->orderBy('created_at','desc')->get();
+                $article = $article->orderBy('created_at','desc');
                 break;
             case 'hot':
-                $article = Article::where('status',1)->orderBy('commentsNum','desc');
+                $article = $article->orderBy('commentsNum','desc');
                 break;
-            case 'top':
-                $article = Article::where('status',1)->orderBy('created_at','desc')->orderBy('isTop','desc');
+            case 'quality':
+                $article = $article->where('isQuality',1)->orderBy('created_at','desc');
                 break;
             case 'collect':
-                $article = DB::table('article')
-                            ->join('collect','article.articleId','=','collect.articleId')
-                            ->join('collect',$request->session()->get('userId'),'=','collect.userId')
+                $article = $article->join('collect',function($join){
+                                $join->on('article.id', '=','collect.articleId')->on('article.userId', '=','collect.userId');
+                            })
+//                            ->join('collect','article.id','=','collect.articleId')
+//                            ->join('collect',$request->session()->get('userId'),'=','collect.userId')
+//                            ->join('collect','article.userId','=','collect.userId')
                             ->select('article.*','collect.id as collectId')
-                            ->where('status',1)
-                            ->orderBy('created_at','desc')
-                            ->get();
+                            ->orderBy('created_at','desc');
                 break;
-
         }
+
+        $page = $request->page;
+        if(empty($page)){
+            $article = $article->limit(10);
+        }else{
+            $article = $article->forPage($page,5);
+        }
+
+        $article = $article->get();
 
         return response()->json(Result::ok($article));
     }
