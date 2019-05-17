@@ -24,6 +24,15 @@ Route::group(['namespace' => 'Admin'], function() {
 });
 
 
+Route::group(['middleware' => ['wechat.oauth']], function () {
+    Route::get('/wechat', function () {
+        $user = session('wechat.oauth_user.default'); // 拿到授权用户资料
+
+        dd($user);
+    });
+});
+
+
 Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
     Route::get('/', 'IndexController@index');
     Route::get('/wechat', 'IndexController@wechat');
