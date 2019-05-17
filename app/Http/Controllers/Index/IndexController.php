@@ -22,4 +22,14 @@ class IndexController extends Controller
 //        dump($res);
         return response()->json(Result::ok());
     }
+
+    public function wechat(){
+
+        $app = app('wechat.official_account');
+        $app->server->push(function($message){
+            return "欢迎关注！";
+        });
+
+        return $app->server->serve();
+    }
 }
