@@ -20,6 +20,7 @@ class IndexController extends Controller
         //
 //        $res = DB::table("admin")->get();
 //        dump($res);
+        phpinfo();
         return response()->json(Result::ok());
     }
 
