@@ -48,11 +48,11 @@ class WechatLogin
             $userInfo = UserInfo::where('openId',$openId)->first();
             dump($userInfo);
             if(!empty($userInfo)){
-                session('userId',$userInfo['userId']);
-                session('openId',$userInfo['openId']);
-                session('nickName',$userInfo['nickName']);
-                session('headimgurl',$userInfo['imgUrl']);
-                session('mobile',$userInfo['mobile']);
+                $request->session()->put('userId',$userInfo['userId']);
+                $request->session()->put('openId',$userInfo['openId']);
+                $request->session()->put('nickName',$userInfo['nickName']);
+                $request->session()->put('headimgurl',$userInfo['imgUrl']);
+                $request->session()->put('mobile',$userInfo['mobile']);
             }else{
                 $originalInfo = $openInfo['original'];
                 $users = new UserInfo;
@@ -64,11 +64,11 @@ class WechatLogin
                 $users->imgUrl = $originalInfo['headimgurl'];
                 $users->save();
                 $userInfo = UserInfo::where('openId',$openId)->first();
-                session('userId',$userInfo['userId']);
-                session('openId',$userInfo['openId']);
-                session('nickName',$userInfo['nickName']);
-                session('headimgurl',$userInfo['imgUrl']);
-                session('mobile',$userInfo['mobile']);
+                $request->session()->put('userId',$userInfo['userId']);
+                $request->session()->put('openId',$userInfo['openId']);
+                $request->session()->put('nickName',$userInfo['nickName']);
+                $request->session()->put('headimgurl',$userInfo['imgUrl']);
+                $request->session()->put('mobile',$userInfo['mobile']);
             }
         }
 
