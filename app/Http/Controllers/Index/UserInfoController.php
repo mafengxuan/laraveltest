@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Index;
 
 use App\Helpers\Result;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\UserInfo;
@@ -61,6 +62,7 @@ class UserInfoController extends Controller
     {
         //
         $userInfo = UserInfo::where('openId',$openId)->first();
+        //年龄 牙套类型 矫正时间 牙齿问题 个人简介 转发 评论 点赞
         if(!empty($userInfo)){
             return response()->json(Result::ok($userInfo));
         }else{
@@ -90,6 +92,17 @@ class UserInfoController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $userInfo = UserInfo::find($id);
+        $userInfo->mobile = $request->mobile;
+        $userInfo->sex = $request->sex;
+        $userInfo->age = $request->age;
+        $userInfo->correctTime = $request->correctTime;
+        $userInfo->tooth_socket = $request->tooth_socket;
+        $userInfo->tooth_question = $request->tooth_question;
+        $userInfo->content = $request->post('content');
+        $userInfo->save();
+        return response()->json(Result::ok('修改成功'));
+
     }
 
     /**

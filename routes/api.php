@@ -50,8 +50,8 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
     Route::get('/article/showDraftList/{userId}', 'ArticleController@showDraftList');
 
     //回复
-    Route::get('/addComments', 'ReplyController@addComments');
-    Route::get('/addReply', 'ReplyController@addReply');
+    Route::post('/addComments', 'ReplyController@addComments');
+    Route::post('/addReply', 'ReplyController@addReply');
     Route::get('/reply/showList/{articleId}', 'ReplyController@showList');
 
     //点赞
@@ -59,9 +59,8 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
     //转发
     Route::post('/forward', 'OperationController@forward');
 
-
     //用户
-    Route::post('/userInfo/store', 'UserInfoController@store');
+//    Route::post('/userInfo/store', 'UserInfoController@store');
     Route::get('/userInfo/show/{openId}', 'UserInfoController@show');
 
     //系统消息
