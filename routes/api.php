@@ -28,6 +28,7 @@ Route::group(['middleware' => ['wechat.oauth','wechatLogin']], function () {
     Route::get('/wechat', function () {
         $user = session('wechat.oauth_user.default'); // 拿到授权用户资料
         dump($user);
+        dump(session());
 
         $userInfo = \App\Model\UserInfo::where('openId',session('openId'))->first();
         dump(session('openId'));
