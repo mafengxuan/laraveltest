@@ -41,9 +41,10 @@ class WechatLogin
           ]
         }
          */
-
+        dd('test');
         if(!empty(session('wechat.oauth_user.default'))){
             $openInfo = session('wechat.oauth_user.default');
+            dd($openInfo);
             $openId = $openInfo['original']['openid'];
             $userInfo = UserInfo::where('openId',$openId)->first();
             if(!empty($userInfo)){
