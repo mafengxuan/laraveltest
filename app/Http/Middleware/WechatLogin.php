@@ -42,9 +42,6 @@ class WechatLogin
         }
          */
         dump('test');
-        dump(session());
-        dump(session('wechat.oauth_user.default'));
-        dump(!empty(session('wechat.oauth_user.default')));
         if(!empty(session('wechat.oauth_user.default'))){
             $openInfo = session('wechat.oauth_user.default');
             dd($openInfo);
