@@ -46,13 +46,13 @@ class WechatLogin
             $openInfo = session('wechat.oauth_user.default');
             $openId = $openInfo['original']['openid'];
             $userInfo = UserInfo::where('openId',$openId)->first();
-//            if(!empty($userInfo)){
-//                session('userId',$userInfo['userId']);
-//                session('openId',$userInfo['openId']);
-//                session('nickName',$userInfo['nickName']);
-//                session('headimgurl',$userInfo['imgUrl']);
-//                session('mobile',$userInfo['mobile']);
-//            }else{
+            if(!empty($userInfo)){
+                session('userId',$userInfo['userId']);
+                session('openId',$userInfo['openId']);
+                session('nickName',$userInfo['nickName']);
+                session('headimgurl',$userInfo['imgUrl']);
+                session('mobile',$userInfo['mobile']);
+            }else{
                 $originalInfo = $openInfo['original'];
                 $users = new UserInfo;
                 $users->openId = $originalInfo['openid'];
@@ -68,7 +68,7 @@ class WechatLogin
                 session('nickName',$userInfo['nickName']);
                 session('headimgurl',$userInfo['imgUrl']);
                 session('mobile',$userInfo['mobile']);
-//            }
+            }
         }
 
         return $next($request);
