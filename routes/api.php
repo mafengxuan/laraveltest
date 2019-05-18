@@ -34,7 +34,7 @@ Route::group(['middleware' => ['wechat.oauth']], function () {
 
             $userInfo = \App\Model\UserInfo::where('openId', session('openId'))->first();
             dd($userInfo);
-        });
+        })->middleware('wechatLogin');
 //    });
 });
 
