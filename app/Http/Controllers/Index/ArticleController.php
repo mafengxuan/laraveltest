@@ -65,7 +65,7 @@ class ArticleController extends Controller
         }else{
             $article['collected'] = '';
         }
-        $article->increment('viewNum');
+//        $article->increment('viewNum');
         return response()->json(Result::ok($article));
     }
 
