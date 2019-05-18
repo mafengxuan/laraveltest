@@ -41,39 +41,39 @@ class WechatLogin
           ]
         }
          */
-        dd('test');
-        dd(session());
+        dump('test');
+        dump(session());
         dump(session('wechat.oauth_user.default'));
         dump(!empty(session('wechat.oauth_user.default')));
-//        if(!empty(session('wechat.oauth_user.default'))){
-//            $openInfo = session('wechat.oauth_user.default');
-//            dd($openInfo);
-//            $openId = $openInfo['original']['openid'];
-//            $userInfo = UserInfo::where('openId',$openId)->first();
-//            if(!empty($userInfo)){
-//                session('userId',$userInfo['userId']);
-//                session('openId',$userInfo['openId']);
-//                session('nickName',$userInfo['nickName']);
-//                session('headimgurl',$userInfo['imgUrl']);
-//                session('mobile',$userInfo['mobile']);
-//            }else{
-//                $originalInfo = $openInfo['original'];
-//                $users = new UserInfo;
-//                $users->openId = $originalInfo['openid'];
-//                $users->nickName = $originalInfo['nickname'];
-//                $users->sex = $originalInfo['sex'];
-//                $users->province = $originalInfo['province'];
-//                $users->city = $originalInfo['city'];
-//                $users->imgUrl = $originalInfo['headimgurl'];
-//                $users->save();
-//                $userInfo = UserInfo::where('openId',$openId)->first();
-//                session('userId',$userInfo['userId']);
-//                session('openId',$userInfo['openId']);
-//                session('nickName',$userInfo['nickName']);
-//                session('headimgurl',$userInfo['imgUrl']);
-//                session('mobile',$userInfo['mobile']);
-//            }
-//        }
+        if(!empty(session('wechat.oauth_user.default'))){
+            $openInfo = session('wechat.oauth_user.default');
+            dd($openInfo);
+            $openId = $openInfo['original']['openid'];
+            $userInfo = UserInfo::where('openId',$openId)->first();
+            if(!empty($userInfo)){
+                session('userId',$userInfo['userId']);
+                session('openId',$userInfo['openId']);
+                session('nickName',$userInfo['nickName']);
+                session('headimgurl',$userInfo['imgUrl']);
+                session('mobile',$userInfo['mobile']);
+            }else{
+                $originalInfo = $openInfo['original'];
+                $users = new UserInfo;
+                $users->openId = $originalInfo['openid'];
+                $users->nickName = $originalInfo['nickname'];
+                $users->sex = $originalInfo['sex'];
+                $users->province = $originalInfo['province'];
+                $users->city = $originalInfo['city'];
+                $users->imgUrl = $originalInfo['headimgurl'];
+                $users->save();
+                $userInfo = UserInfo::where('openId',$openId)->first();
+                session('userId',$userInfo['userId']);
+                session('openId',$userInfo['openId']);
+                session('nickName',$userInfo['nickName']);
+                session('headimgurl',$userInfo['imgUrl']);
+                session('mobile',$userInfo['mobile']);
+            }
+        }
 
         return $next($request);
     }
