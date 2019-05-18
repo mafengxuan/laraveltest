@@ -59,13 +59,15 @@ class ArticleController extends Controller
     {
         //
         $article = Article::where('id',$id)->first();
-        if(!empty(session('userId'))){
-            $collect = Collect::where('userId',1)->first();
-            $article['collected'] = $collect['id'];
-        }else{
-            $article['collected'] = '';
+        if(!empty($article)){
+            if(!empty(session('userId'))){
+                $collect = Collect::where('userId',session('userId'))->first();
+                $article['collected'] = $collect['id'];
+            }else{
+                $article['collected'] = '';
+            }
+            $article->increment('viewNum');
         }
-//        $article->increment('viewNum');
         return response()->json(Result::ok($article));
     }
 
