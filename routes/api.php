@@ -26,7 +26,7 @@ Route::group(['namespace' => 'Admin'], function() {
 
 Route::group(['middleware' => ['wechat.oauth']], function () {
 
-    Route::group(['middleware' => ['wechatLogin']], function () {
+//    Route::group(['middleware' => ['wechatLogin']], function () {
 
         Route::get('/wechat', function () {
             $user = session('wechat.oauth_user.default'); // 拿到授权用户资料
@@ -35,7 +35,7 @@ Route::group(['middleware' => ['wechat.oauth']], function () {
             $userInfo = \App\Model\UserInfo::where('openId', session('openId'))->first();
             dd($userInfo);
         });
-    });
+//    });
 });
 
 
