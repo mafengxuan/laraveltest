@@ -20,4 +20,8 @@ class Article extends Model
     protected $table = 'article';
 
 
+    public function tags()
+    {
+        return $this->belongsToMany('App\Model\Tags');
+    }
 }

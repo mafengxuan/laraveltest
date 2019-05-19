@@ -59,15 +59,22 @@ class ArticleController extends Controller
     {
         //
         $article = Article::where('id',$id)->first();
-        if(!empty($article)){
-            if(!empty(session('userId'))){
-                $collect = Collect::where('userId',session('userId'))->first();
-                $article['collected'] = $collect['id'];
-            }else{
-                $article['collected'] = '';
-            }
-            $article->increment('viewNum');
-        }
+
+//        if(!empty($article)){
+//            if(!empty(session('userId'))){
+//                $collect = Collect::where('userId',session('userId'))->first();
+//                $article['collected'] = $collect['id'];
+//            }else{
+//                $article['collected'] = '';
+//            }
+//            if(!empty($article->tags)){
+//                $article['tags'] = $article->tags;
+//            }else{
+//                $article['tags'] = [];
+//            }
+//
+//            $article->increment('viewNum');
+//        }
         return response()->json(Result::ok($article));
     }
 
@@ -109,7 +116,6 @@ class ArticleController extends Controller
                             ->orderBy('created_at','desc');
                 break;
         }
-
         $page = $request->page;
         if(empty($page)){
             $article = $article->limit(10);
