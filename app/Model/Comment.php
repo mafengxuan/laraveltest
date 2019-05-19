@@ -12,12 +12,16 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|\App\Model\Reply query()
  * @mixin \Eloquent
  */
-class Reply extends Model
+class Comment extends Model
 {
     //
-    protected $table = 'reply';
+    protected $table = 'comment';
 
-    public function comment(){
-        return $this->hasOne('App\Model\Comment','id','commentId');
+    public function article(){
+        return $this->hasOne('App\Model\Article','id','articleId');
+    }
+
+    public function reply(){
+        return $this->hasMany('App\Model\Reply','commentId','id');
     }
 }

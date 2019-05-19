@@ -4,11 +4,12 @@ namespace App\Http\Controllers\Index;
 
 use App\Helpers\Result;
 use App\Model\Article;
+use App\Model\Comment;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Reply;
 
-class ReplyController extends Controller
+class CommentController extends Controller
 {
 
     /**
@@ -17,15 +18,21 @@ class ReplyController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function addReply(Request $request){
-        $reply = new Reply();
-        $reply->commentId = $request->commentId;
-        $reply->content = $request->post('content');
-        $reply->reUserId = $request->reUserId;
-        $reply->save();
+    public function addComments(Request $request)
+    {
+        //
+        $comment = new Comment();
+        $comment->articleId = $request->articleId;
+        $comment->userId = session('userId');
+        $comment->content = $request->post('content');
 
-        return response()->json(Result::ok('回复成功'));
+        $comment->save();
+        if(empty($request->pid)){
+            Article::where('id', $request->articleId)->increment('commentsNum');
+        }
+        return response()->json(Result::ok('评论成功'));
     }
+
 
     /**
      * Display the specified resource.
@@ -36,9 +43,12 @@ class ReplyController extends Controller
     public function showList($articleId)
     {
         //
-        $reply = Reply::where('articledId',$articleId)->orderBy('created_at','asc')->get();
+        $reply = Comment::where('articleId',$articleId)->orderBy('created_at','desc')->with('reply')->get();
         return response()->json(Result::ok($reply));
     }
+
+
+
 
     /**
      * Show the form for editing the specified resource.

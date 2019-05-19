@@ -24,4 +24,9 @@ class Article extends Model
     {
         return $this->belongsToMany('App\Model\Tags');
     }
+
+    public function praise()
+    {
+        return $this->hasOne('App\Model\Praise','articleId','id')->where('userId',session('userId'));
+    }
 }

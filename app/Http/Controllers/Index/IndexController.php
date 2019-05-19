@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Index;
 
 use App\Helpers\Result;
 use App\Http\Controllers\Controller;
+use App\Model\Article;
 
 class IndexController extends Controller
 {
@@ -21,13 +22,10 @@ class IndexController extends Controller
         return response()->json(Result::ok());
     }
 
-    public function wechat(){
+    public function test(){
 
-        $app = app('wechat.official_account');
-        $app->server->push(function($message){
-            return "欢迎关注！";
-        });
-
-        return $app->server->serve();
+//        $a = Article::where('userId',1)->sum('praiseNum')->sum('commentsNum')->sum('forwardNum')->get();
+        $a = Article::where('userId',1)->sum('viewNum');
+        dump($a);
     }
 }

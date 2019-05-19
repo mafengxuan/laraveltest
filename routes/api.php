@@ -39,7 +39,7 @@ Route::group(['middleware' => ['wechat.oauth','wechatLogin']], function () {
 
 Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
     Route::get('/', 'IndexController@index');
-    Route::get('/wechat', 'IndexController@wechat');
+    Route::get('/test', 'IndexController@test');
 
     //帖子
     Route::post('/article/store', 'ArticleController@store');
@@ -49,10 +49,21 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
     Route::get('/article/showList/{type}', 'ArticleController@showList');
     Route::get('/article/showDraftList/{userId}', 'ArticleController@showDraftList');
 
+    Route::get('/article/showListAsTag/{tags}', 'ArticleController@showListAsTag');
+
     //回复
-    Route::post('/addComments', 'ReplyController@addComments');
     Route::post('/addReply', 'ReplyController@addReply');
     Route::get('/reply/showList/{articleId}', 'ReplyController@showList');
+
+    //评论
+    Route::post('/addComments', 'CommentController@addComments');
+    Route::get('/commentsList/{articleId}', 'CommentController@showList');
+
+
+
+    //我的消息
+    Route::get('/aboutMyMsg', 'MessageController@aboutMe');
+
 
     //点赞
     Route::post('/praise', 'OperationController@praise');

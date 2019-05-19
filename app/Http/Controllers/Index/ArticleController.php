@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Index;
 
 use App\Helpers\Result;
 use App\Model\Collect;
+use App\Model\Praise;
+use App\Model\Tags;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Article;
@@ -42,7 +44,7 @@ class ArticleController extends Controller
         //
         $article = new Article();
         $article->qrCode = $request->qrCode;
-        $article->userId = $request->userId;
+        $article->userId = session('userId');
         $article->image = $request->image;
         $article->content = $request->post('content');
         $article->save();
@@ -58,23 +60,21 @@ class ArticleController extends Controller
     public function show($id)
     {
         //
-        $article = Article::where('id',$id)->first();
+        $article = Article::where('id',$id)->with('tags')->first();
 
-//        if(!empty($article)){
-//            if(!empty(session('userId'))){
-//                $collect = Collect::where('userId',session('userId'))->first();
-//                $article['collected'] = $collect['id'];
-//            }else{
-//                $article['collected'] = '';
-//            }
-//            if(!empty($article->tags)){
-//                $article['tags'] = $article->tags;
-//            }else{
-//                $article['tags'] = [];
-//            }
-//
-//            $article->increment('viewNum');
-//        }
+        if(!empty($article)){
+            if(!empty(session('userId'))){
+                $collect = Collect::where('userId',session('userId'))->where('articleId',$id)->first();
+                $praise = Collect::where('userId',session('userId'))->where('articleId',$id)->first();
+                $article['collected'] = $collect['id'];
+                $article['praised'] = $praise['id'];
+            }else{
+                $article['collected'] = '';
+                $article['praised'] = '';
+            }
+
+            $article->increment('viewNum');
+        }
         return response()->json(Result::ok($article));
     }
 
@@ -107,11 +107,8 @@ class ArticleController extends Controller
                 break;
             case 'collect':
                 $article = $article->join('collect',function($join){
-                                $join->on('article.id', '=','collect.articleId')->on('article.userId', '=','collect.userId');
+                                $join->on('article.id', '=','collect.articleId')->where('collect.userId', '=',session('userId'));
                             })
-//                            ->join('collect','article.id','=','collect.articleId')
-//                            ->join('collect',$request->session()->get('userId'),'=','collect.userId')
-//                            ->join('collect','article.userId','=','collect.userId')
                             ->select('article.*','collect.id as collectId')
                             ->orderBy('created_at','desc');
                 break;
@@ -123,9 +120,25 @@ class ArticleController extends Controller
             $article = $article->forPage($page,5);
         }
 
-        $article = $article->get();
+        $article = $article->with('tags')->with('praise')->get();
 
         return response()->json(Result::ok($article));
+    }
+
+    public function showListAsTag($tags){
+        $tagsArr = explode(',',$tags);
+        $list = Tags::wherein('id',$tagsArr)->with('article')->get();
+        $data = array();
+        foreach($list as $k => $v){
+            foreach($v['article'] as $kk => $vv){
+                if(isset($data[$vv['id']])){
+                    continue;
+                }
+                $data[$vv['id']] = $vv;
+            }
+        }
+        $data = array_values($data);
+        return response()->json(Result::ok($data));
     }
 
     /**

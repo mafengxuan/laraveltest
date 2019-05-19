@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Index;
 
 use App\Helpers\Result;
+use App\Model\Article;
 use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -63,7 +64,19 @@ class UserInfoController extends Controller
         //
         $userInfo = UserInfo::where('openId',$openId)->first();
         //年龄 牙套类型 矫正时间 牙齿问题 个人简介 转发 评论 点赞
+
         if(!empty($userInfo)){
+            $timeDiff = time() - strtotime($userInfo['updated_at']);
+            if($timeDiff > 3600){
+                $praiseNum = Article::where('userId',$userInfo['userId'])->sum('praiseNum');
+                $commentsNum = Article::where('userId',$userInfo['userId'])->sum('commentsNum');
+                $forwardNum = Article::where('userId',$userInfo['userId'])->sum('forwardNum');
+                $userInfoUpdate = new UserInfo();
+                $userInfoUpdate->praiseNum = $praiseNum;
+                $userInfoUpdate->commentsNum = $commentsNum;
+                $userInfoUpdate->forwardNum = $forwardNum;
+                $userInfoUpdate->save();
+            }
             return response()->json(Result::ok($userInfo));
         }else{
             return response()->json(Result::error('1','not found'));
