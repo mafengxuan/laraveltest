@@ -351,3 +351,27 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2019-05-19 17:35:35
+CREATE TABLE `user` (
+  `userId` int(11) NOT NULL AUTO_INCREMENT,
+  `openId` varchar(120) NOT NULL,
+  `nickName` varchar(32) NOT NULL DEFAULT '' COMMENT '用户昵称',
+  `name` varchar(255) DEFAULT '' COMMENT '姓名',
+  `sex` tinyint(2) DEFAULT '0' COMMENT '性别',
+  `province` varchar(64) DEFAULT '' COMMENT '省份',
+  `city` varchar(64) DEFAULT '' COMMENT '城市',
+  `imgUrl` varchar(512) DEFAULT '' COMMENT '用户头像',
+  `mobile` char(20) NOT NULL DEFAULT '' COMMENT '电话',
+  `age` int(11) DEFAULT '0' COMMENT '年龄',
+  `correctTime` varchar(255) DEFAULT NULL COMMENT '矫正时间',
+  `tooth_socket` varchar(255) DEFAULT NULL COMMENT '牙套类型',
+  `tooth_question` varchar(255) DEFAULT '' COMMENT '牙齿问题',
+  `content` text COMMENT '个人简介',
+  `forwardNum` int(11) DEFAULT NULL COMMENT '转发',
+  `commentsNum` int(11) DEFAULT NULL COMMENT '评论',
+  `praiseNum` int(11) DEFAULT NULL COMMENT '点赞',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
+  PRIMARY KEY (`userId`),
+  KEY `openId_index` (`openId`),
+  KEY `nickName_index` (`nickName`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8
