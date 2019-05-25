@@ -93,6 +93,7 @@ class ArticleController extends Controller
         return response()->json(Result::ok('删除成功'));
     }
 
+    //审核通过
     public function audit($id){
 
         $article = Article::find($id);
@@ -120,10 +121,12 @@ class ArticleController extends Controller
         return response()->json(Result::ok('置顶成功'));
     }
 
+    //驳回
     public function reject(Request $request,$id){
         $article = Article::find($id);
         $article->status = 2;
         $article->remark = $request->remark;
         $article->save();
+        return response()->json(Result::ok('驳回通过'));
     }
 }
