@@ -130,5 +130,13 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
     Route::put('/discovery/update/{id}', 'DiscoveryController@update');
     Route::delete('/discovery/destroy/{id}', 'DiscoveryController@destroy');
 
+    //评论
+    Route::get('/commentsList/{articleId}', 'CommentController@showList');
+    Route::delete('/comment/{commentId}', 'CommentController@destory');
+
+    //回复
+    Route::post('/addReply', 'ReplyController@addReply');
+    Route::delete('/reply/{replyId}', 'ReplyController@destory');
+
 });
 
