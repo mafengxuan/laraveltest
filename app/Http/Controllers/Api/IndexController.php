@@ -1,12 +1,12 @@
 <?php
-namespace App\Http\Controllers\Upload;
+namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Helpers\Result;
 use Illuminate\Support\Facades\Storage;
 
-class UploadController extends Controller {
+class IndexController extends Controller {
 
     public function uploadImage(Request $request){
 
@@ -32,5 +32,12 @@ class UploadController extends Controller {
 //            $result = Storage::disk('public')->put($fileName,,file_get_contents($filePath));
 //        }
 
+    }
+
+    public function jssdk()
+    {
+        $app = app('wechat.official_account');
+        $sdk = $app->jssdk->buildConfig(array(), $debug = false, $beta = false, $json = true);
+        return response()->json(Result::ok($sdk));
     }
 }
