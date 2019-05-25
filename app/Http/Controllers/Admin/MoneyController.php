@@ -42,7 +42,7 @@ class MoneyController extends Controller
     public function showList()
     {
         //
-        $money = Money::orderBy('created_at')->get();
+        $money = Money::orderBy('created_at','desc')->get();
         return response()->json(Result::ok($money));
 
     }

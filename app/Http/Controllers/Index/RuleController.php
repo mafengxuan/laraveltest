@@ -38,10 +38,7 @@ class RuleController extends Controller
     public function store(Request $request)
     {
         //
-        $rule = new Rule;
-        $rule->content = $request->post('content');
-        $rule->save();
-        return response()->json(Result::ok('添加成功'));
+
     }
 
     /**
@@ -53,6 +50,14 @@ class RuleController extends Controller
     public function show($id)
     {
         //
+    }
+
+
+    public function showAll()
+    {
+        $rule = Rule::all();
+        return response()->json(Result::ok($rule));
+
     }
 
     /**

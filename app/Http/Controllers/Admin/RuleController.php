@@ -35,9 +35,24 @@ class RuleController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function storeArticle(Request $request)
     {
         //
+        $rule = new Rule;
+        $rule->content = $request->post('content');
+        $rule->type = 1;
+        $rule->save();
+        return response()->json(Result::ok('添加成功'));
+    }
+
+    public function storeMoney(Request $request)
+    {
+        //
+        $rule = new Rule;
+        $rule->content = $request->post('content');
+        $rule->type = 2;
+        $rule->save();
+        return response()->json(Result::ok('添加成功'));
     }
 
     /**

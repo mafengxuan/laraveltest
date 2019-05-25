@@ -82,6 +82,10 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
     //红包列表
     Route::get('/moneyList/{userId}', 'MoneyController@showList');
 
+    //规则
+    Route::post('/rule/storeArticle', 'RuleController@storeArticle');
+    Route::post('/rule/storeMoney', 'RuleController@storeMoney');
+
 });
 
 
@@ -107,5 +111,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
     //前10帖子排序功能；
     Route::post('/orderTop/{id}','ArticleController@orderTop');
 
+
+    //获取规则
+    Route::get('/rules','RuleController@showAll');
 });
 
