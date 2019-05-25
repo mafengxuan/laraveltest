@@ -86,6 +86,9 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
     Route::post('/rule/storeArticle', 'RuleController@storeArticle');
     Route::post('/rule/storeMoney', 'RuleController@storeMoney');
 
+    //发现
+    Route::get('/discovery/showList/{type}', 'DiscoveryController@showList');
+
 });
 
 
@@ -114,5 +117,14 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
 
     //获取规则
     Route::get('/rules','RuleController@showAll');
+
+    //发现
+    Route::get('/discovery/showList/{type}', 'DiscoveryController@showList');
+    Route::post('/discovery/storeSlideShow', 'DiscoveryController@storeSlideShow');
+    Route::post('/discovery/storeSlideArticle', 'DiscoveryController@storeSlideArticle');
+    Route::post('/discovery/storeSlideIcon', 'DiscoveryController@storeSlideIcon');
+    Route::put('/discovery/update/{id}', 'DiscoveryController@update');
+    Route::delete('/discovery/destroy/{id}', 'DiscoveryController@destroy');
+
 });
 

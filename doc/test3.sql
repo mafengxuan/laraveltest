@@ -382,3 +382,14 @@ CREATE TABLE `rule` (
   `content` TEXT COMMENT '规则',
   PRIMARY KEY (`id`)
 ) ENGINE=INNODB DEFAULT CHARSET=utf8
+
+CREATE TABLE `discovery` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `image` varchar(255)  DEFAULT '' COMMENT '图片',
+  `title` varchar(120)  DEFAULT '' COMMENT '标题',
+  `url` varchar(255)  DEFAULT '' COMMENT '链接',
+  `order` int(11) DEFAULT '0' COMMENT '排序',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
