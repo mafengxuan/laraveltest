@@ -375,3 +375,10 @@ CREATE TABLE `user` (
   KEY `openId_index` (`openId`),
   KEY `nickName_index` (`nickName`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8
+
+
+CREATE TABLE `rule` (
+  `id` INT(11) NOT NULL AUTO_INCREMENT,
+  `content` TEXT COMMENT '规则',
+  PRIMARY KEY (`id`)
+) ENGINE=INNODB DEFAULT CHARSET=utf8
