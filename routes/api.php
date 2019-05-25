@@ -83,8 +83,8 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
     Route::get('/moneyList/{userId}', 'MoneyController@showList');
 
     //规则
-    Route::post('/rule/storeArticle', 'RuleController@storeArticle');
-    Route::post('/rule/storeMoney', 'RuleController@storeMoney');
+    Route::get('/rule/showAll','RuleController@showAll');
+
 
     //发现
     Route::get('/discovery/showList/{type}', 'DiscoveryController@showList');
@@ -116,7 +116,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
 
 
     //获取规则
-    Route::get('/rules','RuleController@showAll');
+    Route::get('/rule/showAll','RuleController@showAll');
+    Route::get('/rule/show/{type}','RuleController@show');
+    Route::post('/rule/storeArticle', 'RuleController@storeArticle');
+    Route::post('/rule/storeMoney', 'RuleController@storeMoney');
+    Route::put('/rule/update/{type}', 'RuleController@update');
 
     //发现
     Route::get('/discovery/showList/{type}', 'DiscoveryController@showList');

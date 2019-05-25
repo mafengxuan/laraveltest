@@ -6,6 +6,7 @@ use App\Helpers\Result;
 use App\Model\Rule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use PHPUnit\Runner\TestSuiteLoader;
 
 class RuleController extends Controller
 {
@@ -61,9 +62,11 @@ class RuleController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($type)
     {
         //
+        $rule = Rule::where('type',$type)->first();
+        return response()->json(Result::ok($rule));
     }
 
     public function showAll()
@@ -91,9 +94,17 @@ class RuleController extends Controller
      * @param int $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, $type)
     {
         //
+        $rule = Rule::where('type',$type)->first();
+        if(empty($rule)){
+            $rule = new Rule();
+            $rule->type = $type;
+        }
+        $rule->content = $request->post('content');
+        $rule->save();
+        return response()->json(Result::ok('修改成功'));
     }
 
     /**
