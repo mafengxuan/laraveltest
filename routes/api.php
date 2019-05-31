@@ -50,7 +50,7 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index','middleware' => ['wech
     Route::get('/article/show/{id}', 'ArticleController@show');
     Route::get('/article/showMyList', 'ArticleController@showMyList');
     Route::get('/article/showList/{type}', 'ArticleController@showList');
-    Route::get('/article/showDraftList/{userId}', 'ArticleController@showDraftList');
+    Route::get('/article/showDraftList', 'ArticleController@showDraftList');
 
     Route::get('/article/showListAsTag/{tags}', 'ArticleController@showListAsTag');
 
