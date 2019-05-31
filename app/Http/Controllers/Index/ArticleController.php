@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Article;
 use Illuminate\Support\Facades\DB;
+use phpDocumentor\Reflection\DocBlock\Tags\Throws;
 
 class ArticleController extends Controller
 {
@@ -140,6 +141,28 @@ class ArticleController extends Controller
         $data = array_values($data);
         return response()->json(Result::ok($data));
     }
+
+    public function showTags(){
+
+        $tags = Tags::all();
+
+        $data = array();
+        foreach($tags as $k => $v){
+            if($v['pid'] == 0){
+                $data[$v['id']] = array('label'=>$v['name']);
+            }
+
+            if(isset($data[$v['pid']])){
+                $data[$v['pid']]['data'][] = array(
+                    'key'=>$v['id'],
+                    'value'=>$v['name']
+                );
+            }
+        }
+        return response()->json(Result::ok($data));
+
+    }
+
 
     /**
      * Show the form for editing the specified resource.

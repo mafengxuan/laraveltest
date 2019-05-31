@@ -54,6 +54,8 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index'], function(){
 
     Route::get('/article/showListAsTag/{tags}', 'ArticleController@showListAsTag');
 
+    Route::get('/article/showTags', 'ArticleController@showTags');
+
     //回复
     Route::post('/addReply', 'ReplyController@addReply');
     Route::get('/reply/showList/{articleId}', 'ReplyController@showList');
