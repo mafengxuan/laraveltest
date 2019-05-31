@@ -71,9 +71,9 @@ class UserInfoController extends Controller
                 $commentsNum = Article::where('userId',$userInfo['userId'])->sum('commentsNum');
                 $forwardNum = Article::where('userId',$userInfo['userId'])->sum('forwardNum');
                 $userInfoUpdate = new UserInfo();
-                $userInfoUpdate->praiseNum = $praiseNum;
-                $userInfoUpdate->commentsNum = $commentsNum;
-                $userInfoUpdate->forwardNum = $forwardNum;
+                $userInfoUpdate->praiseNum = !empty($praiseNum) ? $praiseNum : 0;
+                $userInfoUpdate->commentsNum = !empty($commentsNum) ? $commentsNum : 0;
+                $userInfoUpdate->forwardNum = !empty($forwardNum) ? $forwardNum : 0;
                 $userInfoUpdate->save();
             }
             return response()->json(Result::ok($userInfo));
