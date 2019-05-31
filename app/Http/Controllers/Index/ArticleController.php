@@ -159,6 +159,8 @@ class ArticleController extends Controller
                 );
             }
         }
+
+        $data = array_values($data);
         return response()->json(Result::ok($data));
 
     }
