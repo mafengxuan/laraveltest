@@ -51,10 +51,10 @@ class MoneyController extends Controller
         //
     }
 
-    public function showList($userId)
+    public function showList()
     {
         //
-        $money = Money::where('userId',$userId)->where('status',1)->get();
+        $money = Money::where('userId',session('userId'))->where('status',1)->get();
         return response()->json(Result::ok($money));
 
     }

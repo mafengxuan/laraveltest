@@ -18,7 +18,7 @@ class OperationController extends Controller
         }
 
         $praise = new Praise();
-        $praise->userId = $request->userId;
+        $praise->userId = session('userId');
         $praise->articleId = $request->articleId;
         $praise->save();
 
@@ -38,7 +38,7 @@ class OperationController extends Controller
         $article1->increment('forwardNum');
         $article2 = new Article();
         $article2->qrCode = $article1->qrCode;
-        $article2->userId = $request->userId;
+        $article2->userId = session('userId');
         $article2->image = $article1->image;
         $article2->content = '转发: '.$article1->content;
         $article2->save();
@@ -54,7 +54,7 @@ class OperationController extends Controller
         }
 
         $praise = new Praise();
-        $praise->userId = $request->userId;
+        $praise->userId = session('userId');
         $praise->articleId = $request->articleId;
         $praise->save();
 

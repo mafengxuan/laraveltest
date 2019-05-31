@@ -56,13 +56,12 @@ class UserInfoController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $openId
      * @return \Illuminate\Http\Response
      */
-    public function show($openId)
+    public function show()
     {
         //
-        $userInfo = UserInfo::where('openId',$openId)->first();
+        $userInfo = UserInfo::where('id',session('userId'))->first();
         //年龄 牙套类型 矫正时间 牙齿问题 个人简介 转发 评论 点赞
 
         if(!empty($userInfo)){

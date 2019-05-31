@@ -77,13 +77,13 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index','middleware' => ['wech
 
     //用户
 //    Route::post('/userInfo/store', 'UserInfoController@store');
-    Route::get('/userInfo/show/{openId}', 'UserInfoController@show');
+    Route::get('/userInfo/show', 'UserInfoController@show');
 
     //系统消息
     Route::get('/message/showList', 'MessageController@showList');
 
     //红包列表
-    Route::get('/moneyList/{userId}', 'MoneyController@showList');
+    Route::get('/moneyList', 'MoneyController@showList');
 
     //规则
     Route::get('/rule/showAll','RuleController@showAll');

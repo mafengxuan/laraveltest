@@ -25,7 +25,7 @@ class ReplyController extends Controller
         $reply = new Reply();
         $reply->commentId = $request->commentId;
         $reply->content = $request->post('content');
-        $reply->reUserId = $request->reUserId;
+        $reply->reUserId = session('userId');
         $reply->save();
 
         return response()->json(Result::ok('回复成功'));

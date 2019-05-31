@@ -62,7 +62,7 @@ class MessageController extends Controller
     }
 
     public function aboutMe(){
-        $userId = 1;
+        $userId = session('userId');
         $articleIds = Article::where('userId',$userId)->get(['id'])->toArray();
         $ids = [];
         foreach ($articleIds as $k => $v){

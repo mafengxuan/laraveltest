@@ -189,7 +189,7 @@ class ArticleController extends Controller
         //
         $article = Article::find($id);
         $article->qrCode = $request->qrCode;
-        $article->userId = $request->userId;
+        $article->userId = session('userId');
         $article->image = $request->image;
         $article->content = $request->post('content');
         $article->save();
