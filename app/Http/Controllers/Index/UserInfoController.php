@@ -61,7 +61,7 @@ class UserInfoController extends Controller
     public function show()
     {
         //
-        $userInfo = UserInfo::where('id',session('userId'))->first();
+        $userInfo = UserInfo::where('userId',session('userId'))->first();
         //年龄 牙套类型 矫正时间 牙齿问题 个人简介 转发 评论 点赞
 
         if(!empty($userInfo)){
