@@ -78,9 +78,7 @@ class WechatLogin
             $request->session()->put('headimgurl',$userInfo['imgUrl']);
             $request->session()->put('mobile',$userInfo['mobile']);
         }
-
-        dump(session());
-
+        
         return $next($request);
     }
 }
