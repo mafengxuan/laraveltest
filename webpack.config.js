@@ -94,8 +94,8 @@ module.exports = function(env){
     output: {
       path: DIST_PATH,
       filename: isProduction ? '[name]/[name].[chunkhash].js':'[name]/[name].js',
-      chunkFilename: isProduction ? '[name].[chunkhash].bundle.js':'[name].bundle.js',
-      publicPath: '/public/'
+      chunkFilename: isProduction ? '[name].[chunkhash].bundle.js':'[name].bundle.js'
+      // publicPath: '/public/'
     },
     module: {
         rules:[
@@ -188,7 +188,11 @@ module.exports = function(env){
               colors: true
           },
           proxy: {
-
+            '/': {
+              target: 'http://zjrj.bjjskq.com/',
+              secure: true,
+              changeOrigin: true
+            }
           }
       }
   }
