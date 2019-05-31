@@ -94,8 +94,8 @@ module.exports = function(env){
     output: {
       path: DIST_PATH,
       filename: isProduction ? '[name]/[name].[chunkhash].js':'[name]/[name].js',
-      chunkFilename: isProduction ? '[name].[chunkhash].bundle.js':'[name].bundle.js',
-      publicPath: isProduction ?'/':'/public/'
+      chunkFilename: isProduction ? '[name].[chunkhash].bundle.js':'[name].bundle.js'
+      // publicPath: isProduction ?'/':'/public/'
     },
     module: {
         rules:[

@@ -3,7 +3,6 @@ const Messages = () => import(/* webpackChunkName: "/index/Messages" */ './conta
 const Find = () => import(/* webpackChunkName: "/index/Find" */ './containers/find.vue');
 const Personal = () => import(/* webpackChunkName: "/index/Personal" */ './containers/personal.vue');
 const Detail = () => import(/* webpackChunkName: "/index/Detail" */ './containers/detail.vue');
-const Add = () => import(/* webpackChunkName: "/index/Add" */ './containers/add.vue');
 
 export default [
   {
@@ -35,10 +34,5 @@ export default [
     path: "/Detail",
     title: "Detail",
     component: Detail
-  },
-  {
-    path: "/Add",
-    title: "Add",
-    component: Add
   }
 ];
