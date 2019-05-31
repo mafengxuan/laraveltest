@@ -94,8 +94,8 @@ module.exports = function(env){
     output: {
       path: DIST_PATH,
       filename: isProduction ? '[name]/[name].[chunkhash].js':'[name]/[name].js',
-      chunkFilename: isProduction ? '[name].[chunkhash].bundle.js':'[name].bundle.js'
-      // publicPath: '/public/'
+      chunkFilename: isProduction ? '[name].[chunkhash].bundle.js':'[name].bundle.js',
+      publicPath: isProduction ?'/':'/public/'
     },
     module: {
         rules:[
@@ -175,8 +175,8 @@ module.exports = function(env){
       }),
       new webpack.HotModuleReplacementPlugin() //热更新插件
     ].concat(plugins),
-     devtool: (isProduction ? '' : 'source-map')
-     ,devServer: {
+     devtool: (isProduction ? '' : 'source-map'),
+     devServer: {
           contentBase:"./public",
           historyApiFallback: true,
           disableHostCheck: true,
