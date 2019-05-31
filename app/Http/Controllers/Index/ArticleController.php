@@ -82,14 +82,14 @@ class ArticleController extends Controller
     public function showMyList(Request $request)
     {
         //
-        $article = Article::where('userId',$request->userId)->orderBy('created_at','desc')->orderBy('order','desc')->orderBy('created_at','desc')->get();
+        $article = Article::where('userId',session('userId'))->orderBy('created_at','desc')->orderBy('order','desc')->orderBy('created_at','desc')->get();
         return response()->json(Result::ok($article));
     }
 
     public function showDraftList(Request $request)
     {
         //
-        $article = Article::where('userId',$request->userId)->where('isDraft',1)->get();
+        $article = Article::where('userId',session('userId'))->where('isDraft',1)->get();
         return response()->json(Result::ok($article));
     }
 

@@ -48,7 +48,7 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index','middleware' => ['wech
     Route::post('/article/store', 'ArticleController@store');
     Route::put('/article/update/{id}', 'ArticleController@update');
     Route::get('/article/show/{id}', 'ArticleController@show');
-    Route::get('/article/showMyList/{userId}', 'ArticleController@showMyList');
+    Route::get('/article/showMyList', 'ArticleController@showMyList');
     Route::get('/article/showList/{type}', 'ArticleController@showList');
     Route::get('/article/showDraftList/{userId}', 'ArticleController@showDraftList');
 
