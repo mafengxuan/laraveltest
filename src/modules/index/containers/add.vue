@@ -43,11 +43,11 @@ export default {
       addAticle: 'Add/addAticle'
     }),
     save() {
-      // this.addAticle({
-      //   qrCode:'test',
-      //   image:'test',
-      //   content:'123'
-      // });
+      this.addAticle({
+        qrCode:'test',
+        image:'test',
+        content:'123'
+      });
     }
   }
 }

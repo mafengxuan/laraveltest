@@ -3,7 +3,7 @@ import vuex from 'vuex';
 import actions from './actions';
 import getters from './getters';
 import mutations from './mutations';
-import Add from './add/index';
+import Add from './add/add';
 
 const state = {
 
