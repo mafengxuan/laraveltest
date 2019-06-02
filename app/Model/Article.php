@@ -29,4 +29,9 @@ class Article extends Model
     {
         return $this->hasOne('App\Model\Praise','articleId','id')->where('userId',session('userId'));
     }
+
+    public function user()
+    {
+        return $this->hasOne('App\Model\Praise','userId','userId');
+    }
 }
