@@ -32,6 +32,6 @@ class Article extends Model
 
     public function user()
     {
-        return $this->hasOne('App\Model\Praise','userId','userId');
+        return $this->hasOne('App\Model\UserInfo','userId','userId');
     }
 }
