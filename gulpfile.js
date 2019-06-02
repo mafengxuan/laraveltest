@@ -8,7 +8,7 @@ var gulp = require('gulp'),
 //拷贝 favicon.ico
 gulp.task('move:app',function(){
     var stream = gulp.src('./app/**/*')
-        .pipe(gulp.dest('../app'));
+        .pipe(gulp.dest('./public'));
     return stream;
 })
 
@@ -71,15 +71,15 @@ gulp.task('dev_vue',function(callback){
 //开发环境
 gulp.task('dev',['dev_vue'], function(callback) {
     // 将你的默认的任务代码放在这
-    var stream = gulp.src('./app/**/*')
-        .pipe(gulp.dest('../app'));
+    var stream = gulp.src('./dist/**/*')
+        .pipe(gulp.dest('./public'));
     return stream;
 });
 
 //默认生成环境任务
 gulp.task('default',['build_vue'], function(callback) {
     // 将你的默认的任务代码放在这
-    var stream = gulp.src('./app/**/*')
-        .pipe(gulp.dest('../app'));
+    var stream = gulp.src('./dist/**/*')
+        .pipe(gulp.dest('./public'));
     return stream;
 });

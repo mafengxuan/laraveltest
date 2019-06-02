@@ -7,7 +7,7 @@
             <img src="http://lichenglong.pw/img/lcl.jpg" alt="">
           </div>
           <div class="info_box">
-            <div class="title">劲小松</div>
+            <div class="title">劲小松33</div>
             <div class="time">2018年6月26日 09:00</div>
           </div>
           <div class="reply_box">

@@ -14,7 +14,7 @@ module.exports = function(env){
 
   var ROOT_PATH = path.resolve(__dirname);
   var SRC_PATH = path.resolve(ROOT_PATH, 'src/modules/');
-  var DIST_PATH = path.resolve(ROOT_PATH, 'public');
+  var DIST_PATH = path.resolve(ROOT_PATH, 'dist');
   var VIEWS_PATH = path.resolve(ROOT_PATH, 'src/views/');
   var NODE_MODULES = path.resolve(ROOT_PATH, 'node_modules');
 
@@ -94,8 +94,8 @@ module.exports = function(env){
     output: {
       path: DIST_PATH,
       filename: isProduction ? '[name]/[name].[chunkhash].js':'[name]/[name].js',
-      chunkFilename: isProduction ? '[name].[chunkhash].bundle.js':'[name].bundle.js'
-      // publicPath: isProduction ?'/':'/public/'
+      chunkFilename: isProduction ? '[name].[chunkhash].bundle.js':'[name].bundle.js',
+      publicPath: '/dist/'
     },
     module: {
         rules:[
@@ -175,9 +175,9 @@ module.exports = function(env){
       }),
       new webpack.HotModuleReplacementPlugin() //热更新插件
     ].concat(plugins),
-     devtool: (isProduction ? '' : 'source-map'),
-     devServer: {
-          contentBase:"./public",
+     devtool: (isProduction ? '' : 'source-map')
+     ,devServer: {
+          contentBase:"./dist",
           historyApiFallback: true,
           disableHostCheck: true,
           hot: true,
@@ -188,11 +188,7 @@ module.exports = function(env){
               colors: true
           },
           proxy: {
-            '/': {
-              target: 'http://zjrj.bjjskq.com/',
-              secure: true,
-              changeOrigin: true
-            }
+
           }
       }
   }
