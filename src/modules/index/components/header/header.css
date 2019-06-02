@@ -17,4 +17,16 @@
     white-space: nowrap;
     text-overflow: ellipsis;
   }
+  & .back {
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 0.2rem 0.24rem;
+    font-size: 0;
+    & img {
+      width: 100%;
+      width: 0.18rem;
+      height: 0.34rem;
+    }
+  }
 }

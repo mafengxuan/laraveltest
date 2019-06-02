@@ -1,3 +1,38 @@
+:root {
+  --flexCenter: {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  --flexJustify: {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  --flexLeft: {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  --flexColumn {
+    flex-direction: column
+  }
+  --flexCenterLeft: {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  --flexCenterTopLeft: {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  --flexJustifyTop: {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
 .quill-code {
   border: none;
   height: auto;
@@ -15,10 +50,9 @@
 }
 
 .quill-editor {
-  height: 745px;
-
+  height: 4.6rem;
   & .ql-container {
-    height: 680px;
+    height: 3.6rem;
   }
 }
 
@@ -43,6 +77,7 @@
 
 #add {
   & .save {
+    float: right;
     width: 1.48rem;
     height: 0.5rem;
     text-align: center;
@@ -51,5 +86,18 @@
     font-size: 0.3rem;
     color: #07bed1;
     border-radius: 0.08rem;
+    margin-right: 0.2rem;
+  }
+  & .push {
+    float: right;
+    width: 1.48rem;
+    height: 0.5rem;
+    text-align: center;
+    line-height: 0.5rem;
+    background: #eeeeee;
+    font-size: 0.3rem;
+    color: #07bed1;
+    border-radius: 0.08rem;
+    margin-right: 0.2rem;
   }
 }

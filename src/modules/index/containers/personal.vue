@@ -14,8 +14,10 @@
         <div class="bottom_box">
           <ul>
             <li>
-              <div class="">发布</div>
-              <div class="">日记</div>
+              <router-link to="/add">
+                <div class="">发布</div>
+                <div class="">日记</div>
+              </router-link>
             </li>
             <li>
               <div class="">1350</div>

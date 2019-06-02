@@ -186,6 +186,7 @@
 
 <script>
 import '../css/home.css';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 export default {
   data() {
     return {
@@ -196,12 +197,21 @@ export default {
 
   },
   methods: {
+    ...mapActions({
+      addAticle: 'Home/getList'
+    }),
     layerShow() {
       this.$data.type = true;
     },
     layerHide() {
       this.$data.type = false;
     }
+  },
+  created() {
+    console.log(132)
+    this.addAticle({
+      showList: 'new'
+    })
   }
 }
 </script>

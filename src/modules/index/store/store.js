@@ -4,6 +4,7 @@ import actions from './actions';
 import getters from './getters';
 import mutations from './mutations';
 import Add from './add/add';
+import Home from './home/home';
 
 const state = {
 
@@ -17,6 +18,7 @@ export default new vuex.Store({ //store对象
   actions,
   mutations,
   modules: {
-    Add:Add
+    Add:Add,
+    Home:Home
   }
 });

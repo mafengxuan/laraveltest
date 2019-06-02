@@ -1,9 +1,9 @@
 <template lang="html">
   <div>
     <!-- HeaderComponent -->
-    <HeaderComponent></HeaderComponent>
+    <HeaderComponent :showBack='isFooter'></HeaderComponent>
     <router-view></router-view>
-    <FooterComponent></FooterComponent>
+    <FooterComponent :show='isFooter' :name="footerName"></FooterComponent>
   </div>
 </template>
 
@@ -18,8 +18,30 @@ export default {
     HeaderComponent,
     FooterComponent
   },
+  data() {
+    return {
+      isFooter: true,
+      footerName:'/'
+    }
+  },
   created() {
     flexible(750,750);
+  },
+  methods: {
+    isShowFooter(data) {
+      if(/\/Detail|\/add/.test(data)){
+        this.$data.isFooter = false;
+      }else {
+        this.$data.isFooter = true;
+      }
+    }
+  },
+  watch: {
+    $route (to, from){
+      console.log(to.path)
+      this.isShowFooter(to.path)
+      this.$data.footerName = to.path;
+    }
   }
 }
 </script>

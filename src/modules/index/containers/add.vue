@@ -6,6 +6,7 @@
                     class="editer"
                     :options="editorOption">
       </quill-editor>
+      <div class="push">发布</div>
       <div class="save" @click="save">保存草稿</div>
     </div>
   </div>
