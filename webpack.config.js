@@ -188,7 +188,11 @@ module.exports = function(env){
               colors: true
           },
           proxy: {
-
+            '/': {
+              target: 'http://zjrj.bjjskq.com/',
+              secure: true,
+              changeOrigin: true
+            }
           }
       }
   }

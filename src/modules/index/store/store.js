@@ -3,7 +3,7 @@ import vuex from 'vuex';
 import actions from './actions';
 import getters from './getters';
 import mutations from './mutations';
-
+import Add from './add/index';
 
 const state = {
 
@@ -16,5 +16,7 @@ export default new vuex.Store({ //store对象
   getters,
   actions,
   mutations,
-  modules: {}
+  modules: {
+    Add:Add
+  }
 });

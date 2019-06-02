@@ -1,0 +1,55 @@
+.quill-code {
+  border: none;
+  height: auto;
+  & code {
+    width: 100%;
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0;
+    height: 10rem;
+    overflow-y: auto;
+    resize: vertical;
+  }
+}
+
+.quill-editor {
+  height: 745px;
+
+  & .ql-container {
+    height: 680px;
+  }
+}
+
+.limit {
+  height: 30px;
+  border: 1px solid #ccc;
+  line-height: 30px;
+  text-align: right;
+
+  & span {
+    color: #ee2a7b;
+  }
+}
+
+.ql-snow .ql-editor img {
+  max-width: 480px;
+}
+
+.ql-editor .ql-video {
+  max-width: 480px;
+}
+
+#add {
+  & .save {
+    width: 1.48rem;
+    height: 0.5rem;
+    text-align: center;
+    line-height: 0.5rem;
+    background: #eeeeee;
+    font-size: 0.3rem;
+    color: #07bed1;
+    border-radius: 0.08rem;
+  }
+}
