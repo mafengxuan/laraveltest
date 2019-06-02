@@ -121,7 +121,7 @@ class ArticleController extends Controller
             $article = $article->forPage($page,5);
         }
 
-        $article = $article->with('tags')->with('praise')->get();
+        $article = $article->with('tags')->with('praise')->with('user')->get();
 
         return response()->json(Result::ok($article));
     }
