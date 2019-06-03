@@ -1,5 +1,5 @@
 <template lang="html">
-  <div>
+  <div id="app">
     <!-- HeaderComponent -->
     <HeaderComponent :showBack='isFooter'></HeaderComponent>
     <router-view></router-view>
