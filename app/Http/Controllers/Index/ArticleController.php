@@ -144,7 +144,7 @@ class ArticleController extends Controller
 
     public function showTags(){
 
-        $data = \App\Helpers\Tags::$tags;
+        $data = array_values(\App\Helpers\Tags::$tags);
         return response()->json(Result::ok($data));
 
     }
