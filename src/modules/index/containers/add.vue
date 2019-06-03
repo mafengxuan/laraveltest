@@ -87,6 +87,9 @@ export default {
         content: this.$data.content
       });
     }
+  },
+  created() {
+    window.scrollTo(0,0);
   }
 }
 </script>

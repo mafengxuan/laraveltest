@@ -213,6 +213,7 @@ export default {
     }
   },
   created() {
+    window.scrollTo(0,0);
     console.log(132)
     this.addAticle({
       showList: 'new'
