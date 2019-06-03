@@ -36,7 +36,7 @@ const api = {
         }else {
           resolve({
             isSuccess: false,
-            error: res.message
+            error: res.data.errMessage
           });
         }
       }).catch(function(res){
@@ -49,17 +49,17 @@ const api = {
   },
   showTags(params) {
     return new Promise(function(resolve, reject){
-      Axios.post('/api/index/article/store',params)
+      Axios.get('/api/index/article/showTags')
       .then(function(res){
         if(res.data.status){
           resolve({
             isSuccess: true,
-            data: res.data.data
+            data: res.data.result
           });
         }else {
           resolve({
             isSuccess: false,
-            error: res.message
+            error: res.data.errMessage
           });
         }
       }).catch(function(res){
@@ -72,7 +72,6 @@ const api = {
   },
   uploadImage(params) {
     return new Promise(function(resolve, reject){
-      console.log(params)
       Axios.post('/api/uploadImage',params).
       then(function(res){
         if(res.data.status){

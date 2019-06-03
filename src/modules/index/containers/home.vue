@@ -203,7 +203,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      addAticle: 'Home/getList'
+      addAticle: 'Home/getList',
+      showTags: 'Home/showTags'
     }),
     layerShow() {
       this.$data.type = true;
@@ -218,6 +219,7 @@ export default {
     this.addAticle({
       showList: 'new'
     })
+    this.showTags();
   }
 }
 </script>
