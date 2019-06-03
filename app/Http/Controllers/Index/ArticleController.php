@@ -144,23 +144,7 @@ class ArticleController extends Controller
 
     public function showTags(){
 
-        $tags = Tags::all();
-
-        $data = array();
-        foreach($tags as $k => $v){
-            if($v['pid'] == 0){
-                $data[$v['id']] = array('label'=>$v['name']);
-            }
-
-            if(isset($data[$v['pid']])){
-                $data[$v['pid']]['data'][] = array(
-                    'key'=>$v['id'],
-                    'value'=>$v['name']
-                );
-            }
-        }
-
-        $data = array_values($data);
+        $data = \App\Helpers\Tags::$tags;
         return response()->json(Result::ok($data));
 
     }
