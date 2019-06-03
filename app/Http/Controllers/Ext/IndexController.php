@@ -9,8 +9,48 @@ use Illuminate\Support\Facades\Storage;
 class IndexController extends Controller {
 
     public function uploadImage(Request $request){
-        dump($request->file('files'));die;
-        $path = Storage::putFile(date('Y-m-d') . '/', $request->file('files'));
+
+        /*
+         * array:1 [
+  0 => UploadedFile {#240
+    -test: false
+    -originalName: "60.png"
+    -mimeType: "image/png"
+    -size: 105674
+    -error: 0
+    #hashName: null
+    path: "E:\ZkeysSoft\Php\tmp"
+    filename: "phpB10D.tmp"
+    basename: "phpB10D.tmp"
+    pathname: "E:\ZkeysSoft\Php\tmp\phpB10D.tmp"
+    extension: "tmp"
+    realPath: "E:\ZkeysSoft\Php\tmp\phpB10D.tmp"
+    aTime: 2019-06-03 12:51:13
+    mTime: 2019-06-03 12:51:13
+    cTime: 2019-06-03 12:51:13
+    inode: 0
+    size: 105674
+    perms: 0100666
+    owner: 0
+    group: 0
+    type: "file"
+    writable: true
+    readable: true
+    executable: false
+    file: true
+    dir: false
+    link: false
+    linkTarget: "E:\ZkeysSoft\Php\tmp\phpB10D.tmp"
+  }
+]
+         */
+
+        $imageFile = $request->file('files');
+        $ext=$imageFile->getClientOriginalExtension();
+        $fileName = date('Y-m-d') . '/' . uniqid() .'.'.$ext;
+
+
+        $path = Storage::disk('public')->putFile(date('Y-m-d') . '/', $request->file('files'),$fileName);
         dump($path);die;
         return response()->json(Result::ok($path));
 //        $imageFile = $request->file('files');
