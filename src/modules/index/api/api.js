@@ -73,7 +73,7 @@ const api = {
   uploadImage(params) {
     return new Promise(function(resolve, reject){
       console.log(params)
-      Axios.post('/api/index/uploadImage',params).
+      Axios.post('/api/uploadImage',params).
       then(function(res){
         if(res.data.status){
           resolve({

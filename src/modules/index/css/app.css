@@ -1,0 +1,25 @@
+.toast-in-middle{
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.toast-in-top{
+    top: 50px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.toast-in-bottom{
+    bottom: 50px;
+    left: 50%;
+    transform: translate(-50%, 0);
+}
+
+.toast-fade-enter-active,.toast-fade-leave-active{
+    -webkit-transition: opacity .4s linear;
+    transition: opacity .4s linear;
+}
+.toast-fade-enter,.toast-fade-leave-active{
+    opacity: 0;
+}
