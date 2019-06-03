@@ -18,8 +18,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::post('/uploadImage','Api\IndexController@uploadImage');
-Route::get('/jssdk','Api\IndexController@jssdk');
+Route::group(['namespace' => 'Api'], function() {
+    Route::post('/uploadImage','IndexController@uploadImage');
+    Route::get('/jssdk','IndexController@jssdk');
+});
 
 //后台登陆
 Route::group(['namespace' => 'Admin'], function() {
