@@ -30,10 +30,11 @@ const api = {
       console.log(params)
       Axios.get('/api/index/article/showList/'+params.showList)
       .then(function(res){
+        console.log(res)
         if(res.data.status){
           resolve({
             isSuccess: true,
-            data: res.data.data
+            data: res.data.result
           })
         }else {
           resolve({

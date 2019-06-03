@@ -15,25 +15,25 @@
     <!-- 列表 -->
     <div class="list_box">
       <ul>
-        <li>
+        <li v-for="(item,index) in list" :key="index">
           <router-link to="/Detail">
             <div class="top_box">
               <div class="logo_box">
-                <img src="http://lichenglong.pw/img/lcl.jpg" alt="">
+                <img :src="item.user.imgUrl" alt="">
               </div>
               <div class="info_box">
-                <div class="title">劲小松1234</div>
-                <div class="time">更新时间：2018年6月26日</div>
+                <div class="title">{{item.user.nickName}}</div>
+                <div class="time">更新时间：{{item.user.updated_at}}</div>
               </div>
             </div>
-            <div class="inner">10月有矫正牙齿的想法，与老公商量后决定实行！想彻底整顿一下自己的口腔问题想彻底整顿一下自己的口腔问题</div>
-            <div class="label_inner">
-              <span class="bg_r">男</span>
-              <span class="bg_y">23岁</span>
+            <div class="inner">{{item.content}}</div>
+            <div class="label_inner" v-if='item.tags.length'>
+              <span class="bg_r" v-for="(val,key) in item.tags" :key="key">男</span>
+              <!-- <span class="bg_y">23岁</span>
               <span class="bg_g">隐适美</span>
               <span class="bg_o">地包天</span>
               <span class="bg_b">牙齿突出</span>
-              <span class="bg_gray">矫正完毕</span>
+              <span class="bg_gray">矫正完毕</span> -->
             </div>
             <div class="img_box">
               <div class="list"><img src="http://lichenglong.pw/img/lcl.jpg" alt=""></div>
@@ -44,19 +44,19 @@
           <div class="icon_box">
             <div class="i_inner">
               <img src="../images/icon/share.png" alt="">
-              <span>1350</span>
+              <span>{{item.forwardNum}}</span>
             </div>
             <div class="i_inner">
               <img src="../images/icon/message.png" alt="">
-              <span>1350</span>
+              <span>{{item.commentsNum}}</span>
             </div>
             <div class="i_inner">
               <img src="../images/icon/good.png" alt="">
-              <span>1350</span>
+              <span>{{item.viewNum}}</span>
             </div>
           </div>
         </li>
-        <li>
+        <!-- <li>
           <div class="top_box">
             <div class="logo_box">
               <img src="http://lichenglong.pw/img/lcl.jpg" alt="">
@@ -94,7 +94,7 @@
               <span>1350</span>
             </div>
           </div>
-        </li>
+        </li> -->
       </ul>
     </div>
     <div class="bomb_layer" v-if="type">
@@ -192,6 +192,11 @@ export default {
     return {
       type: false
     }
+  },
+  computed: {
+    ...mapGetters({
+      list:'Home/list'
+    })
   },
   mounted() {
 
