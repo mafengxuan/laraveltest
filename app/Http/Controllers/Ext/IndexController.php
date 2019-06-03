@@ -45,11 +45,11 @@ class IndexController extends Controller {
 ]
          */
 
-        $imageFile = $request->file('model');
-        dump($imageFile);die;
+        $imageFile = $request->file('files');
         $ext=$imageFile->getClientOriginalExtension();
         $fileName = date('Y-m-d') . '/' . uniqid() .'.'.$ext;
 
+        dump($fileName);die;
 
         $path = Storage::disk('public')->putFile(date('Y-m-d') . '/', $request->file('files'),$fileName);
         dump($path);die;
