@@ -18,7 +18,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 
-Route::group(['namespace' => 'Api'], function() {
+Route::group(['namespace' => 'Ext'], function() {
     Route::post('/uploadImage','IndexController@uploadImage');
     Route::get('/jssdk','IndexController@jssdk');
 });
