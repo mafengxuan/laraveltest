@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class IndexController extends Controller {
 
     public function uploadImage(Request $request){
-
+        dump($request);die;
         $path = Storage::putFile(date('Y-m-d') . '/', $request->file('files'));
         dump($path);die;
         return response()->json(Result::ok($path));
