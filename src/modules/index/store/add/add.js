@@ -4,7 +4,7 @@ import mutations from './mutations';
 
 const state = {
   img:''
-}
+};
 
 export default {
   namespaced: true,
@@ -12,4 +12,4 @@ export default {
   getters,
   actions,
   mutations
-}
+};

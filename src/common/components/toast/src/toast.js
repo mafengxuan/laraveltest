@@ -20,7 +20,6 @@ const Toast = (text, params = {}) => {
         instance.position = position;
     }
 
-    console.log(instance.$el)
     document.getElementById('app').appendChild(instance.$el)
 
     Vue.nextTick(function(){

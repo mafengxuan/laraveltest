@@ -4,13 +4,12 @@
       <quill-editor v-model="content"
                     ref="myQuillEditor"
                     class="editer"
-                    :options="editorOption">
+                    :options="editorOption"
+                    @change="onEditorChange($event)">
       </quill-editor>
       <input @change="fileChange($event)" type="file" id="upload_file" multiple style="display: none"/>
-      <div class="ql-toolbar ql-snow" style="float: left;border: 0;padding: 0;" @click="chooseType">
-        <div class="ql-formats">
-          <button type="button" class="ql-image"><svg viewBox="0 0 18 18"> <rect class="ql-stroke" height="10" width="12" x="3" y="4"></rect> <circle class="ql-fill" cx="6" cy="7" r="1"></circle> <polyline class="ql-even ql-fill" points="5 12 5 11 7 9 8 10 11 7 13 9 13 12 5 12"></polyline> </svg></button>
-        </div>
+      <div class="upImg" @click="chooseType">
+        <img src="../images/icon/upImg.png" alt="">
       </div>
       <div class="push">发布</div>
       <div class="save" @click="save">保存草稿</div>
@@ -34,7 +33,7 @@ export default {
   },
   data(){
     return {
-      content:null,
+      content:'',
       editorOption:{
         modules: {
           toolbar: [
@@ -80,16 +79,26 @@ export default {
       if(!this.$data.content){
         toast('内容不能为空',{delay:1500});
       }
-      return;
       this.addAticle({
         qrCode:'test',
-        image:'test',
+        image: '',
         content: this.$data.content
       });
+    },
+    onEditorChange({ editor, html, text }) {
+      console.log(html)
     }
   },
   created() {
     window.scrollTo(0,0);
+  },
+  watch: {
+    img(data){
+      console.log(data);
+      this.$data.imgList.push(data);
+      var l = this.$data.imgList.length;
+      this.$data.content += '<p><img index='+l+' src='+data+'></p>';
+    }
   }
 }
 </script>

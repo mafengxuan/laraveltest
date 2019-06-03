@@ -8,12 +8,12 @@ const api = {
         if(res.data.status){
           resolve({
             isSuccess: true,
-            data: res.data.data
+            data: res.data.result
           });
         }else {
           resolve({
             isSuccess: false,
-            error: res.message
+            error: res.data.errMessage
           });
         }
       }).catch(function(res){
@@ -77,12 +77,12 @@ const api = {
         if(res.data.status){
           resolve({
             isSuccess: true,
-            data: res.data.data
+            data: res.data.result
           });
         }else {
           resolve({
             isSuccess: false,
-            error: res.message
+            error: res.data.errMessage
           });
         }
       }).catch(function(res){
