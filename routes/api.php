@@ -19,7 +19,10 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 
 Route::group(['namespace' => 'Ext'], function() {
-    Route::post('/uploadImage','IndexController@uploadImage');
+//    Route::post('/uploadImage','IndexController@uploadImage');
+    Route::post('/uploadImage',function(){
+        dump('test');die;
+    });
     Route::get('/jssdk','IndexController@jssdk');
 });
 
