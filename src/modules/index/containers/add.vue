@@ -14,6 +14,7 @@
       <div class="push">发布</div>
       <div class="save" @click="save">保存草稿</div>
     </div>
+    <loading v-if="loading"></loading>
   </div>
 </template>
 
@@ -24,12 +25,14 @@ import '../css/quillcore.css';
 import '../css/quillsnow.css';
 import '../css/quillbubble.css';
 import toast from '../../../common/components/toast';
+import loading from '../../../common/components/loading';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
   components: {
     //使用编辑器
-    quillEditor
+    quillEditor,
+    loading
   },
   data(){
     return {
@@ -42,7 +45,8 @@ export default {
           ]
         }
       },
-      imgList:[]
+      imgList:[],
+      loading: false
     }
   },
   computed: {
@@ -60,14 +64,15 @@ export default {
     },
     fileChange(el) {
       var files = el.target.files[0];
-      console.log(files);
-      console.log(files.type);
+      this.$data.loading = true;
       if(!/image\/jpeg|image\/png|image\/jpg/.test(files.type)){
         toast('不支持的图片格式',{delay:1500});
+        this.$data.loading = false;
         return;
       }
       if(files.size/1024 > 1024*2){
         toast('图片过大不支持上传',{delay:1500});
+        this.$data.loading = false;
         return;
       }
       var formData = new FormData();
@@ -98,6 +103,7 @@ export default {
       this.$data.imgList.push(data);
       var l = this.$data.imgList.length;
       this.$data.content += '<p><img index='+l+' src='+data+'></p>';
+      this.$data.loading = false;
     }
   }
 }
