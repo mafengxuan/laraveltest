@@ -45,7 +45,8 @@ class IndexController extends Controller {
 ]
          */
 
-        $imageFile = $request->file('files');
+        $imageFile = $request->file('model');
+        dump($imageFile);die;
         $ext=$imageFile->getClientOriginalExtension();
         $fileName = date('Y-m-d') . '/' . uniqid() .'.'.$ext;
 
