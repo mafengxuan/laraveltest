@@ -6,9 +6,8 @@ const actions = {
     commit('getListData',s);
   },
   async showTags ({ commit, state},params) {
-    console.log(state)
     const s = await api.showTags(params);
-    // commit('showTagsData',s);
+    commit('showTagsData',s);
   }
 };
 

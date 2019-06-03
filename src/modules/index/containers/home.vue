@@ -4,10 +4,10 @@
     <div class="label_box">
       <div class="inner clearfix">
         <ul class="tab_box clearfix">
-          <li class="active">最新 <span></span> <i></i> </li>
-          <li>最热 <span></span> <i></i></li>
-          <li>精选 <span></span> <i></i></li>
-          <li>收藏</li>
+          <li @click="listTypeChange('new')" :class="listType=='new'?'active':''">最新 <span></span> <i></i> </li>
+          <li @click="listTypeChange('hot')" :class="listType=='hot'?'active':''">最热 <span></span> <i></i></li>
+          <li @click="listTypeChange('quality')" :class="listType=='quality'?'active':''">精选 <span></span> <i></i></li>
+          <li @click="listTypeChange('collect')" :class="listType=='collect'?'active':''">收藏 <i></i></li>
         </ul>
         <div class="label_btn" @click="layerShow">标签</div>
       </div>
@@ -102,18 +102,17 @@
       <div class="content">
         <div class="top_box">
           <ul>
-            <li>
-              <div class="type">性别</div>
+            <li v-for="(item,index) in tags" :key="index">
+              <div class="type">{{item.label}}</div>
               <div class="btn_box">
-                <span class="btn active">男</span>
-                <span class="btn">女</span>
+                <span class="btn" v-for="(val,key) in item.data" :key="key" :data-key="val.key">{{val.value}}</span>
                 <span class="btn" style="height:0;margin:0;border:0"></span>
                 <span class="btn" style="height:0;margin:0;border:0"></span>
                 <span class="btn" style="height:0;margin:0;border:0"></span>
                 <span class="btn" style="height:0;margin:0;border:0"></span>
               </div>
             </li>
-            <li>
+            <!-- <li>
               <div class="type">年龄</div>
               <div class="btn_box">
                 <span class="btn active">0~12岁</span>
@@ -172,7 +171,7 @@
                 <span class="btn" style="height:0;margin:0;border:0"></span>
                 <span class="btn" style="height:0;margin:0;border:0"></span>
               </div>
-            </li>
+            </li> -->
           </ul>
         </div>
         <div class="set_btn">
@@ -181,21 +180,28 @@
         </div>
       </div>
     </div>
+    <loading v-if="!list"></loading>
   </div>
 </template>
 
 <script>
 import '../css/home.css';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
+import loading from '../../../common/components/loading';
 export default {
+  components: {
+    loading
+  },
   data() {
     return {
-      type: false
+      type: false,
+      listType: 'new'
     }
   },
   computed: {
     ...mapGetters({
-      list:'Home/list'
+      list:'Home/list',
+      tags:'Home/tags'
     })
   },
   mounted() {
@@ -206,19 +212,33 @@ export default {
       addAticle: 'Home/getList',
       showTags: 'Home/showTags'
     }),
+    ...mapMutations({
+      clearList: 'Home/clearList'
+    }),
     layerShow() {
       this.$data.type = true;
     },
     layerHide() {
       this.$data.type = false;
+    },
+    addAticleFun(data) {
+      this.addAticle({
+        showList: data
+      })
+    },
+    listTypeChange(data) {
+      console.log(data);
+      if(data == this.$data.listType){return;}
+      this.clearList();
+      this.$data.listType = data;
+      this.addAticle({
+        showList: data
+      })
     }
   },
   created() {
     window.scrollTo(0,0);
-    console.log(132)
-    this.addAticle({
-      showList: 'new'
-    })
+    this.addAticleFun('new');
     this.showTags();
   }
 }
