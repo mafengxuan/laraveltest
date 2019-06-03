@@ -47,7 +47,7 @@ class IndexController extends Controller {
 
         $imageFile = $request->file('files')[0];
 
-        $path = Storage::disk('public')->putFile(date('Y-m-d') . '/', $request->file('files'));
+        $path = Storage::disk('public')->putFile(date('Y-m-d') . '/', $request->file('files')[0]);
         dump($path);die;
         return response()->json(Result::ok($path));
 //        $imageFile = $request->file('files');
