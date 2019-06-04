@@ -20,4 +20,8 @@ class UserInfo extends Model
 
     protected $primaryKey = 'userId';
 
+    public function article()
+    {
+        return $this->hasOne('App\Model\Article','userId','userId');
+    }
 }

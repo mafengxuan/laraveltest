@@ -61,20 +61,10 @@ class UserInfoController extends Controller
     public function show()
     {
         //
-        $userInfo = UserInfo::find(session('userId'));
+        $userInfo = UserInfo::with('article')->find(session('userId'));
         //年龄 牙套类型 矫正时间 牙齿问题 个人简介 转发 评论 点赞
 
         if(!empty($userInfo)){
-            $timeDiff = time() - strtotime($userInfo['updated_at']);
-            if($timeDiff > 3600){
-                $praiseNum = Article::where('userId',$userInfo['userId'])->sum('praiseNum');
-                $commentsNum = Article::where('userId',$userInfo['userId'])->sum('commentsNum');
-                $forwardNum = Article::where('userId',$userInfo['userId'])->sum('forwardNum');
-                $userInfo->praiseNum = !empty($praiseNum) ? $praiseNum : 0;
-                $userInfo->commentsNum = !empty($commentsNum) ? $commentsNum : 0;
-                $userInfo->forwardNum = !empty($forwardNum) ? $forwardNum : 0;
-                $userInfo->save();
-            }
             return response()->json(Result::ok($userInfo));
         }else{
             return response()->json(Result::error('1','not found'));

@@ -84,7 +84,7 @@ class ArticleController extends Controller
     public function show($id)
     {
         //
-        $article = Article::where('id',$id)->with('tags')->first();
+        $article = Article::where('id',$id)->first();
 
         if(!empty($article)){
             if(!empty(session('userId'))){
@@ -102,17 +102,10 @@ class ArticleController extends Controller
         return response()->json(Result::ok($article));
     }
 
-    public function showMyList()
+    public function showMyArticle()
     {
         //
-        $article = Article::where('userId',session('userId'))->orderBy('created_at','desc')->orderBy('order','desc')->orderBy('created_at','desc')->get();
-        return response()->json(Result::ok($article));
-    }
-
-    public function showDraftList()
-    {
-        //
-        $article = Article::where('userId',session('userId'))->where('isDraft',1)->get();
+        $article = Article::where('userId',session('userId'))->first();
         return response()->json(Result::ok($article));
     }
 
