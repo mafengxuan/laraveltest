@@ -14,6 +14,7 @@ class Tags
     public static $tags = [
 
         0 => [
+            'id' => 1,
             'label' => "性别",
             'data' => [
                 [
@@ -27,6 +28,7 @@ class Tags
             ]
         ],
         1 => [
+            'id' => 4,
             'label' => "年龄",
             'data' => [
                 [
@@ -56,6 +58,7 @@ class Tags
             ]
         ],
         2 => [
+            'id' => 11,
             'label' => "矫正时间",
             'data' => [
                 [
@@ -77,6 +80,7 @@ class Tags
             ]
         ],
         3 => [
+            'id' => 16,
             'label' => "牙套类型",
             'data' => [
                 [
@@ -106,6 +110,7 @@ class Tags
             ]
         ],
         4 => [
+            'id' => 23,
             'label' => "牙齿问题",
             'data' => [
                 [

@@ -131,18 +131,22 @@ class ArticleController extends Controller
     }
 
     public function showListAsTag($tags){
-        $tagsArr = explode(',',$tags);
-        $list = Tags::wherein('id',$tagsArr)->with('article')->get();
-        $data = array();
-        foreach($list as $k => $v){
-            foreach($v['article'] as $kk => $vv){
-                if(isset($data[$vv['id']])){
-                    continue;
-                }
-                $data[$vv['id']] = $vv;
-            }
-        }
-        $data = array_values($data);
+//        $tagsArr = explode(',',$tags);
+//        $list = Tags::wherein('id',$tagsArr)->with('article')->get();
+//        $data = array();
+//        foreach($list as $k => $v){
+//            foreach($v['article'] as $kk => $vv){
+//                if(isset($data[$vv['id']])){
+//                    continue;
+//                }
+//                $data[$vv['id']] = $vv;
+//            }
+//        }
+//        $data = array_values($data);
+
+        $article = Article::where('status',1)->where('isOnline',1)->where('isDraft',0);
+        $article = $article->where('tag',$tags);
+        $data = $article->get();
         return response()->json(Result::ok($data));
     }
 
