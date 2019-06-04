@@ -131,6 +131,10 @@ class ArticleController extends Controller
 
         $article = $article->with('tags')->with('praise')->with('user')->get();
 
+        foreach($article as $k => $v){
+            $article[$k]['image'] = json_decode($v['image'],true);
+        }
+
         return response()->json(Result::ok($article));
     }
 
@@ -150,8 +154,11 @@ class ArticleController extends Controller
 
         $article = Article::where('status',1)->where('isOnline',1)->where('isDraft',0);
         $article = $article->where('tag',$tags)->orderBy('created_at','desc');
-        $data = $article->get();
-        return response()->json(Result::ok($data));
+        $article = $article->get();
+        foreach($article as $k => $v){
+            $article[$k]['image'] = json_decode($v['image'],true);
+        }
+        return response()->json(Result::ok($article));
     }
 
     public function showTags(){
