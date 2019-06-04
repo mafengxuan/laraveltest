@@ -145,7 +145,7 @@ class ArticleController extends Controller
 //        $data = array_values($data);
 
         $article = Article::where('status',1)->where('isOnline',1)->where('isDraft',0);
-        $article = $article->where('tag',$tags);
+        $article = $article->where('tag',$tags)->orderBy('created_at','desc');
         $data = $article->get();
         return response()->json(Result::ok($data));
     }
