@@ -25,7 +25,7 @@ Route::group(['namespace' => 'Ext'], function() {
 
 //后台登陆
 Route::group(['namespace' => 'Admin'], function() {
-    Route::get('/loginAdmin','LoginController@login');
+    Route::post('/loginAdmin','LoginController@login');
 });
 
 
