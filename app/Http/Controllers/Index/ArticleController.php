@@ -47,7 +47,7 @@ class ArticleController extends Controller
         $article = new Article();
         $article->qrCode = '';
         $article->userId = session('userId');
-        $article->image = $request->image;
+        $article->image = json_encode($request->image);
         $article->content = $request->post('content');
         $userInfo = UserInfo::find(session('userId'))->toArray();
         $article->tag = $userInfo['tag'];
