@@ -12,7 +12,7 @@
       <div class="upImg" @click="chooseType">
         <img src="../images/icon/upImg.png" alt="">
       </div>
-      <div class="push">发布</div>
+      <div class="push" @click="push">发布</div>
       <div class="save" @click="save">保存草稿</div>
     </div>
     <loading v-if="loading"></loading>
@@ -87,8 +87,21 @@ export default {
       }
       this.addAticle({
         qrCode:'test',
-        image: '',
-        content: this.$data.content
+        image: this.$data.imgList,
+        content: this.$data.content,
+        isDraf:1
+      });
+    },
+    push() {
+      console.log(this.$data.content);
+      if(!this.$data.content){
+        toast('内容不能为空',{delay:1500});
+      }
+      this.addAticle({
+        qrCode:'test',
+        image: this.$data.imgList,
+        content: this.$data.content,
+        isDraf:0
       });
     },
     onEditorChange({ editor, html, text }) {
@@ -100,7 +113,6 @@ export default {
   },
   watch: {
     img(data){
-      console.log(data);
       this.$data.imgList.push(data);
       var l = this.$data.imgList.length;
       this.$data.content += '<p><img index='+l+' src=/storage'+data+'></p>';

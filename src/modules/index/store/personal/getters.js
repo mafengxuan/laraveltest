@@ -1,5 +1,5 @@
 const getters = {
-  img: state => state.img
+  userInfo: state => state.userInfo
 };
 
 export default getters;

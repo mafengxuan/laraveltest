@@ -4,18 +4,22 @@
       <div class="inner">
         <div class="top_box">
           <div class="logo_box">
-            <img src="http://lichenglong.pw/img/lcl.jpg" alt="">
+            <img :src="info.imgUrl" alt="">
           </div>
           <div class="info_box">
-            <div class="title">劲小松</div>
-            <div class="time">更新时间：2018年6月26日</div>
+            <div class="title">{{info.nickName}}</div>
+            <div class="time">更新时间：{{info.updated_at}}</div>
           </div>
         </div>
         <div class="bottom_box">
           <ul>
             <li>
-              <router-link to="/add">
+              <router-link to="/add" v-if="info.article">
                 <div class="">发布</div>
+                <div class="">日记</div>
+              </router-link>
+              <router-link to="/add" v-if="info && !info.article">
+                <div class="">我的</div>
                 <div class="">日记</div>
               </router-link>
             </li>
@@ -86,19 +90,37 @@
         </li>
       </ul>
     </div>
+    <loading v-if='!info'></loading>
   </div>
 </template>
 
 <script>
 import "../css/personal.css";
+import loading from '../../../common/components/loading';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
+
 export default {
+  components: {
+    loading
+  },
   data() {
     return {
 
     }
   },
+  computed: {
+    ...mapGetters({
+      info:'Personal/userInfo'
+    })
+  },
+  methods: {
+    ...mapActions({
+      userInfo: 'Personal/userInfo',
+    })
+  },
   created() {
     window.scrollTo(0,0);
+    this.userInfo();
   }
 }
 </script>

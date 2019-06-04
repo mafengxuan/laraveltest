@@ -1,6 +1,7 @@
 import Axios from 'axios';
 
 const api = {
+  //添加文章
   addAticle(params) {
     return new Promise(function(resolve, reject){
       Axios.post('/api/index/article/store',params).
@@ -24,6 +25,7 @@ const api = {
       });
     });
   },
+  //首页列表
   getList(params) {
     return new Promise(function(resolve, reject){
       Axios.get('/api/index/article/showList/'+params.showList).
@@ -47,6 +49,7 @@ const api = {
       });
     });
   },
+  //首页标签
   showTags(params) {
     return new Promise(function(resolve, reject){
       Axios.get('/api/index/article/showTags')
@@ -70,9 +73,33 @@ const api = {
       });
     });
   },
+  //add页面添加图片
   uploadImage(params) {
     return new Promise(function(resolve, reject){
       Axios.post('/api/uploadImage',params).
+      then(function(res){
+        if(res.data.status){
+          resolve({
+            isSuccess: true,
+            data: res.data.result
+          });
+        }else {
+          resolve({
+            isSuccess: false,
+            error: res.data.errMessage
+          });
+        }
+      }).catch(function(res){
+        resolve({
+          isSuccess: false,
+          error: ''
+        });
+      });
+    });
+  },
+  userInfo(params) {
+    return new Promise(function(resolve, reject){
+      Axios.get('/api/index/userInfo/show').
       then(function(res){
         if(res.data.status){
           resolve({
