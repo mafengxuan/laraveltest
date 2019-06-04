@@ -83,6 +83,7 @@ class ArticleController extends Controller
 
             $article->increment('viewNum');
         }
+        $article['image'] = json_decode($article['image'],true);
         return response()->json(Result::ok($article));
     }
 
