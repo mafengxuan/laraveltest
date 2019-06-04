@@ -6,6 +6,7 @@ use App\Helpers\Result;
 use App\Model\Collect;
 use App\Model\Praise;
 use App\Model\Tags;
+use App\Model\UserInfo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Article;
@@ -48,7 +49,10 @@ class ArticleController extends Controller
         $article->userId = session('userId');
         $article->image = $request->image;
         $article->content = $request->post('content');
+        $userInfo = UserInfo::find(session('userId'))->toArray();
+        $article->tag = $userInfo['tag'];
         $article->save();
+
         return response()->json(Result::ok('添加成功'));
     }
 

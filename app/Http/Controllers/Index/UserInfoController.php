@@ -105,11 +105,30 @@ class UserInfoController extends Controller
         //
         $userInfo = UserInfo::find($id);
         $userInfo->mobile = $request->mobile;
+
+        $array = array();
         $userInfo->sex = $request->sex;
+        if(!empty($request->sex)){
+            $array[] = $request->sex;
+        }
         $userInfo->age = $request->age;
+        if(!empty($request->age)){
+            $array[] = $request->age;
+        }
         $userInfo->correctTime = $request->correctTime;
+        if(!empty($request->correctTime)){
+            $array[] = $request->correctTime;
+        }
         $userInfo->tooth_socket = $request->tooth_socket;
+        if(!empty($request->tooth_socket)){
+            $array[] = $request->tooth_socket;
+        }
         $userInfo->tooth_question = $request->tooth_question;
+        if(!empty($request->tooth_question)){
+            $array[] = $request->tooth_question;
+        }
+        $tags = implode(',',$array);
+        $userInfo->tag = $tags;
         $userInfo->content = $request->post('content');
         $userInfo->save();
         return response()->json(Result::ok('修改成功'));
