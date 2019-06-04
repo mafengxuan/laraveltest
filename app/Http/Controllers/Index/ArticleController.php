@@ -48,7 +48,7 @@ class ArticleController extends Controller
         $article->qrCode = '';
         $article->userId = session('userId');
         $article->image = json_encode($request->image);
-        $article->content = $request->post('content');
+        $article->content = trim($request->post('content'));
         $userInfo = UserInfo::find(session('userId'))->toArray();
         $article->tag = $userInfo['tag'];
         $article->isDraft = 0;
@@ -191,10 +191,12 @@ class ArticleController extends Controller
     {
         //
         $article = Article::find($id);
-        $article->qrCode = $request->qrCode;
-        $article->userId = session('userId');
-        $article->image = $request->image;
-        $article->content = $request->post('content');
+        if(!empty($request->image)){
+            $article->image = json_encode($request->image);
+        }
+        if(!empty($request->post('content'))){
+            $article->content = trim($request->post('content'));
+        }
         $article->save();
         return response()->json(Result::ok('修改成功'));
     }
