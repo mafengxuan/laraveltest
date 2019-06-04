@@ -58,22 +58,6 @@ class ArticleController extends Controller
         return response()->json(Result::ok('添加成功'));
     }
 
-    public function storeDraft(Request $request)
-    {
-        //
-        $article = new Article();
-        $article->qrCode = '';
-        $article->userId = session('userId');
-        $article->image = $request->image;
-        $article->content = $request->post('content');
-        $userInfo = UserInfo::find(session('userId'))->toArray();
-        $article->tag = $userInfo['tag'];
-        $article->isDraft = 1;
-
-        $article->save();
-
-        return response()->json(Result::ok('添加成功'));
-    }
 
     /**
      * Display the specified resource.
