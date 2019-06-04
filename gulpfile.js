@@ -83,3 +83,11 @@ gulp.task('default',['build_vue'], function(callback) {
         .pipe(gulp.dest('./public/dist'));
     return stream;
 });
+
+//拷贝admin
+gulp.task('move:admin',function(){
+    var stream = gulp.src('./admin/dist/*.*')
+        .pipe(gulp.dest('./public/admin/'));
+    var statics = gulp.src('./admin/dist/static/**')
+        .pipe(gulp.dest('./public/static/'));
+});
