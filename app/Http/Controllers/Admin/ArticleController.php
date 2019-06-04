@@ -10,23 +10,6 @@ use App\Model\Article;
 class ArticleController extends Controller
 {
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
-        $article = new Article();
-        $article->qrCode = $request->qrCode;
-        $article->userId = $request->userId;
-        $article->image = $request->image;
-        $article->content = $request->post('content');
-        $article->save();
-        return response()->json(Result::ok('添加成功'));
-    }
 
     /**
      * Display the specified resource.
@@ -60,25 +43,6 @@ class ArticleController extends Controller
         return response()->json(Result::ok($article));
     }
 
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-        $article = Article::find($id);
-        $article->qrCode = $request->qrCode;
-        $article->userId = $request->userId;
-        $article->image = $request->image;
-        $article->content = $request->post('content');
-        $article->save();
-        return response()->json(Result::ok('修改成功'));
-    }
 
     /**
      * Remove the specified resource from storage.
@@ -118,7 +82,7 @@ class ArticleController extends Controller
         $article = Article::find($id);
         $article->order = $request->order;
         $article->save();
-        return response()->json(Result::ok('置顶成功'));
+        return response()->json(Result::ok('排序成功'));
     }
 
     //驳回

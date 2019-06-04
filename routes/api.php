@@ -103,8 +103,16 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
 //        'as' => 'index', 'uses' => 'AdminController@index'
 //    ]);
 
-    //对帖子审核通过上线
+    //对帖子
+    //审核通过上线
     Route::post('/audit/{id}','ArticleController@audit');
+    //驳回
+    Route::post('/reject/{id}','ArticleController@reject');
+    //置顶
+    Route::post('/addTop/{id}','ArticleController@addTop');
+    //排序
+    Route::post('/orderTop/{id}','ArticleController@orderTop');
+    //
     //对审核通过帖子可分批次发放定额红包
     Route::post('/sendMoney/{id}','MoneyController@send');
     //红包记录页
