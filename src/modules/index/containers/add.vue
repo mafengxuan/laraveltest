@@ -5,6 +5,7 @@
                     ref="myQuillEditor"
                     class="editer"
                     :options="editorOption"
+                    autofocus
                     @change="onEditorChange($event)">
       </quill-editor>
       <input @change="fileChange($event)" type="file" id="upload_file" multiple style="display: none"/>
@@ -102,7 +103,7 @@ export default {
       console.log(data);
       this.$data.imgList.push(data);
       var l = this.$data.imgList.length;
-      this.$data.content += '<p><img index='+l+' src='+data+'></p>';
+      this.$data.content += '<p><img index='+l+' src=/storage'+data+'></p>';
       this.$data.loading = false;
     }
   }
