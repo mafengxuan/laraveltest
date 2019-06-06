@@ -91,6 +91,6 @@ class ArticleController extends Controller
         $article->status = 2;
         $article->remark = $request->remark;
         $article->save();
-        return response()->json(Result::ok('驳回通过'));
+        return response()->json(Result::ok('驳回成功'));
     }
 }
