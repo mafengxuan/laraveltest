@@ -20,7 +20,7 @@ class LoginController extends Controller
             $request->session()->put('username', $adminInfo['username']);
             return response()->json(Result::ok('登陆成功'));
         }else{
-            return response()->json(Result::error('登陆失败'));
+            return response()->json(Result::error(2,'登陆失败'));
         }
     }
 
