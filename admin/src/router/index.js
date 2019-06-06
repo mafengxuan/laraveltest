@@ -37,18 +37,29 @@ export const constantRouterMap = [
     }]
   },
   {
-    path: '/form',
+    path: '/diary',
     component: Layout,
+    redirect: '/diary/audit',
+    name: 'diary',
+    meta: {
+      title: '矫正日志',
+      icon: 'form'
+    },
     children: [
       {
-        path: 'index',
-        name: 'Form',
-        component: () => import('@/views/form/index'),
-        meta: { title: 'Form', icon: 'form' }
+        path: 'audit',
+        name: 'audit',
+        component: () => import('@/views/diary/audit/index'),
+        meta: { title: '审核日志', icon: 'form' }
+      },
+      {
+        path: 'ruler',
+        name: 'ruler',
+        component: () => import('@/views/diary/ruler/index'),
+        meta: { title: '规则设置', icon: 'form' }
       }
     ]
   },
-
   {
     path: '/nested',
     component: Layout,

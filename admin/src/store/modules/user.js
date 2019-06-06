@@ -1,5 +1,6 @@
-import { login, logout, getInfo } from '@/api/login'
-import { getToken, setToken, removeToken } from '@/utils/auth'
+import { login, logout, getInfo } from '@/api/login';
+import { getToken, setToken, removeToken } from '@/utils/auth';
+import Cookie from 'vue-cookies'
 
 const user = {
   state: {
@@ -35,12 +36,12 @@ const user = {
       return new Promise((resolve, reject) => {
         login(username, userInfo.password).then(response => {
           if(response.status){
-            const data = response.data
+            const data = response.result
             setToken(data.token)
-            commit('SET_TOKEN', data.token)
+            commit('SET_TOKEN', 'login')
             resolve()
           }else {
-            commit('ERR_TIP', response.message)
+            commit('ERR_TIP', response.errMessage)
             resolve()
           }
         }).catch(error => {
@@ -71,14 +72,10 @@ const user = {
     // 登出
     LogOut({ commit, state }) {
       return new Promise((resolve, reject) => {
-        logout(state.token).then(() => {
-          commit('SET_TOKEN', '')
-          commit('SET_ROLES', [])
-          removeToken()
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
+        commit('SET_TOKEN', '')
+        commit('SET_ROLES', [])
+        removeToken()
+        resolve()
       })
     },
 
