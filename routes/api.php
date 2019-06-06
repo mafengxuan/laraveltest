@@ -119,7 +119,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
     //红包记录页
     Route::get('/moneyList','MoneyController@showList');
     //帖子列表管理
-    Route::get('/articleList/{type}','ArticleController@showList');
+    Route::get('/articleList/{status}','ArticleController@showList');
     //评论管理
     //广告区管理
     //对用户发系统通知

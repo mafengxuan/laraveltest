@@ -24,10 +24,10 @@ class ArticleController extends Controller
         return response()->json(Result::ok($article));
     }
 
-    public function showList($type)
+    public function showList($status)
     {
         //
-        $article = Article::where('status',$type)->orderBy('created_at','desc')->get();
+        $article = Article::where('status',$status)->orderBy('created_at','desc')->get();
         return response()->json(Result::ok($article));
     }
 
