@@ -27,7 +27,7 @@ class ArticleController extends Controller
     public function showList($status)
     {
         //
-        $article = Article::where('status',$status)->orderBy('created_at','desc')->get();
+        $article = Article::where('status',$status)->orderBy('created_at','desc')->with('user')->get();
         return response()->json(Result::ok($article));
     }
 
