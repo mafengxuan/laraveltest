@@ -5,7 +5,7 @@
         <el-input v-model="input" placeholder="微信昵称"></el-input>
       </div>
       <el-date-picker
-        v-model="value6"
+        v-model="value"
         type="daterange"
         range-separator="至"
         start-placeholder="开始日期"
@@ -43,7 +43,8 @@ export default {
   data() {
     return {
       listLoading: true,
-      input:''
+      input:'',
+      value:''
     }
   },
   computed: {
