@@ -62,7 +62,7 @@ class ArticleController extends Controller
 
         $article = Article::find($id);
         $article->status = 1;
-        $article->auditTime = time();
+        $article->auditTime = date('Y-m-d H:i:s',time());
         $article->save();
         return response()->json(Result::ok('审核通过'));
     }
