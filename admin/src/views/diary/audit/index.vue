@@ -5,21 +5,17 @@
       <el-table-column prop="user.nickName" label="微信昵称"></el-table-column>
       <el-table-column prop="user.nickName" label="姓名"></el-table-column>
       <el-table-column prop="" label="电话"></el-table-column>
-      <el-table-column prop="user.created_at" label="上传时间"></el-table-column>
-      <el-table-column prop="user.auditTime" label="审核时间"></el-table-column>
-      <el-table-column prop="" label="驳回原因 ">
+      <el-table-column prop="user.created_at" label="上传时间" width="180"></el-table-column>
+      <el-table-column prop="" label="主治医生"></el-table-column>
+      <el-table-column prop="" label="查看文章" width="90">
         <template slot-scope="scope">
-          <el-tag type="success">查看原因</el-tag>
+          <el-tag type="primary">查看</el-tag>
         </template>
       </el-table-column>
       <el-table-column prop="" label="操作">
         <template slot-scope="scope">
-          <el-tag type="danger">重新审核</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column prop="" label="查看文章">
-        <template slot-scope="scope">
-          <el-tag type="info">查看</el-tag>
+          <el-tag type="success">通过审核</el-tag>
+          <el-tag type="warning">驳回</el-tag>
         </template>
       </el-table-column>
     </el-table>

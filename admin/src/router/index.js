@@ -42,7 +42,7 @@ export const constantRouterMap = [
     redirect: '/diary/audit',
     name: 'diary',
     meta: {
-      title: '矫正日志',
+      title: '审核日志',
       icon: 'form'
     },
     children: [
@@ -50,13 +50,13 @@ export const constantRouterMap = [
         path: 'audit',
         name: 'audit',
         component: () => import('@/views/diary/audit/index'),
-        meta: { title: '审核日志', icon: 'form' }
+        meta: { title: '待审核', icon: 'form' }
       },
       {
         path: 'ruler',
         name: 'ruler',
         component: () => import('@/views/diary/ruler/index'),
-        meta: { title: '规则设置', icon: 'form' }
+        meta: { title: '已通过', icon: 'form' }
       }
     ]
   },
