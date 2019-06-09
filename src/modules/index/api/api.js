@@ -97,9 +97,35 @@ const api = {
       });
     });
   },
+  //个人中心
   userInfo(params) {
     return new Promise(function(resolve, reject){
       Axios.get('/api/index/userInfo/show').
+      then(function(res){
+        if(res.data.status){
+          resolve({
+            isSuccess: true,
+            data: res.data.result
+          });
+        }else {
+          resolve({
+            isSuccess: false,
+            error: res.data.errMessage
+          });
+        }
+      }).catch(function(res){
+        resolve({
+          isSuccess: false,
+          error: ''
+        });
+      });
+    });
+  },
+  //详情页
+  getDetail(params) {
+    return new Promise(function(resolve, reject){
+      console.log(params)
+      Axios.get('/api/index/article/show/'+params).
       then(function(res){
         if(res.data.status){
           resolve({

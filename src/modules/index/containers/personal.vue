@@ -12,7 +12,7 @@
           </div>
         </div>
         <div class="bottom_box">
-          <ul>
+          <ul v-if="info">
             <li>
               <router-link to="/add" v-if="info.article">
                 <div class="">发布</div>
@@ -24,15 +24,15 @@
               </router-link>
             </li>
             <li>
-              <div class="">1350</div>
+              <div class="">{{info.article.forwardNum}}</div>
               <div class="">转发</div>
             </li>
             <li>
-              <div class="">1350</div>
+              <div class="">{{info.article.commentsNum}}</div>
               <div class="">评论</div>
             </li>
             <li>
-              <div class="">1350</div>
+              <div class="">{{info.article.viewNum}}</div>
               <div class="">获赞</div>
             </li>
             <li>
@@ -49,12 +49,13 @@
         <li class="clearfix">
           <div class="f_left">性别</div>
           <div class="f_right">
-            <span>男</span>
+            <span v-if="info.sex == 1">男</span>
+            <span v-else>女</span>
             <img src="../images/icon/right.png" alt="">
           </div>
         </li>
         <li class="clearfix">
-          <div class="f_left">年龄</div>
+          <div class="f_left">{{info.age}}</div>
           <div class="f_right">
             <span>23岁</span>
             <img src="../images/icon/right.png" alt="">
@@ -77,7 +78,7 @@
         <li class="clearfix">
           <div class="f_left">牙齿问题</div>
           <div class="f_right">
-            <span>牙齿不齐、龅牙</span>
+            <span>{{info.tooth_question}}</span>
             <img src="../images/icon/right.png" alt="">
           </div>
         </li>
