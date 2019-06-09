@@ -38,7 +38,6 @@ export default {
   },
   watch: {
     $route (to, from){
-      console.log(to.path)
       this.isShowFooter(to.path)
       this.$data.footerName = to.path;
     }

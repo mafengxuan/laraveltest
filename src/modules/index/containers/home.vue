@@ -156,7 +156,8 @@ export default {
   data() {
     return {
       type: false,
-      listType: 'new'
+      listType: 'new',
+      tagData:''
     }
   },
   computed: {

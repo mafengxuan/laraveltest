@@ -73,11 +73,15 @@ export default {
   },
   created() {
     window.scrollTo(0,0);
+    this.clearList();
     this.getDetailData();
   },
   methods: {
     ...mapActions({
       getDetail: 'Detail/getDetail'
+    }),
+    ...mapMutations({
+      clearList: 'Detail/clearList'
     }),
     getDetailData() {
       this.getDetail(this.$route.query.id);
