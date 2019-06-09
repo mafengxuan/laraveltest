@@ -50,8 +50,9 @@
               <span>{{item.commentsNum}}</span>
             </div>
             <div class="i_inner">
-              <img src="../images/icon/good.png" alt="">
-              <span>{{item.viewNum}}</span>
+              <img v-if='item.praiseNum' src="../images/icon/goodD.png" alt="">
+              <img v-else src="../images/icon/good.png" alt="">
+              <span>{{item.praiseNum}}</span>
             </div>
           </div>
         </li>

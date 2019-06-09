@@ -12,6 +12,7 @@
       </div>
       <div v-html="info.content" class="content"></div>
     </div>
+    <div style="height:0.8rem;background:#fff;"></div>
     <div class="message_title" v-if='info'>
       <span>全部回复(1007)</span>
       <span class="good_box"><img src="../images/icon/good.png" alt=""> <span>1350</span></span>
@@ -28,7 +29,7 @@
               <div class="time">1楼 2018年6月26日 09:00</div>
             </div>
             <div class="reply_box">
-              <div class="reply_btn"><img src="../images/icon/good.png" alt=""> <span>1350</span>  </div>
+              <div class="reply_btn"><img src="../images/icon/goodD.png" alt=""> <span>1350</span>  </div>
             </div>
           </div>
           <div class="inner">10月有矫正牙齿的想法，与老公商量后决定实行！想彻底整顿一下自己的口腔问题想彻底整顿一下自己的口腔问题</div>
@@ -40,6 +41,13 @@
           </div>
         </li>
       </ul>
+    </div>
+    <div style="height:1.24rem;"></div>
+    <div class="reply_b">
+      <div class="con">
+        <div>说说你的看法......</div>
+        <div class="">发表</div>
+      </div>
     </div>
     <loading v-if='!info'></loading>
   </div>

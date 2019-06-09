@@ -32,7 +32,7 @@
               <div class="">评论</div>
             </li>
             <li>
-              <div class="">{{info.article.viewNum}}</div>
+              <div class="">{{info.article.praiseNum}}</div>
               <div class="">获赞</div>
             </li>
             <li>
