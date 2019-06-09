@@ -138,7 +138,7 @@ class ArticleController extends Controller
         return response()->json(Result::ok($article));
     }
 
-    public function showListAsTag($tags){
+    public function showListAsTag($tag){
 //        $tagsArr = explode(',',$tags);
 //        $list = Tags::wherein('id',$tagsArr)->with('article')->get();
 //        $data = array();
@@ -153,7 +153,7 @@ class ArticleController extends Controller
 //        $data = array_values($data);
 
         $article = Article::where('status',1)->where('isOnline',1)->where('isDraft',0);
-        $article = $article->where('tag',$tags)->orderBy('created_at','desc');
+        $article = $article->where('tag',$tag)->orderBy('created_at','desc');
         $article = $article->get();
         foreach($article as $k => $v){
             $article[$k]['image'] = json_decode($v['image'],true);
