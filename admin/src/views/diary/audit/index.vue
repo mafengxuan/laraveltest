@@ -16,7 +16,7 @@
     <el-table v-loading="listLoading" :data="list" border style="width: 100%">
       <el-table-column prop="id" label="序号" sortable></el-table-column>
       <el-table-column prop="user.nickName" label="微信昵称"></el-table-column>
-      <el-table-column prop="user.nickName" label="姓名"></el-table-column>
+      <el-table-column prop="user.name" label="姓名"></el-table-column>
       <el-table-column prop="" label="电话"></el-table-column>
       <el-table-column prop="user.created_at" label="上传时间" width="180"></el-table-column>
       <el-table-column prop="" label="主治医生"></el-table-column>
