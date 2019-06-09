@@ -17,14 +17,23 @@ class OperationController extends Controller
             return response()->json(Result::error('1','false'));
         }
 
-        $praise = new Praise();
-        $praise->userId = session('userId');
-        $praise->articleId = $request->articleId;
-        $praise->save();
+        if($request->cannel == 1){
+            $praise = Praise::where('userId',session('userId'))->where('articleId',$request->articleId)->delete();
 
-        $article = Article::where('id',$request->articleId)->first();
-        $article->increment('praiseNum');
-        return response()->json(Result::ok('点赞成功'));
+            $article = Article::where('id',$request->articleId)->first();
+            $article->decrement('praiseNum');
+            return response()->json(Result::ok('取消点赞成功'));
+
+        }else{
+            $praise = new Praise();
+            $praise->userId = session('userId');
+            $praise->articleId = $request->articleId;
+            $praise->save();
+
+            $article = Article::where('id',$request->articleId)->first();
+            $article->increment('praiseNum');
+            return response()->json(Result::ok('点赞成功'));
+        }
     }
 
     //转发
