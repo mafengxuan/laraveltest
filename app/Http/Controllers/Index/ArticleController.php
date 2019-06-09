@@ -68,7 +68,7 @@ class ArticleController extends Controller
     public function show($id)
     {
         //
-        $article = Article::where('id',$id)->first();
+        $article = Article::where('id',$id)->with('user')->first();
 
         if(!empty($article)){
             if(!empty(session('userId'))){

@@ -17,5 +17,8 @@ class Money extends Model
     //
     protected $table = 'money';
 
-
+    public function user()
+    {
+        return $this->hasOne('App\Model\UserInfo','userId','userId');
+    }
 }

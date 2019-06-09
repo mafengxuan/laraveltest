@@ -39,10 +39,24 @@ class MoneyController extends Controller
         //
     }
 
-    public function showList()
+    public function showList(Request $request)
     {
         //
-        $money = Money::orderBy('created_at','desc')->get();
+        $money = Money::with('user')->orderBy('created_at','desc');
+
+        if(!empty($request->nickName)){
+            $money = $money->whereHas('nickName',function($query,$request){
+                $query->where('nickName', '=', $request->nickName);
+            });
+        }
+        if(!empty($request->sDate) && !empty($request->eDate)){
+            $money = $money->where('created_at','>=',$request->sDate)->where('created_at','<=',$request->eDate);
+        }
+        if(!empty($request->status)){
+            $money = $money->where('status',$request->status);
+        }
+
+        $money = $money->get();
         return response()->json(Result::ok($money));
 
     }

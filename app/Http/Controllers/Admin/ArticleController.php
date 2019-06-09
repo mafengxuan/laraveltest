@@ -20,7 +20,7 @@ class ArticleController extends Controller
     public function show($id)
     {
         //
-        $article = Article::find($id);
+        $article = Article::with('user')->find($id);
         return response()->json(Result::ok($article));
     }
 
