@@ -37,7 +37,7 @@ const user = {
         login(username, userInfo.password).then(response => {
           if(response.status){
             const data = response.result
-            setToken(data.token)
+            setToken('login')
             commit('SET_TOKEN', 'login')
             resolve()
           }else {

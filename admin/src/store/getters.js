@@ -5,6 +5,9 @@ const getters = {
   avatar: state => state.user.avatar,
   name: state => state.user.name,
   roles: state => state.user.roles,
-  message: state => state.user.message
-}
-export default getters
+  message: state => state.user.message,
+  list: state => state.diary.list,
+  messages: state => state.diary.message,
+  errCode: state => state.diary.errCode
+};
+export default getters;
