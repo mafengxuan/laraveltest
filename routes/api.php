@@ -143,15 +143,15 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
     Route::post('/discovery/storeSlideIcon', 'DiscoveryController@storeSlideIcon');
     Route::get('/discovery/show/{id}', 'DiscoveryController@show');
     Route::post('/discovery/update/{id}', 'DiscoveryController@update');
-    Route::delete('/discovery/destroy/{id}', 'DiscoveryController@destroy');
+    Route::post('/discovery/destroy/{id}', 'DiscoveryController@destroy');
 
     //评论
     Route::get('/commentsList/{articleId}', 'CommentController@showList');
-    Route::delete('/comment/{commentId}', 'CommentController@destory');
+    Route::post('/comment/{commentId}', 'CommentController@destory');
 
     //回复
     Route::post('/addReply', 'ReplyController@addReply');
-    Route::delete('/reply/{replyId}', 'ReplyController@destory');
+    Route::post('/reply/{replyId}', 'ReplyController@destory');
 
 });
 
