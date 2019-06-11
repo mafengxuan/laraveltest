@@ -8,6 +8,7 @@ const getters = {
   message: state => state.user.message,
   list: state => state.diary.list,
   audit: state => state.diary.audit,
+  reject: state => state.diary.reject,
   messages: state => state.diary.message,
   errCode: state => state.diary.errCode
 };

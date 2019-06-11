@@ -1,7 +1,6 @@
 import request from '@/utils/request';
 
 export function articleList(data) {
-  console.log(data)
   return request({
     url: '/api/admin/articleList/'+data.type+'?nickName='+data.nickName+'&sDate='+data.sDate+'&eDate='+data.eDate,
     method: 'get',
@@ -12,6 +11,14 @@ export function articleList(data) {
 export function audit(id) {
   return request({
     url: '/api/admin/audit/'+id,
+    method: 'post'
+  });
+}
+
+export function rejectTo(id) {
+  console.log(id)
+  return request({
+    url: '/api/admin/reject/'+id,
     method: 'post'
   });
 }

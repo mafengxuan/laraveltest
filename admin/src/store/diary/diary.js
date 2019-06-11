@@ -1,4 +1,4 @@
-import { articleList,audit } from '@/api/diary';
+import { articleList,audit,rejectTo } from '@/api/diary';
 
 const article = {
   state: {
@@ -9,7 +9,6 @@ const article = {
   },
   mutations: {
     SET_LIST: (state, list) => {
-      console.log(list);
       state.list = list;
     },
     ERR_TIP: (state, message) => {
@@ -20,6 +19,9 @@ const article = {
     },
     SET_AUDIT: (state, audit) => {
       state.audit = audit;
+    },
+    SET_REJECT: (state, data) => {
+      state.reject = data;
     }
   },
   actions: {
@@ -46,6 +48,23 @@ const article = {
           if(response.status){
             const data = response.result;
             commit('SET_AUDIT', data);
+            resolve();
+          }else {
+            commit('ERR_TIP', response.errMessage);
+            commit('ERR_CODE', response.errCode);
+            resolve();
+          }
+        }).catch(error => {
+          reject(error);
+        });
+      });
+    },
+    setReject ({ commit }, type){
+      return new Promise((resolve, reject) => {
+        rejectTo(type).then(response => {
+          if(response.status){
+            const data = response.result;
+            commit('SET_REJECT', data);
             resolve();
           }else {
             commit('ERR_TIP', response.errMessage);

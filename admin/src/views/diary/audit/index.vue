@@ -27,8 +27,8 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-tag type="success"><div @click="dialogShow(scope.row.id)" :data-id='id'>通过审核</div></el-tag>
-          <el-tag type="warning">驳回</el-tag>
+          <el-tag type="success"><div @click="dialogShow(scope.row.id)">通过审核</div></el-tag>
+          <el-tag type="warning"><div @click="rejectShow(scope.row.id)">驳回</div></el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -37,7 +37,8 @@
       :visible.sync="dialogVisible"
       width="30%"
       :before-close="handleClose">
-      <span>确定通过</span>
+      <span v-if='type == "audit"'>确定通过</span>
+      <span v-if='type == "reject"'>确定驳回</span>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogSure">确 定</el-button>
@@ -57,7 +58,8 @@ export default {
       name:'',
       dateVal:'',
       dialogVisible: false,
-      id:''
+      id:'',
+      type:''
     }
   },
   computed: {
@@ -65,7 +67,8 @@ export default {
       'list',
       'messages',
       'errCode',
-      'audit'
+      'audit',
+      'reject'
     ])
   },
   created() {
@@ -96,28 +99,70 @@ export default {
     dialogShow(id) {
       this.$data.id = id;
       this.$data.dialogVisible = true;
+      this.$data.type = 'audit';
     },
     dialogSure() {
       this.$data.dialogVisible = false;
-      this.fetchAudit();
+      if(this.$data.type == 'audit'){
+        this.fetchAudit();
+      }else if(this.$data.type == 'reject'){
+        this.fetchReject();
+      }
     },
+    // 通过审核
     fetchAudit() {
       var that = this;
       this.$store.dispatch('setAudit', this.$data.id).then(() => {
+        Message({
+          message: that.audit,
+          type: 'success',
+          duration: 1 * 1000
+        })
         that.fetchData();
       })
     },
     selectList() {
-      console.log(this.$data)
       if(!this.$data.name && !this.$data.dateVal){
         return;
       }
+      if(this.$data.dateVal){
         this.$store.dispatch('getList',{
           type:0,
           nickName:this.$data.name,
-          sDate: this.$data.dateVal[0]?this.$data.dateVal[0]:'',
-          eDate: this.$data.dateVal[1]?this.$data.dateVal[1]:''
+          sDate: this.$data.dateVal[0]?this.dateToString(this.$data.dateVal[0]):'',
+          eDate: this.$data.dateVal[1]?this.dateToString(this.$data.dateVal[1]):''
         })
+      }else {
+        this.$store.dispatch('getList',{
+          type:0,
+          nickName:this.$data.name,
+          sDate: '',
+          eDate: ''
+        })
+      }
+    },
+    dateToString(date){
+      var year = date.getFullYear();
+      var month = date.getMonth() + 1;
+      var day = date.getDate();
+      return year+'-'+month+'-'+day
+    },
+    // 驳回
+    rejectShow(id) {
+      this.$data.id = id;
+      this.$data.dialogVisible = true;
+      this.$data.type = 'reject';
+    },
+    fetchReject(){
+      var that = this;
+      this.$store.dispatch('setReject', this.$data.id).then(() => {
+        Message({
+          message: that.reject,
+          type: 'success',
+          duration: 1 * 1000
+        })
+        that.fetchData();
+      })
     }
   }
 }
