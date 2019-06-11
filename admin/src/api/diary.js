@@ -16,7 +16,6 @@ export function audit(id) {
 }
 
 export function rejectTo(id) {
-  console.log(id)
   return request({
     url: '/api/admin/reject/'+id,
     method: 'post'

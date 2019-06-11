@@ -61,6 +61,24 @@ export const constantRouterMap = [
     ]
   },
   {
+    path: '/find',
+    component: Layout,
+    redirect: '/find/banner',
+    name: 'find',
+    meta: {
+      title: '发现链接',
+      icon: 'form'
+    },
+    children: [
+      {
+        path: 'banner',
+        name: 'banner',
+        component: () => import('@/views/find/banner/index'),
+        meta: { title: '轮播图' }
+      }
+    ]
+  },
+  {
     path: '/nested',
     component: Layout,
     redirect: '/nested/menu1',
