@@ -1,20 +1,22 @@
 <template lang="html">
   <div class="app-container">
     <div class="filter-container">
-      <el-button type="primary" @click="dialogVisible = true">新增</el-button>
+      <el-button type="primary" @click="addNewData">新增</el-button>
     </div>
     <el-table v-loading="listLoading" :data="list" border style="width: 100%">
       <el-table-column prop="image" label="图片" sortable>
         <template slot-scope="scope">
-          <img :src="scope.row.image" alt="">
+          <div class="img_box">
+            <img :src="'/storage'+scope.row.image" alt="">
+          </div>
         </template>
       </el-table-column>
       <el-table-column prop="url" label="链接"></el-table-column>
       <el-table-column prop="order" label="排序"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button type="text" size="small" @click="update(scope.row.id)">修改</el-button>
-          <el-button type="text" size="small">删除</el-button>
+          <el-button type="text" size="small" @click="update(scope.row)">修改</el-button>
+          <el-button type="text" size="small" @click="delete(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -32,7 +34,10 @@
           <el-input v-model="form.sort" auto-complete="off" style="width:50px;"></el-input>
         </el-form-item>
         <el-form-item label="素材图片" :label-width="formLabelWidth">
-          <input @change="fileChange($event)" type="file" id="upload_file" ref="file" multiple/>
+          <div class="img_box">
+            <img :src="form.img" alt="">
+          </div>
+          <input @change="fileChange($event)" type="file" id="upload_file" ref="file" v-loading.fullscreen.lock="fullscreenLoading" multiple/>
         </el-form-item>
       </el-form>
       <span slot="footer" class="dialog-footer">
@@ -45,27 +50,33 @@
 
 <script>
 import { Message } from 'element-ui';
-import { storeSlideShow,showList } from '../../../api/banner';
+import { storeSlideShow,uploadImage,showList,updateData } from '../../../api/banner';
 export default {
   data() {
     return {
       list:'',
       listLoading: true,
       dialogVisible: false,
+      fullscreenLoading: false,
       form: {
         title:'',
         url:'',
         sort:'',
         img:''
       },
+      id:'',
       formLabelWidth:"80px",
-      id:''
+      type: 'add'
     }
   },
   created() {
     this.getList();
   },
   methods: {
+    addNewData() {
+      this.$data.dialogVisible = true;
+      this.$data.type = 'add';
+    },
     fileChange(el) {
       var files = el.target.files[0];
       if(!/image\/jpeg|image\/png|image\/jpg/.test(files.type)){
@@ -86,34 +97,53 @@ export default {
         this.$refs.file.value = ''
         return;
       }
+      this.$data.fullscreenLoading = true;
       var formData = new FormData();
       formData.append('files[]', files);
-      this.form.img = formData;
-      console.log(formData)
+      uploadImage(formData).then(res => {
+        this.$data.fullscreenLoading = false;
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            this.form.img = res.data.result;
+          }else {
+            Message({
+              message: res.data.errMessage,
+              type: 'error',
+              duration: 1 * 1000
+            })
+          }
+        }
+      });
     },
     add() {
-      storeSlideShow({
-        title: this.form.title,
-        url: this.form.url,
-        order: this.form.sort,
-        image: this.form.img
-      }).then(res => {
-        this.$data.dialogVisible = false;
-        if(res.status){
-          Message({
-            message: res.result,
-            type: 'success',
-            duration: 1 * 1000
-          })
-          this.getList();
-        }else {
-          Message({
-            message: res.errMessage,
-            type: 'error',
-            duration: 1 * 1000
-          })
-        }
-      })
+      if(this.$data.type == 'add'){
+        storeSlideShow({
+          title: this.form.title,
+          url: this.form.url,
+          order: this.form.sort,
+          image: this.form.img
+        }).then(res => {
+          this.$data.dialogVisible = false;
+          if(res.status == 200 && res.data){
+            if(res.data.status){
+              Message({
+                message: res.data.result,
+                type: 'success',
+                duration: 1 * 1000
+              })
+              this.getList();
+            }else {
+              Message({
+                message: res.data.errMessage,
+                type: 'error',
+                duration: 1 * 1000
+              })
+            }
+          }
+        })
+      }else if(this.$data.type == 'update'){
+        updateData(this.$data.id,this.$data.form)
+      }
     },
     getList() {
       showList(1).then(res => {
@@ -129,8 +159,20 @@ export default {
         }
       });
     },
-    update(id) {
-      this.$data.id = id;
+    update(data) {
+      this.$data.form = {
+        title: data.title,
+        url: data.url,
+        sort:data.order,
+        img:data.image
+      };
+      this.$data.id = data.id;
+      // this.$refs.file.value = data.image;
+      this.$data.type = 'update';
+      this.$data.dialogVisible = true;
+    },
+    delete(id) {
+
     }
   }
 }
@@ -138,5 +180,18 @@ export default {
 <style>
   .filter-container {
     margin-bottom: 10px;
+  }
+  .img_box {
+    width: 120px;
+    height: 120px;
+    font-size: 0;
+    line-height: 120px;
+    text-align: center;
+    border: 1px solid #eee;
+  }
+  .img_box img {
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%;
   }
 </style>
