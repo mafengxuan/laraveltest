@@ -147,11 +147,11 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
 
     //评论
     Route::get('/commentsList/{articleId}', 'CommentController@showList');
-    Route::post('/comment/{commentId}', 'CommentController@destory');
+    Route::post('/comment/{commentId}', 'CommentController@destroy');
 
     //回复
     Route::post('/addReply', 'ReplyController@addReply');
-    Route::post('/reply/{replyId}', 'ReplyController@destory');
+    Route::post('/reply/{replyId}', 'ReplyController@destroy');
 
 });
 
