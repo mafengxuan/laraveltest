@@ -20,3 +20,7 @@ export function showList(id) {
 export function updateData(id,params) {
   return Axios.post('/api/admin/discovery/update/'+id,params);
 }
+
+export function destory(id) {
+  return Axios.post('/api/admin/discovery/destroy/'+id);
+}

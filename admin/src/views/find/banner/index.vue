@@ -45,12 +45,23 @@
         <el-button type="primary" @click="add">确 定</el-button>
       </span>
     </el-dialog>
+
+    <el-dialog
+      title="提示"
+      :visible.sync="deleteVisible"
+      width="30%">
+      <span>确定删除</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="deleteVisible = false">取 消</el-button>
+        <el-button type="primary" @click="deleteSure">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { Message } from 'element-ui';
-import { storeSlideShow,uploadImage,showList,updateData } from '../../../api/banner';
+import { storeSlideShow,uploadImage,showList,updateData,destory } from '../../../api/banner';
 export default {
   data() {
     return {
@@ -66,7 +77,8 @@ export default {
       },
       id:'',
       formLabelWidth:"80px",
-      type: 'add'
+      type: 'add',
+      deleteVisible: false
     }
   },
   created() {
@@ -190,7 +202,29 @@ export default {
       this.$data.dialogVisible = true;
     },
     deleteData(id) {
-      console.log(id);
+      this.$data.id = id;
+      this.$data.deleteVisible = true;
+    },
+    deleteSure() {
+      this.$data.deleteVisible = false;
+      destory(this.$data.id).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            Message({
+              message: res.data.result,
+              type: 'success',
+              duration: 1 * 1000
+            })
+            this.getList();
+          }else {
+            Message({
+              message: res.data.errMessage,
+              type: 'error',
+              duration: 1 * 1000
+            })
+          }
+        }
+      })
     }
   }
 }
