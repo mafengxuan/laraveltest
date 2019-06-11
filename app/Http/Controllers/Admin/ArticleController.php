@@ -31,7 +31,7 @@ class ArticleController extends Controller
 
         if(!empty($request->nickName)){
             $nickName = $request->nickName;
-            $article = $article->whereHas('nickName',function($query) use ($nickName){
+            $article = $article->whereHas('user',function($query) use ($nickName){
                 $query->where('nickName', '=', $nickName);
             });
         }
