@@ -28,13 +28,14 @@ class ArticleController extends Controller
     {
         //
         $article = Article::with('user')->where('status',$status);
+        dump($request->nickName);die;
 
         if(!empty($request->nickName)){
+
             $article = $article->whereHas('nickName',function($query,$request){
                 $query->where('nickName', '=', $request->nickName);
             });
         }
-        dump($article);
         if(!empty($request->sDate) && !empty($request->eDate)){
             $article = $article->where('created_at','>=',$request->sDate)->where('created_at','<=',$request->eDate);
         }
