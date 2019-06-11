@@ -34,6 +34,7 @@ class ArticleController extends Controller
                 $query->where('nickName', '=', $request->nickName);
             });
         }
+        dump($article);
         if(!empty($request->sDate) && !empty($request->eDate)){
             $article = $article->where('created_at','>=',$request->sDate)->where('created_at','<=',$request->eDate);
         }
