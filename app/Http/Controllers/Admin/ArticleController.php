@@ -28,11 +28,9 @@ class ArticleController extends Controller
     {
         //
         $article = Article::with('user')->where('status',$status);
-        dump($request->nickName);die;
 
         if(!empty($request->nickName)){
-
-            $article = $article->whereHas('nickName',function($query,$request){
+            $article = $article->whereHas('nickName',function($query) use ($request){
                 $query->where('nickName', '=', $request->nickName);
             });
         }
