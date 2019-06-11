@@ -20,6 +20,7 @@ class DiscoveryController extends Controller
     public function storeSlideShow(Request $request)
     {
         //
+        dd($request);
         $discovery = new Discovery;
         $discovery->type = 1;
         $discovery->title = $request->title;
