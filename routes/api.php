@@ -141,6 +141,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
     Route::post('/discovery/storeSlideShow', 'DiscoveryController@storeSlideShow');
     Route::post('/discovery/storeSlideArticle', 'DiscoveryController@storeSlideArticle');
     Route::post('/discovery/storeSlideIcon', 'DiscoveryController@storeSlideIcon');
+    Route::get('/discovery/show/{id}', 'DiscoveryController@show');
     Route::put('/discovery/update/{id}', 'DiscoveryController@update');
     Route::delete('/discovery/destroy/{id}', 'DiscoveryController@destroy');
 
