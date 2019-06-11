@@ -30,8 +30,9 @@ class ArticleController extends Controller
         $article = Article::with('user')->where('status',$status);
 
         if(!empty($request->nickName)){
-            $article = $article->whereHas('nickName',function($query) use ($request){
-                $query->where('nickName', '=', $request->nickName);
+            $nickName = $request->nickName;
+            $article = $article->whereHas('nickName',function($query) use ($nickName){
+                $query->where('nickName', '=', $nickName);
             });
         }
         if(!empty($request->sDate) && !empty($request->eDate)){
