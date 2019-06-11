@@ -45,8 +45,9 @@ class MoneyController extends Controller
         $money = Money::with('user')->orderBy('created_at','desc');
 
         if(!empty($request->nickName)){
-            $money = $money->whereHas('nickName',function($query,$request){
-                $query->where('nickName', '=', $request->nickName);
+            $nickName = $request->nickName;
+            $money = $money->whereHas('user',function($query) use ($nickName){
+                $query->where('nickName', '=', $nickName);
             });
         }
         if(!empty($request->sDate) && !empty($request->eDate)){
