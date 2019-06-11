@@ -50,13 +50,13 @@ export const constantRouterMap = [
         path: 'audit',
         name: 'audit',
         component: () => import('@/views/diary/audit/index'),
-        meta: { title: '待审核', icon: 'form' }
+        meta: { title: '待审核' }
       },
       {
-        path: 'ruler',
-        name: 'ruler',
-        component: () => import('@/views/diary/ruler/index'),
-        meta: { title: '已通过', icon: 'form' }
+        path: 'pass',
+        name: 'pass',
+        component: () => import('@/views/diary/pass/index'),
+        meta: { title: '已通过' }
       }
     ]
   },

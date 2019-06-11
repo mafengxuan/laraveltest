@@ -2,16 +2,16 @@
   <div class="app-container">
     <div class="block" style="margin-bottom:20px;">
       <div class="el-input" style="float:left;width:180px;margin-right:20px;">
-        <el-input v-model="input" placeholder="微信昵称"></el-input>
+        <el-input v-model="name" placeholder="微信昵称"></el-input>
       </div>
       <el-date-picker
-        v-model="value"
+        v-model="dateVal"
         type="daterange"
         range-separator="至"
         start-placeholder="开始日期"
         end-placeholder="结束日期">
       </el-date-picker>
-      <el-button type="primary" style="margin-left:20px;">筛选</el-button>
+      <el-button type="primary" style="margin-left:20px;" @click="selectList">筛选</el-button>
     </div>
     <el-table v-loading="listLoading" :data="list" border style="width: 100%">
       <el-table-column prop="id" label="序号" sortable></el-table-column>
@@ -25,13 +25,24 @@
           <el-tag type="primary">查看</el-tag>
         </template>
       </el-table-column>
-      <el-table-column prop="" label="操作">
+      <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-tag type="success">通过审核</el-tag>
+          <el-tag type="success"><div @click="dialogShow(scope.row.id)" :data-id='id'>通过审核</div></el-tag>
           <el-tag type="warning">驳回</el-tag>
         </template>
       </el-table-column>
     </el-table>
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose">
+      <span>确定通过</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogSure">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -43,15 +54,18 @@ export default {
   data() {
     return {
       listLoading: true,
-      input:'',
-      value:''
+      name:'',
+      dateVal:'',
+      dialogVisible: false,
+      id:''
     }
   },
   computed: {
     ...mapGetters([
       'list',
       'messages',
-      'errCode'
+      'errCode',
+      'audit'
     ])
   },
   created() {
@@ -59,7 +73,7 @@ export default {
   },
   methods: {
     fetchData (){
-      this.$store.dispatch('getList', 0).then(res => {
+      this.$store.dispatch('getList', {type:0,nickName:'',sDate: '',eDate: ''}).then(res => {
         this.$data.listLoading = false;
         if(this.errCode == '001'){
           store.dispatch('FedLogOut').then(() => {
@@ -78,6 +92,32 @@ export default {
           })
         }
       })
+    },
+    dialogShow(id) {
+      this.$data.id = id;
+      this.$data.dialogVisible = true;
+    },
+    dialogSure() {
+      this.$data.dialogVisible = false;
+      this.fetchAudit();
+    },
+    fetchAudit() {
+      var that = this;
+      this.$store.dispatch('setAudit', this.$data.id).then(() => {
+        that.fetchData();
+      })
+    },
+    selectList() {
+      console.log(this.$data)
+      if(!this.$data.name && !this.$data.dateVal){
+        return;
+      }
+        this.$store.dispatch('getList',{
+          type:0,
+          nickName:this.$data.name,
+          sDate: this.$data.dateVal[0]?this.$data.dateVal[0]:'',
+          eDate: this.$data.dateVal[1]?this.$data.dateVal[1]:''
+        })
     }
   }
 }

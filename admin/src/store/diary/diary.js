@@ -1,8 +1,9 @@
-import { articleList } from '@/api/diary';
+import { articleList,audit } from '@/api/diary';
 
 const article = {
   state: {
     list:'',
+    audit:'',
     errCode:'',
     message:''
   },
@@ -16,15 +17,35 @@ const article = {
     },
     ERR_CODE: (state, errCode) => {
       state.errCode = errCode;
+    },
+    SET_AUDIT: (state, audit) => {
+      state.audit = audit;
     }
   },
   actions: {
-    getList ({ commit }, type) {
+    getList ({ commit }, params) {
       return new Promise((resolve, reject) => {
-        articleList(type).then(response => {
+        articleList(params).then(response => {
           if(response.status){
             const data = response.result;
             commit('SET_LIST', data);
+            resolve();
+          }else {
+            commit('ERR_TIP', response.errMessage);
+            commit('ERR_CODE', response.errCode);
+            resolve();
+          }
+        }).catch(error => {
+          reject(error);
+        });
+      });
+    },
+    setAudit ({ commit }, type){
+      return new Promise((resolve, reject) => {
+        audit(type).then(response => {
+          if(response.status){
+            const data = response.result;
+            commit('SET_AUDIT', data);
             resolve();
           }else {
             commit('ERR_TIP', response.errMessage);

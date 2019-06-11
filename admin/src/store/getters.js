@@ -7,6 +7,7 @@ const getters = {
   roles: state => state.user.roles,
   message: state => state.user.message,
   list: state => state.diary.list,
+  audit: state => state.diary.audit,
   messages: state => state.diary.message,
   errCode: state => state.diary.errCode
 };
