@@ -49,7 +49,7 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index','middleware' => ['wech
 
     //帖子
     Route::post('/article/store', 'ArticleController@store');
-    Route::put('/article/update/{id}', 'ArticleController@update');
+    Route::post('/article/update/{id}', 'ArticleController@update');
     Route::get('/article/show/{id}', 'ArticleController@show');
     Route::get('/article/showMyArticle', 'ArticleController@showMyArticle');
     Route::get('/article/showList/{type}', 'ArticleController@showList');
@@ -134,7 +134,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
     Route::get('/rule/show/{type}','RuleController@show');
     Route::post('/rule/storeArticle', 'RuleController@storeArticle');
     Route::post('/rule/storeMoney', 'RuleController@storeMoney');
-    Route::put('/rule/update/{type}', 'RuleController@update');
+    Route::post('/rule/update/{type}', 'RuleController@update');
 
     //发现
     Route::get('/discovery/showList/{type}', 'DiscoveryController@showList');
