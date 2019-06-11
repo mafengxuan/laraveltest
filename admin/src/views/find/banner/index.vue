@@ -45,7 +45,7 @@
 
 <script>
 import { Message } from 'element-ui';
-import { articleList,showList } from '../../../api/banner';
+import { storeSlideShow,showList } from '../../../api/banner';
 export default {
   data() {
     return {
@@ -89,10 +89,10 @@ export default {
       var formData = new FormData();
       formData.append('files[]', files);
       this.form.img = formData;
-      console.log(files)
+      console.log(formData)
     },
     add() {
-      articleList({
+      storeSlideShow({
         title: this.form.title,
         url: this.form.url,
         order: this.form.sort,

@@ -1,12 +1,9 @@
 import request from '@/utils/request';
+import Axios from 'axios';
 
-export function articleList(data) {
+export function storeSlideShow(data) {
   console.log(data);
-  return request({
-    url: '/api/admin/discovery/storeSlideShow',
-    method: 'post',
-    data: data
-  });
+  return Axios.post('/api/admin/discovery/storeSlideShow',data);
 }
 
 export function showList(id) {
