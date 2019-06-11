@@ -18,5 +18,5 @@ export function showList(id) {
 }
 
 export function updateData(id,params) {
-  return Axios.put('/api/admin/discovery/update/'+id,params);
+  return Axios.post('/api/admin/discovery/update/'+id,params);
 }

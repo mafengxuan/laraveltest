@@ -16,7 +16,7 @@
       <el-table-column label="操作">
         <template slot-scope="scope">
           <el-button type="text" size="small" @click="update(scope.row)">修改</el-button>
-          <el-button type="text" size="small" @click="delete(scope.row.id)">删除</el-button>
+          <el-button type="text" size="small" @click="deleteData(scope.row.id)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -31,11 +31,11 @@
           <el-input v-model="form.url" auto-complete="off" style="width:300px;"></el-input>
         </el-form-item>
         <el-form-item label="排序" :label-width="formLabelWidth">
-          <el-input v-model="form.sort" auto-complete="off" style="width:50px;"></el-input>
+          <el-input v-model="form.order" auto-complete="off" style="width:50px;"></el-input>
         </el-form-item>
         <el-form-item label="素材图片" :label-width="formLabelWidth">
           <div class="img_box">
-            <img :src="form.img" alt="">
+            <img :src="'/storage'+form.image" alt="">
           </div>
           <input @change="fileChange($event)" type="file" id="upload_file" ref="file" v-loading.fullscreen.lock="fullscreenLoading" multiple/>
         </el-form-item>
@@ -61,8 +61,8 @@ export default {
       form: {
         title:'',
         url:'',
-        sort:'',
-        img:''
+        order:'',
+        image:''
       },
       id:'',
       formLabelWidth:"80px",
@@ -104,7 +104,7 @@ export default {
         this.$data.fullscreenLoading = false;
         if(res.status == 200 && res.data){
           if(res.data.status){
-            this.form.img = res.data.result;
+            this.form.image = res.data.result;
           }else {
             Message({
               message: res.data.errMessage,
@@ -120,8 +120,8 @@ export default {
         storeSlideShow({
           title: this.form.title,
           url: this.form.url,
-          order: this.form.sort,
-          image: this.form.img
+          order: this.form.order,
+          image: this.form.image
         }).then(res => {
           this.$data.dialogVisible = false;
           if(res.status == 200 && res.data){
@@ -142,7 +142,25 @@ export default {
           }
         })
       }else if(this.$data.type == 'update'){
-        updateData(this.$data.id,this.$data.form)
+        updateData(this.$data.id,this.$data.form).then(res => {
+          this.$data.dialogVisible = false;
+          if(res.status == 200 && res.data){
+            if(res.data.status){
+              Message({
+                message: res.data.result,
+                type: 'success',
+                duration: 1 * 1000
+              })
+              this.getList();
+            }else {
+              Message({
+                message: res.data.errMessage,
+                type: 'error',
+                duration: 1 * 1000
+              })
+            }
+          }
+        })
       }
     },
     getList() {
@@ -163,16 +181,16 @@ export default {
       this.$data.form = {
         title: data.title,
         url: data.url,
-        sort:data.order,
-        img:data.image
+        order:data.order,
+        image: data.image
       };
       this.$data.id = data.id;
       // this.$refs.file.value = data.image;
       this.$data.type = 'update';
       this.$data.dialogVisible = true;
     },
-    delete(id) {
-
+    deleteData(id) {
+      console.log(id);
     }
   }
 }
