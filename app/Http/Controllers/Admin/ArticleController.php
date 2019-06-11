@@ -24,10 +24,20 @@ class ArticleController extends Controller
         return response()->json(Result::ok($article));
     }
 
-    public function showList($status)
+    public function showList(Request $request, $status)
     {
         //
-        $article = Article::where('status',$status)->orderBy('created_at','desc')->with('user')->get();
+        $article = Article::with('user')->where('status',$status);
+
+        if(!empty($request->nickName)){
+            $article = $article->whereHas('nickName',function($query,$request){
+                $query->where('nickName', '=', $request->nickName);
+            });
+        }
+        if(!empty($request->sDate) && !empty($request->eDate)){
+            $article = $article->where('created_at','>=',$request->sDate)->where('created_at','<=',$request->eDate);
+        }
+        $article = $article->orderBy('created_at','desc')->get();
         return response()->json(Result::ok($article));
     }
 
