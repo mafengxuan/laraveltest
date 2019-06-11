@@ -43,7 +43,7 @@ class DiscoveryController extends Controller
         $discovery->order = $request->order;
         $discovery->save();
 
-        return response()->json(Result::ok('添加轮播图成功'));
+        return response()->json(Result::ok('添加文章成功'));
 
     }
 
@@ -58,7 +58,7 @@ class DiscoveryController extends Controller
         $discovery->order = $request->order;
         $discovery->save();
 
-        return response()->json(Result::ok('添加轮播图成功'));
+        return response()->json(Result::ok('添加图标成功'));
 
     }
 
