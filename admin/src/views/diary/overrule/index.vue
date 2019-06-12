@@ -53,21 +53,85 @@
 
 <script>
 import { Message } from 'element-ui';
-
+import { articleList } from '../../../api/overrule';
 export default {
   data() {
     return {
-      listLoading: true
+      listLoading: true,
+      list:'',
+      name:'',
+      dateVal:''
     }
   },
   computed: {
 
   },
   created() {
-
+    this.getList();
   },
   methods: {
-
+    getList() {
+      articleList({type:2,nickName:'',sDate: '',eDate: ''}).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            this.$data.list = res.data.result;
+            this.$data.listLoading = false;
+          }else {
+            Message({
+              message: res.data.errMessage,
+              type: 'error',
+              duration: 1 * 1000
+            })
+          }
+        }
+      });
+    },
+    selectList() {
+      if(!this.$data.name && !this.$data.dateVal){
+        return;
+      }
+      if(this.$data.dateVal){
+        articleList({
+          type:2,
+          nickName:this.$data.name,
+          sDate: this.$data.dateVal[0]?this.dateToString(this.$data.dateVal[0]):'',
+          eDate: this.$data.dateVal[1]?this.dateToString(this.$data.dateVal[1]):''
+        }).then(res => {
+          if(res.status == 200 && res.data){
+            if(res.data.status){
+              this.$data.list = res.data.result;
+              this.$data.listLoading = false;
+            }else {
+              Message({
+                message: res.data.errMessage,
+                type: 'error',
+                duration: 1 * 1000
+              })
+            }
+          }
+        });
+      }else {
+        articleList({
+          type:2,
+          nickName:this.$data.name,
+          sDate: '',
+          eDate: ''
+        }).then(res => {
+          if(res.status == 200 && res.data){
+            if(res.data.status){
+              this.$data.list = res.data.result;
+              this.$data.listLoading = false;
+            }else {
+              Message({
+                message: res.data.errMessage,
+                type: 'error',
+                duration: 1 * 1000
+              })
+            }
+          }
+        });
+      }
+    }
   }
 }
 </script>
