@@ -1,4 +1,5 @@
 import request from '@/utils/request';
+import Axios from 'axios';
 
 export function articleList(data) {
   return request({
@@ -15,9 +16,7 @@ export function audit(id) {
   });
 }
 
-export function rejectTo(id) {
-  return request({
-    url: '/api/admin/reject/'+id,
-    method: 'post'
-  });
+export function rejectTo(data) {
+  var remark = data.remark;
+  return Axios.post('/api/admin/reject/'+data.id,{remark});
 }

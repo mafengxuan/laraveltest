@@ -57,6 +57,12 @@ export const constantRouterMap = [
         name: 'pass',
         component: () => import('@/views/diary/pass/index'),
         meta: { title: '已通过' }
+      },
+      {
+        path: 'overrule',
+        name: 'overrule',
+        component: () => import('@/views/diary/overrule/index'),
+        meta: { title: '被驳回' }
       }
     ]
   },
@@ -67,7 +73,7 @@ export const constantRouterMap = [
     name: 'find',
     meta: {
       title: '发现链接',
-      icon: 'form'
+      icon: 'guide'
     },
     children: [
       {
@@ -75,6 +81,18 @@ export const constantRouterMap = [
         name: 'banner',
         component: () => import('@/views/find/banner/index'),
         meta: { title: '轮播图' }
+      },
+      {
+        path: 'article',
+        name: 'article',
+        component: () => import('@/views/find/article/index'),
+        meta: { title: '文章' }
+      },
+      {
+        path: 'icon',
+        name: 'icon',
+        component: () => import('@/views/find/icon/index'),
+        meta: { title: '图标' }
       }
     ]
   },

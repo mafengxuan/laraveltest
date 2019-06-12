@@ -62,7 +62,7 @@
 
 <script>
 import { Message } from 'element-ui';
-import { storeSlideShow,uploadImage,showList,updateData,destory } from '../../../api/banner';
+import { storeSlideArticle,uploadImage,showList,updateData,destory } from '../../../api/article';
 export default {
   data() {
     return {
@@ -130,7 +130,7 @@ export default {
     },
     add() {
       if(this.$data.type == 'add'){
-        storeSlideShow({
+        storeSlideArticle({
           title: this.form.title,
           url: this.form.url,
           order: this.form.order,
@@ -177,7 +177,7 @@ export default {
       }
     },
     getList() {
-      showList(1).then(res => {
+      showList(2).then(res => {
         if(res.status){
           this.$data.list = res.result;
           this.$data.listLoading = false;

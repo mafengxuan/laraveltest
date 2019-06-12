@@ -39,6 +39,13 @@
       :before-close="handleClose">
       <span v-if='type == "audit"'>确定通过</span>
       <span v-if='type == "reject"'>确定驳回</span>
+      <el-input
+        type="textarea"
+        :rows="2"
+        placeholder="请输入内容"
+        v-model="remark"
+        style="margin-top:20px;">
+      </el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="dialogSure">确 定</el-button>
@@ -59,7 +66,8 @@ export default {
       dateVal:'',
       dialogVisible: false,
       id:'',
-      type:''
+      type:'',
+      remark:''
     }
   },
   computed: {
@@ -155,7 +163,10 @@ export default {
     },
     fetchReject(){
       var that = this;
-      this.$store.dispatch('setReject', this.$data.id).then(() => {
+      this.$store.dispatch('setReject', {
+        id: this.$data.id,
+        remark: this.$data.remark
+      }).then(() => {
         Message({
           message: that.reject,
           type: 'success',
