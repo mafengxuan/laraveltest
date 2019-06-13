@@ -17,22 +17,22 @@
       <el-table-column prop="id" label="序号" sortable></el-table-column>
       <el-table-column prop="user.nickName" label="微信昵称"></el-table-column>
       <el-table-column prop="user.name" label="姓名"></el-table-column>
-      <el-table-column prop="" label="电话"></el-table-column>
+      <el-table-column prop="mobile" label="电话"></el-table-column>
       <el-table-column prop="user.created_at" label="上传时间" width="180"></el-table-column>
       <el-table-column prop="" label="审核时间"></el-table-column>
-      <el-table-column prop="" label="驳回原因 " width="90">
+      <el-table-column prop="" label="驳回原因" width="90">
         <template slot-scope="scope">
-          <el-tag type="primary">查看</el-tag>
+          <el-tag type="primary"><div @click="showOverrule(scope.row.remark)" class="point">查看原因</div></el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-tag type="danger"><div>重新审核</div></el-tag>
+          <el-tag type="danger"><div class="point">重新审核</div></el-tag>
         </template>
       </el-table-column>
       <el-table-column label="查看文章">
         <template slot-scope="scope">
-          <el-tag type="success"><div>查看</div></el-tag>
+          <el-tag type="success"><div class="point">查看</div></el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -48,6 +48,12 @@
         <el-button type="primary" @click="dialogSure">确 定</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+      title="驳回原因"
+      :visible.sync="overruleVisible"
+      width="30%">
+      <span>{{remark}}</span>
+    </el-dialog>
   </div>
 </template>
 
@@ -58,6 +64,8 @@ export default {
   data() {
     return {
       listLoading: true,
+      overruleVisible: false,
+      remark:'',
       list:'',
       name:'',
       dateVal:''
@@ -131,10 +139,17 @@ export default {
           }
         });
       }
+    },
+    showOverrule(remark) {
+      this.$data.overruleVisible = true;
+      this.$data.remark = remark;
     }
   }
 }
 </script>
 
 <style lang="css" scoped>
+.point {
+  cursor: pointer;
+}
 </style>

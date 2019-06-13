@@ -11,24 +11,24 @@
         start-placeholder="开始日期"
         end-placeholder="结束日期">
       </el-date-picker>
-      <el-button type="primary" style="margin-left:20px;" @click="selectList">筛选</el-button>
+      <el-button type="primary" style="margin-left:20px;" @click="selectList" class="point">筛选</el-button>
     </div>
     <el-table v-loading="listLoading" :data="list" border style="width: 100%">
       <el-table-column prop="id" label="序号" sortable></el-table-column>
       <el-table-column prop="user.nickName" label="微信昵称"></el-table-column>
       <el-table-column prop="user.name" label="姓名"></el-table-column>
-      <el-table-column prop="" label="电话"></el-table-column>
+      <el-table-column prop="mobile" label="电话"></el-table-column>
       <el-table-column prop="user.created_at" label="上传时间" width="180"></el-table-column>
       <el-table-column prop="" label="主治医生"></el-table-column>
       <el-table-column prop="" label="查看文章" width="90">
         <template slot-scope="scope">
-          <el-tag type="primary">查看</el-tag>
+          <el-tag type="primary" class="point">查看</el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-tag type="success"><div @click="dialogShow(scope.row.id)">通过审核</div></el-tag>
-          <el-tag type="warning"><div @click="rejectShow(scope.row.id)">驳回</div></el-tag>
+          <el-tag type="success"><div @click="dialogShow(scope.row.id)" class="point">通过审核</div></el-tag>
+          <el-tag type="warning"><div @click="rejectShow(scope.row.id)" class="point">驳回</div></el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -44,7 +44,8 @@
         :rows="2"
         placeholder="请输入内容"
         v-model="remark"
-        style="margin-top:20px;">
+        style="margin-top:20px;"
+        v-if='type == "reject"'>
       </el-input>
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
@@ -180,4 +181,7 @@ export default {
 </script>
 
 <style lang="css" scoped>
+.point {
+  cursor: pointer;
+}
 </style>
