@@ -56,7 +56,11 @@ class WechatLogin
 //                $users = new UserInfo;
 //                $users->openId = $originalInfo['openid'];
 //                $users->nickName = $originalInfo['nickname'];
-//                $users->sex = $originalInfo['sex'];
+//                    if($originalInfo['sex'] == 1){
+//                        $users->sex = '男';
+//                    }else{
+//                        $users->sex = '女';
+//                    }
 //                $users->province = $originalInfo['province'];
 //                $users->city = $originalInfo['city'];
 //                $users->imgUrl = $originalInfo['headimgurl'];

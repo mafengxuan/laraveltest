@@ -97,24 +97,24 @@ class UserInfoController extends Controller
         $userInfo->mobile = $request->mobile;
 
         $array = array();
-        $userInfo->sex = $request->sex;
         if(!empty($request->sex)){
+            $userInfo->sex = $request->sex;
             $array[] = $request->sex;
         }
-        $userInfo->age = $request->age;
         if(!empty($request->age)){
+            $userInfo->age = $request->age;
             $array[] = $request->age;
         }
-        $userInfo->correctTime = $request->correctTime;
         if(!empty($request->correctTime)){
+            $userInfo->correctTime = $request->correctTime;
             $array[] = $request->correctTime;
         }
-        $userInfo->tooth_socket = $request->tooth_socket;
         if(!empty($request->tooth_socket)){
+            $userInfo->tooth_socket = $request->tooth_socket;
             $array[] = $request->tooth_socket;
         }
-        $userInfo->tooth_question = $request->tooth_question;
         if(!empty($request->tooth_question)){
+            $userInfo->tooth_question = $request->tooth_question;
             $array[] = $request->tooth_question;
         }
         $tags = implode(',',$array);
