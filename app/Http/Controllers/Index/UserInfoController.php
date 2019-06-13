@@ -119,7 +119,9 @@ class UserInfoController extends Controller
         }
         $tags = implode(',',$array);
         $userInfo->tag = $tags;
-        $userInfo->content = $request->post('content');
+        if(!empty($request->post('content'))){
+            $userInfo->content = $request->post('content');
+        }
         $userInfo->save();
         return response()->json(Result::ok('修改成功'));
 
