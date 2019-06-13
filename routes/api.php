@@ -107,6 +107,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
     //对帖子
     //审核通过上线
     Route::post('/audit/{id}','ArticleController@audit');
+    //重新审核
+    Route::post('/reAudit/{id}','ArticleController@reAudit');
     //驳回
     Route::post('/reject/{id}','ArticleController@reject');
     //置顶

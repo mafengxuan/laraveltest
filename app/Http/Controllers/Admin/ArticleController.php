@@ -78,6 +78,16 @@ class ArticleController extends Controller
         return response()->json(Result::ok('审核通过'));
     }
 
+    //重新审核通过
+    public function reAudit($id){
+
+        $article = Article::find($id);
+        $article->status = 0;
+        $article->auditTime = '';
+        $article->save();
+        return response()->json(Result::ok('重新审核'));
+    }
+
     public function addTop($id){
         $count = Article::where('isTop',1)->count();
         if($count>=10){
