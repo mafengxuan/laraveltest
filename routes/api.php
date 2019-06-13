@@ -94,7 +94,7 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index','middleware' => ['wech
 
 
     //发现
-    Route::get('/discovery/showList/{type}', 'DiscoveryController@showList');
+    Route::get('/discovery/showList', 'DiscoveryController@showList');
 
 });
 

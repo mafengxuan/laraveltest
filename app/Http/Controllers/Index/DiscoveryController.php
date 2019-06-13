@@ -52,13 +52,21 @@ class DiscoveryController extends Controller
     }
 
 
-    public function showList($type){
-        $array = [1,2,3];
-        if(!in_array($type,$array)){
-            return response()->json(Result::error('1','参数错误'));
+    public function showList(){
+        $discovery = Discovery::orderBy('type','asc')->orderBy('order','asc')->get()->toArray();
+        $data = array();
+        foreach ($discovery as $k =>$v){
+            if($v['type'] == 1){
+                $data['slideShow'][] = $v;
+            }
+            if($v['type'] == 2){
+                $data['slideArticle'][] = $v;
+            }
+            if($v['type'] == 3){
+                $data['slideIcon'][] = $v;
+            }
         }
-        $discovery = Discovery::where('type',$type)->get();
-        return response()->json(Result::ok($discovery));
+        return response()->json(Result::ok($data));
     }
     /**
      * Show the form for editing the specified resource.
