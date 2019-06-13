@@ -114,4 +114,21 @@ class ArticleController extends Controller
         $article->save();
         return response()->json(Result::ok('驳回成功'));
     }
+
+    public function isQuality(Request $request, $id){
+        $article = Article::find($id);
+        $article->isQuality = $request->isQuality;
+        $article->save();
+        return response()->json(Result::ok('成功'));
+
+    }
+
+    public function isOnline(Request $request, $id){
+        $article = Article::find($id);
+        $article->isOnline = $request->isOnline;
+        $article->save();
+        return response()->json(Result::ok('成功'));
+
+    }
+
 }

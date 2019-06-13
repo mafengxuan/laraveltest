@@ -115,11 +115,19 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
     Route::post('/addTop/{id}','ArticleController@addTop');
     //排序
     Route::post('/orderTop/{id}','ArticleController@orderTop');
-    //
+    //精品
+    Route::post('/quality/{id}','ArticleController@isQuality');
+    //上线
+    Route::post('/online/{id}','ArticleController@isOnline');
+    //查看帖子
+    Route::get('/article/{id}','ArticleController@show');
+
+
+
     //对审核通过帖子可分批次发放定额红包
     Route::post('/sendMoney/{id}','MoneyController@send');
     //红包记录页
-    Route::get('/moneyList','MoneyController@showList');
+    Route::get('/moneyList/{id}','MoneyController@showList');
     //帖子列表管理
     Route::get('/articleList/{status}','ArticleController@showList');
     //评论管理
