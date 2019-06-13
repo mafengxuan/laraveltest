@@ -81,6 +81,7 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index','middleware' => ['wech
     //用户
 //    Route::post('/userInfo/store', 'UserInfoController@store');
     Route::get('/userInfo/show', 'UserInfoController@show');
+    Route::post('/userInfo/update', 'UserInfoController@update');
 
     //系统消息
     Route::get('/message/showList', 'MessageController@showList');
