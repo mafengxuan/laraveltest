@@ -2,11 +2,11 @@
   <div id="detail">
     <div class="content">
       <div class="top_box">
-        <div class="logo_box">
-          <img src="http://lichenglong.pw/img/lcl.jpg" alt="">
+        <div class="logo_box" v-if="info.user">
+          <img :src="info.user.imgUrl" alt="">
         </div>
         <div class="info_box">
-          <div class="title">劲小松</div>
+          <div class="title" v-if="info.user">{{info.user.nickName}}</div>
           <div class="time">更新时间：{{info.updated_at}}</div>
         </div>
       </div>
@@ -45,8 +45,8 @@
     <div style="height:1.24rem;"></div>
     <div class="reply_b">
       <div class="con">
-        <div>说说你的看法......</div>
-        <div class="">发表</div>
+        <div class="con_in"><input type="text" placeholder="说说你的看法..." name="" v-model="content"></div>
+        <div class="" @click="pushSay">发表</div>
       </div>
     </div>
     <loading v-if='!info'></loading>
@@ -57,13 +57,15 @@
 import "../css/detail.css";
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import loading from '../../../common/components/loading';
+import { commentsList,addComments } from '../api/detail';
+import toast from '../../../common/components/toast';
 export default {
   components: {
     loading
   },
   data() {
     return {
-
+      content:''
     }
   },
   computed: {
@@ -75,6 +77,7 @@ export default {
     window.scrollTo(0,0);
     this.clearList();
     this.getDetailData();
+    this.getCommentsList();
   },
   methods: {
     ...mapActions({
@@ -85,6 +88,27 @@ export default {
     }),
     getDetailData() {
       this.getDetail(this.$route.query.id);
+    },
+    getCommentsList() {
+      commentsList({
+        id: this.$route.query.id
+      }).then(res => {
+        console.log(res);
+      })
+    },
+    pushSay() {
+      addComments({
+        articleId: this.$route.query.id,
+        content: this.$data.content
+      }).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            toast(res.data.result,{delay:1500});
+          }else {
+            toast(res.data.errMessage,{delay:1500});
+          }
+        }
+      })
     }
   }
 }
