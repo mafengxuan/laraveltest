@@ -25,11 +25,10 @@ class CommentController extends Controller
         $comment->articleId = $request->articleId;
         $comment->userId = session('userId');
         $comment->content = $request->post('content');
-
         $comment->save();
-        if(empty($request->pid)){
-            Article::where('id', $request->articleId)->increment('commentsNum');
-        }
+
+        Article::where('id', $request->articleId)->increment('commentsNum');
+
         return response()->json(Result::ok('评论成功'));
     }
 
