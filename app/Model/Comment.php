@@ -24,4 +24,9 @@ class Comment extends Model
     public function reply(){
         return $this->hasMany('App\Model\Reply','commentId','id');
     }
+
+    public function user()
+    {
+        return $this->hasOne('App\Model\UserInfo','userId','userId');
+    }
 }

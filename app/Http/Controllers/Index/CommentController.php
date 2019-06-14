@@ -42,7 +42,7 @@ class CommentController extends Controller
     public function showList($articleId)
     {
         //
-        $reply = Comment::where('articleId',$articleId)->orderBy('created_at','desc')->with('reply')->get();
+        $reply = Comment::where('articleId',$articleId)->orderBy('created_at','desc')->with('reply')->with('user')->get();
         return response()->json(Result::ok($reply));
     }
 
