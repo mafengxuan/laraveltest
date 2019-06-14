@@ -22,7 +22,7 @@ class Comment extends Model
     }
 
     public function reply(){
-        return $this->hasMany('App\Model\Reply','commentId','id');
+        return $this->hasMany('App\Model\Reply','commentId','id')->with('user');
     }
 
     public function user()
