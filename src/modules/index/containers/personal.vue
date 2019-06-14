@@ -52,9 +52,9 @@
             <!-- <span v-if="info.sex == 1">男</span>
             <span v-else>女</span> -->
             <div class="con">
-              <select  style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
-                <option :value="sex" style="color:#666;margin: 0px" >男</option>
-                <option :value="sex" style="color:#666;margin: 0px" >女</option>
+              <select  v-model="sex" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+                <option style="color:#666;margin: 0px" >男</option>
+                <option style="color:#666;margin: 0px" >女</option>
               </select>
             </div>
             <img src="../images/icon/right.png" alt="">
@@ -122,6 +122,7 @@ export default {
   },
   computed: {
     ...mapGetters({
+      tags:'Home/tags',
       info:'Personal/userInfo'
     })
   },
