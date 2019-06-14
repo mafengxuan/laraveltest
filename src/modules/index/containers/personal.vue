@@ -105,6 +105,7 @@
 import "../css/personal.css";
 import loading from '../../../common/components/loading';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
+import { updateUserInfo } from '../api/personal';
 
 export default {
   components: {
@@ -112,7 +113,11 @@ export default {
   },
   data() {
     return {
-      sex:''
+      sex:'',
+      age:'',
+      correcTime:'',
+      tooth_socker:'',
+      tooth_question:''
     }
   },
   computed: {

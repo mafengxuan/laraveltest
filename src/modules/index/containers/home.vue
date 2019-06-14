@@ -89,6 +89,7 @@
 import '../css/home.css';
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 import loading from '../../../common/components/loading';
+import toast from '../../../common/components/toast';
 export default {
   components: {
     loading
@@ -156,8 +157,12 @@ export default {
     finishCheck() {
       var data = '';
       for(var key in this.$data.tagData){
-        console.log(this.$data.tagData[key])
-        data += this.$data.tagData[key];
+        data += this.$data.tagData[key]+',';
+      }
+      data = data.substring(0,data.length-1)
+      if(data.split(',').length < 5){
+        toast('请将标签选择完整',{delay:1500});
+        return;
       }
     }
   },
