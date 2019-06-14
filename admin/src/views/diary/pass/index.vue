@@ -44,13 +44,15 @@
       </el-table-column>
       <el-table-column prop="" label="查看文章">
         <template slot-scope="scope">
-          <el-button type="text" size="small" class="point">查看</el-button>
+          <el-button type="text" size="small" class="point"><a :href="'/admin#/article/content?id='+scope.row.id">查看</a></el-button>
         </template>
       </el-table-column>
       <el-table-column prop="" label="加精">
         <template slot-scope="scope">
-          <el-button type="text" size="small" class="point" v-if="!scope.row.isQuality" @click="qualityTo(scope.row)">加精</el-button>
-          <el-button type="text" size="small" class="point" v-else @click="qualityTo(scope.row)">取消</el-button>
+           <el-button class="point" type="primary" plain v-if="!scope.row.isQuality" @click="qualityTo(scope.row)">加精</el-button>
+           <el-button class="point" type="primary" plain v-else @click="qualityTo(scope.row)">取消</el-button>
+          <!-- <el-button type="text" size="small" class="point" v-if="!scope.row.isQuality" @click="qualityTo(scope.row)">加精</el-button>
+          <el-button type="text" size="small" class="point" v-else @click="qualityTo(scope.row)">取消</el-button> -->
         </template>
       </el-table-column>
     </el-table>
@@ -158,7 +160,53 @@ export default {
           }
         }
       })
-    }
+    },
+    selectList() {
+      if(!this.$data.name && !this.$data.dateVal){
+        return;
+      }
+      if(this.$data.dateVal){
+        articleList({
+          type:1,
+          nickName:this.$data.name,
+          sDate: this.$data.dateVal[0]?this.dateToString(this.$data.dateVal[0]):'',
+          eDate: this.$data.dateVal[1]?this.dateToString(this.$data.dateVal[1]):''
+        }).then(res => {
+          if(res.status == 200 && res.data){
+            if(res.data.status){
+              this.$data.list = res.data.result;
+              this.$data.listLoading = false;
+            }else {
+              Message({
+                message: res.data.errMessage,
+                type: 'error',
+                duration: 1 * 1000
+              })
+            }
+          }
+        });
+      }else {
+        articleList({
+          type:1,
+          nickName:this.$data.name,
+          sDate: '',
+          eDate: ''
+        }).then(res => {
+          if(res.status == 200 && res.data){
+            if(res.data.status){
+              this.$data.list = res.data.result;
+              this.$data.listLoading = false;
+            }else {
+              Message({
+                message: res.data.errMessage,
+                type: 'error',
+                duration: 1 * 1000
+              })
+            }
+          }
+        });
+      }
+    },
   }
 }
 </script>

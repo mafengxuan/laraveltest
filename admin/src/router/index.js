@@ -111,6 +111,30 @@ export const constantRouterMap = [
         name: 'set',
         component: () => import('@/views/ruler/set/index'),
         meta: { title: '发表日记申明' }
+      },
+      {
+        path: 'red',
+        name: 'red',
+        component: () => import('@/views/ruler/red/index'),
+        meta: { title: '红包' }
+      }
+    ]
+  },
+  {
+    path: '/article',
+    component: Layout,
+    redirect: '/article/content',
+    name: 'article',
+    meta: {
+      title: '文章',
+      icon: 'component'
+    },
+    children: [
+      {
+        path: 'content',
+        name: 'content',
+        component: () => import('@/views/article/content/index'),
+        meta: { title: '文章' }
       }
     ]
   },

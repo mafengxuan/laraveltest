@@ -27,12 +27,12 @@
       </el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-tag type="danger"><div class="point">重新审核</div></el-tag>
+          <el-tag type="danger"><div class="point" @click="reAuditData(scope.row.id)">重新审核</div></el-tag>
         </template>
       </el-table-column>
       <el-table-column label="查看文章">
         <template slot-scope="scope">
-          <el-tag type="success"><div class="point">查看</div></el-tag>
+          <el-tag type="success"><div class="point"><a :href="'/admin#/article/content?id='+scope.row.id">查看</a></div></el-tag>
         </template>
       </el-table-column>
     </el-table>
@@ -59,7 +59,7 @@
 
 <script>
 import { Message } from 'element-ui';
-import { articleList } from '../../../api/overrule';
+import { articleList,reAudit } from '../../../api/overrule';
 export default {
   data() {
     return {
@@ -143,6 +143,26 @@ export default {
     showOverrule(remark) {
       this.$data.overruleVisible = true;
       this.$data.remark = remark;
+    },
+    reAuditData(id) {
+      reAudit({id:id}).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            Message({
+              message: res.data.result,
+              type: 'success',
+              duration: 1 * 1000
+            })
+            this.getList();
+          }else {
+            Message({
+              message: res.data.errMessage,
+              type: 'error',
+              duration: 1 * 1000
+            })
+          }
+        }
+      })
     }
   }
 }

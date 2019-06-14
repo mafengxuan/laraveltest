@@ -22,7 +22,7 @@
       <el-table-column prop="" label="主治医生"></el-table-column>
       <el-table-column prop="" label="查看文章" width="90">
         <template slot-scope="scope">
-          <el-tag type="primary" class="point">查看</el-tag>
+          <el-tag type="primary" class="point"><a :href="'/admin#/article/content?id='+scope.row.id">查看</a></el-tag>
         </template>
       </el-table-column>
       <el-table-column label="操作">

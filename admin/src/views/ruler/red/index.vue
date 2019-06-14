@@ -77,7 +77,7 @@ export default {
   },
   methods: {
     getRulers() {
-      getRuler({id:1}).then(res => {
+      getRuler({id:2}).then(res => {
         if(res.status == 200 && res.data){
           if(res.data.status){
             this.$data.content = res.data.result.content;
@@ -92,7 +92,7 @@ export default {
       })
     },
     save() {
-      rulerUpdate({id:1,content:this.$data.content}).then(res => {
+      rulerUpdate({id:2,content:this.$data.content}).then(res => {
         if(res.data.status){
           Message({
             message: res.data.result,
