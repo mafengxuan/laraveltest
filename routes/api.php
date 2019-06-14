@@ -121,7 +121,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
     //上线
     Route::post('/online/{id}','ArticleController@isOnline');
     //查看帖子
-    Route::get('/article/{id}','ArticleController@show');
+    Route::get('/article/show/{id}','ArticleController@show');
 
 
 
