@@ -5,5 +5,5 @@ export function commentsList(data) {
 }
 
 export function addComments(data) {
-  return Axios.post('/api/index/addComments/',data);
+  return Axios.post('/api/index/addComments',data);
 }

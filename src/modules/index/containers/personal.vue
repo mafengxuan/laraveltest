@@ -45,46 +45,59 @@
       <img src="../images/personal/me.png" alt="">
     </div>
     <div class="personal_info">
-      <ul>
+      <ul v-if="tags">
         <li class="clearfix">
-          <div class="f_left">性别</div>
+          <div class="f_left">{{tags[0].label}}</div>
           <div class="f_right">
-            <!-- <span v-if="info.sex == 1">男</span>
-            <span v-else>女</span> -->
             <div class="con">
-              <select  v-model="sex" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
-                <option style="color:#666;margin: 0px" >男</option>
-                <option style="color:#666;margin: 0px" >女</option>
+              <select  v-model="tags[0].key" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+                <option v-for="(val,key) in tags[0].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
               </select>
             </div>
             <img src="../images/icon/right.png" alt="">
           </div>
         </li>
         <li class="clearfix">
-          <div class="f_left">年龄</div>
+          <div class="f_left">{{tags[1].label}}</div>
           <div class="f_right">
-            <div class="con">{{info.age}}岁</div>
+            <div class="con">
+              <select  v-model="tags[1].key" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+                <option v-for="(val,key) in tags[1].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
+              </select>
+            </div>
             <img src="../images/icon/right.png" alt="">
           </div>
         </li>
         <li class="clearfix">
-          <div class="f_left">矫正时间</div>
+          <div class="f_left">{{tags[2].label}}</div>
           <div class="f_right">
-            <div class="con">矫正完毕</div>
+            <div class="con">
+              <select  v-model="tags[2].key" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+                <option v-for="(val,key) in tags[2].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
+              </select>
+            </div>
             <img src="../images/icon/right.png" alt="">
           </div>
         </li>
         <li class="clearfix">
-          <div class="f_left">牙套类型</div>
+          <div class="f_left">{{tags[3].label}}</div>
           <div class="f_right">
-            <div class="con">隐适美</div>
+            <div class="con">
+              <select  v-model="tags[3].key" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+                <option v-for="(val,key) in tags[3].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
+              </select>
+            </div>
             <img src="../images/icon/right.png" alt="">
           </div>
         </li>
         <li class="clearfix">
-          <div class="f_left">牙齿问题</div>
+          <div class="f_left">{{tags[4].label}}</div>
           <div class="f_right">
-            <div class="con">{{info.tooth_question}}</div>
+            <div class="con">
+              <select  v-model="tags[4].key" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+                <option v-for="(val,key) in tags[4].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
+              </select>
+            </div>
             <img src="../images/icon/right.png" alt="">
           </div>
         </li>
@@ -97,7 +110,7 @@
         </li>
       </ul>
     </div>
-    <loading v-if='!info'></loading>
+    <loading v-if='!info && !tags'></loading>
   </div>
 </template>
 
@@ -113,11 +126,11 @@ export default {
   },
   data() {
     return {
-      sex:'',
-      age:'',
-      correcTime:'',
-      tooth_socker:'',
-      tooth_question:''
+      // sex:'',
+      // age:'',
+      // correcTime:'',
+      // tooth_socker:'',
+      // tooth_question:''
     }
   },
   computed: {
@@ -128,12 +141,21 @@ export default {
   },
   methods: {
     ...mapActions({
+      showTags: 'Home/showTags'
+    }),
+    ...mapActions({
       userInfo: 'Personal/userInfo',
     })
   },
   created() {
     window.scrollTo(0,0);
     this.userInfo();
+    this.showTags();
+  },
+  watch: {
+    tags (val){
+      console.log(val)
+    }
   }
 }
 </script>
