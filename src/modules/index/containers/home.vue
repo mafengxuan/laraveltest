@@ -58,7 +58,7 @@
         </li>
       </ul>
     </div>
-    <div class="bomb_layer" v-if="type">
+    <div class="bomb_layer" :hidden="!type">
       <div class="mark" @click="layerHide"></div>
       <div class="content">
         <div class="top_box">
@@ -66,78 +66,18 @@
             <li v-for="(item,index) in tags" :key="index">
               <div class="type">{{item.label}}</div>
               <div class="btn_box">
-                <span class="btn" v-for="(val,key) in item.data" :key="key" :data-key="val.key">{{val.value}}</span>
+                <span class="btn" v-for="(val,i) in item.data" :ref='"item"+item.id' @click="checkTags(val.value,item.id,i)">{{val.value}}</span>
                 <span class="btn" style="height:0;margin:0;border:0"></span>
                 <span class="btn" style="height:0;margin:0;border:0"></span>
                 <span class="btn" style="height:0;margin:0;border:0"></span>
                 <span class="btn" style="height:0;margin:0;border:0"></span>
               </div>
             </li>
-            <!-- <li>
-              <div class="type">年龄</div>
-              <div class="btn_box">
-                <span class="btn active">0~12岁</span>
-                <span class="btn">13~18岁</span>
-                <span class="btn">19~24岁</span>
-                <span class="btn">25~29岁</span>
-                <span class="btn">30~35岁</span>
-                <span class="btn">35岁以上</span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-              </div>
-            </li>
-            <li>
-              <div class="type">矫正时间</div>
-              <div class="btn_box">
-                <span class="btn active">矫正完毕</span>
-                <span class="btn">1~12个月</span>
-                <span class="btn">12~24个月</span>
-                <span class="btn">24个月以上</span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-              </div>
-            </li>
-            <li>
-              <div class="type">牙套类型</div>
-              <div class="btn_box">
-                <span class="btn active">钢丝矫正</span>
-                <span class="btn">时代天使</span>
-                <span class="btn">冰晶托槽</span>
-                <span class="btn">金属托槽</span>
-                <span class="btn">陶瓷托槽</span>
-                <span class="btn">隐适美</span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-              </div>
-            </li>
-            <li>
-              <div class="type">牙齿问题</div>
-              <div class="btn_box">
-                <span class="btn active">地包天</span>
-                <span class="btn">牙齿突出</span>
-                <span class="btn">龅牙</span>
-                <span class="btn">错位牙</span>
-                <span class="btn">牙间隙</span>
-                <span class="btn">牙列拥挤</span>
-                <span class="btn">前牙开颌</span>
-                <span class="btn">咬颌错乱</span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-                <span class="btn" style="height:0;margin:0;border:0"></span>
-              </div>
-            </li> -->
           </ul>
         </div>
         <div class="set_btn">
-          <div class="restart_btn">重置</div>
-          <div class="finish_btn">完成</div>
+          <div class="restart_btn" @click="reset">重置</div>
+          <div class="finish_btn" @click="finishCheck">完成</div>
         </div>
       </div>
     </div>
@@ -147,7 +87,7 @@
 
 <script>
 import '../css/home.css';
-import { mapGetters, mapActions, mapMutations } from 'vuex';
+import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 import loading from '../../../common/components/loading';
 export default {
   components: {
@@ -157,13 +97,13 @@ export default {
     return {
       type: false,
       listType: 'new',
-      tagData:''
+      tagData: {}
     }
   },
   computed: {
     ...mapGetters({
-      list:'Home/list',
-      tags:'Home/tags'
+      tags:'Home/tags',
+      list:'Home/list'
     })
   },
   mounted() {
@@ -189,19 +129,42 @@ export default {
       })
     },
     listTypeChange(data) {
-      console.log(data);
       if(data == this.$data.listType){return;}
       this.clearList();
       this.$data.listType = data;
       this.addAticle({
         showList: data
       })
+    },
+    checkTags(val,id,index) {
+      console.log(val)
+      console.log(this.$refs['item'+id])
+      for(var i = 0;i<this.$refs['item'+id].length;i++){
+        this.$refs['item'+id][i].setAttribute("class", 'btn');
+      }
+      this.$refs['item'+id][index].setAttribute("class", 'btn active');
+      this.$data.tagData[id] = val;
+    },
+    reset() {
+      for(var key in this.$refs){
+        for(var i=0;i<this.$refs[key].length;i++){
+          this.$refs[key][i].setAttribute("class", 'btn');
+          this.$data.tagData = {};
+        }
+      }
+    },
+    finishCheck() {
+      var data = '';
+      for(var key in this.$data.tagData){
+        console.log(this.$data.tagData[key])
+        data += this.$data.tagData[key];
+      }
     }
   },
   created() {
     window.scrollTo(0,0);
     this.addAticleFun('new');
-    this.showTags();
+    this.showTags()
   }
 }
 </script>

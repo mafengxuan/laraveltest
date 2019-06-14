@@ -49,36 +49,42 @@
         <li class="clearfix">
           <div class="f_left">性别</div>
           <div class="f_right">
-            <span v-if="info.sex == 1">男</span>
-            <span v-else>女</span>
+            <!-- <span v-if="info.sex == 1">男</span>
+            <span v-else>女</span> -->
+            <div class="con">
+              <select  style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+                <option :value="sex" style="color:#666;margin: 0px" >男</option>
+                <option :value="sex" style="color:#666;margin: 0px" >女</option>
+              </select>
+            </div>
             <img src="../images/icon/right.png" alt="">
           </div>
         </li>
         <li class="clearfix">
-          <div class="f_left">{{info.age}}</div>
+          <div class="f_left">年龄</div>
           <div class="f_right">
-            <span>23岁</span>
+            <div class="con">{{info.age}}岁</div>
             <img src="../images/icon/right.png" alt="">
           </div>
         </li>
         <li class="clearfix">
           <div class="f_left">矫正时间</div>
           <div class="f_right">
-            <span>矫正完毕</span>
+            <div class="con">矫正完毕</div>
             <img src="../images/icon/right.png" alt="">
           </div>
         </li>
         <li class="clearfix">
           <div class="f_left">牙套类型</div>
           <div class="f_right">
-            <span>隐适美</span>
+            <div class="con">隐适美</div>
             <img src="../images/icon/right.png" alt="">
           </div>
         </li>
         <li class="clearfix">
           <div class="f_left">牙齿问题</div>
           <div class="f_right">
-            <span>{{info.tooth_question}}</span>
+            <div class="con">{{info.tooth_question}}</div>
             <img src="../images/icon/right.png" alt="">
           </div>
         </li>
@@ -106,7 +112,7 @@ export default {
   },
   data() {
     return {
-
+      sex:''
     }
   },
   computed: {

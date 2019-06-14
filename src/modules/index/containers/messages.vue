@@ -79,9 +79,30 @@
 
 <script>
 import '../css/messages.css'
+import { getMsg } from '../api/messages';
+import toast from '../../../common/components/toast';
 export default {
+  data() {
+    return {
+
+    }
+  },
   created() {
     window.scrollTo(0,0);
+    this.getMessages();
+  },
+  methods: {
+    getMessages() {
+      getMsg().then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            
+          }else {
+            toast(res.data.errMessage,{delay:1500});
+          }
+        }
+      })
+    }
   }
 }
 </script>

@@ -119,12 +119,17 @@
           line-height: 0.4rem;
         }
         & .f_right {
+          width: 5rem;
           @apply --flexCenter;
           float: right;
           font-size: 0.28rem;
           color: #666666;
           margin-right: 0.22rem;
           line-height: 0.4rem;
+          & .con {
+            width: 4.5rem;
+            text-align: right;
+          }
           & img {
             width: 0.14rem;
             margin-left: 0.2rem;

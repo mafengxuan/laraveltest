@@ -90,18 +90,26 @@ export default {
         image: this.$data.imgList,
         content: this.$data.content,
         isDraf:1
+      }).then(res => {
+        setTimeout(() => {
+          this.$router.push('/');
+        }, 1500)
       });
     },
     push() {
       console.log(this.$data.content);
       if(!this.$data.content){
-        toast('内容不能为空',{delay:1500});
+        toast('内容不能为空',{delay:1000});
       }
       this.addAticle({
         qrCode:'test',
         image: this.$data.imgList,
         content: this.$data.content,
         isDraf:0
+      }).then(res => {
+        setTimeout(() => {
+          this.$router.push('/');
+        }, 1000)
       });
     },
     onEditorChange({ editor, html, text }) {

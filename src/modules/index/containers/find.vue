@@ -2,14 +2,8 @@
   <div id="find">
     <div class="banner_box">
       <swiper :options="swiperOption" ref="mySwiper">
-        <swiper-slide attr-show="1" ref='slide'>
-          <img class="normal" src="https://img0.kfzimg.com/operation/a9/d0/a9d09b15bd401f7d93d9bf28c7cf2ca6.jpg" alt=""/>
-        </swiper-slide>
-        <swiper-slide attr-show="1" ref='slide'>
-          <img class="normal" src="https://img0.kfzimg.com/operation/1a/26/1a26ae66d468c8a71356b95e75f62287.jpg" alt=""/>
-        </swiper-slide>
-        <swiper-slide attr-show="1" ref='slide'>
-          <img class="normal" src="https://img0.kfzimg.com/operation/7e/9d/7e9df1dac18aaaecd8ccec0843b2b583.jpg" alt=""/>
+        <swiper-slide attr-show="1" ref='slide' v-for="(val,key) in slideShow" :key="key">
+          <a :href="val.url"><img class="normal" :src="val.image" alt=""/></a>
         </swiper-slide>
         <!-- Optional controls -->
         <div class="swiper-pagination"  slot="pagination"></div>
@@ -37,37 +31,15 @@
     </div>
     <div class="list_box">
       <ul>
-        <li class="clearfix">
-          <div class="l_f">
-            <p>快速美白修复牙齿，只需这一点改变</p>
-          </div>
-          <div class="l_r">
-            <img src="http://lichenglong.pw/img/lcl.jpg" alt="">
-          </div>
-        </li>
-        <li class="clearfix">
-          <div class="l_f">
-            <p>快速美白修复牙齿，只需这一点改变</p>
-          </div>
-          <div class="l_r">
-            <img src="http://lichenglong.pw/img/lcl.jpg" alt="">
-          </div>
-        </li>
-        <li class="clearfix">
-          <div class="l_f">
-            <p>快速美白修复牙齿，只需这一点改变</p>
-          </div>
-          <div class="l_r">
-            <img src="http://lichenglong.pw/img/lcl.jpg" alt="">
-          </div>
-        </li>
-        <li class="clearfix">
-          <div class="l_f">
-            <p>快速美白修复牙齿，只需这一点改变</p>
-          </div>
-          <div class="l_r">
-            <img src="http://lichenglong.pw/img/lcl.jpg" alt="">
-          </div>
+        <li class="clearfix" v-for="(val,key) in slideArticle" :key="key">
+          <a :href="val.url">
+            <div class="l_f">
+              <p>{{val.title}}</p>
+            </div>
+            <div class="l_r">
+              <img :src="val.image" alt="">
+            </div>
+          </a>
         </li>
       </ul>
     </div>
@@ -77,6 +49,8 @@
 <script>
 import '../css/swpier.css';
 import "../css/find.css";
+import { getBanner } from '../api/find';
+import toast from '../../../common/components/toast';
 export default {
   data() {
     const that = this;
@@ -93,11 +67,30 @@ export default {
             that.$data.slideIndex = this.realIndex + 1;
           }
         }
-      }
+      },
+      slideShow:'',
+      slideIcon:'',
+      slideArticle:''
     }
   },
   created() {
     window.scrollTo(0,0);
+    this.getBannerData();
+  },
+  methods: {
+    getBannerData() {
+      getBanner({type:1}).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            this.$data.slideShow = res.data.result.slideShow;
+            this.$data.slideIcon = res.data.result.slideIcon;
+            this.$data.slideArticle = res.data.result.slideArticle;
+          }else {
+            toast(res.data.errMessage,{delay:1500});
+          }
+        }
+      })
+    }
   }
 }
 </script>
