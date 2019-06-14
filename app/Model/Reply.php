@@ -20,4 +20,8 @@ class Reply extends Model
     public function comment(){
         return $this->hasOne('App\Model\Comment','id','commentId');
     }
-}
+
+    public function user()
+    {
+        return $this->hasOne('App\Model\UserInfo','userId','userId');
+    }}
