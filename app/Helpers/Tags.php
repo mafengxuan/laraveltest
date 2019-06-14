@@ -16,6 +16,7 @@ class Tags
         0 => [
             'id' => 1,
             'label' => "性别",
+            'key' => 'sex',
             'data' => [
                 [
                     'key' => 2,
@@ -30,6 +31,7 @@ class Tags
         1 => [
             'id' => 4,
             'label' => "年龄",
+            'key' => 'age',
             'data' => [
                 [
                     'key' => 5,
@@ -60,6 +62,7 @@ class Tags
         2 => [
             'id' => 11,
             'label' => "矫正时间",
+            'key' => 'correct_time',
             'data' => [
                 [
                     'key' => 12,
@@ -82,6 +85,7 @@ class Tags
         3 => [
             'id' => 16,
             'label' => "牙套类型",
+            'key' => 'tooth_socket',
             'data' => [
                 [
                     'key' => 17,
@@ -112,6 +116,7 @@ class Tags
         4 => [
             'id' => 23,
             'label' => "牙齿问题",
+            'key' => 'tooth_question',
             'data' => [
                 [
                     'key' => 24,
