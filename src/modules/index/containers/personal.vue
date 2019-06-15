@@ -50,7 +50,7 @@
           <div class="f_left">{{tags[0].label}}</div>
           <div class="f_right">
             <div class="con">
-              <select  v-model="tags[0].key" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+              <select  v-model="sex" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
                 <option v-for="(val,key) in tags[0].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
               </select>
             </div>
@@ -61,7 +61,7 @@
           <div class="f_left">{{tags[1].label}}</div>
           <div class="f_right">
             <div class="con">
-              <select  v-model="tags[1].key" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+              <select  v-model="age" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
                 <option v-for="(val,key) in tags[1].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
               </select>
             </div>
@@ -72,7 +72,7 @@
           <div class="f_left">{{tags[2].label}}</div>
           <div class="f_right">
             <div class="con">
-              <select  v-model="tags[2].key" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+              <select  v-model="correcTime" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
                 <option v-for="(val,key) in tags[2].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
               </select>
             </div>
@@ -83,7 +83,7 @@
           <div class="f_left">{{tags[3].label}}</div>
           <div class="f_right">
             <div class="con">
-              <select  v-model="tags[3].key" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+              <select  v-model="tooth_socker" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
                 <option v-for="(val,key) in tags[3].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
               </select>
             </div>
@@ -94,7 +94,7 @@
           <div class="f_left">{{tags[4].label}}</div>
           <div class="f_right">
             <div class="con">
-              <select  v-model="tags[4].key" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+              <select  v-model="tooth_question" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
                 <option v-for="(val,key) in tags[4].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
               </select>
             </div>
@@ -110,6 +110,7 @@
         </li>
       </ul>
     </div>
+    <div class="save" @click="save">保存</div>
     <loading v-if='!info && !tags'></loading>
   </div>
 </template>
@@ -126,11 +127,11 @@ export default {
   },
   data() {
     return {
-      // sex:'',
-      // age:'',
-      // correcTime:'',
-      // tooth_socker:'',
-      // tooth_question:''
+      sex:'',
+      age:'',
+      correcTime:'',
+      tooth_socker:'',
+      tooth_question:''
     }
   },
   computed: {
@@ -145,17 +146,39 @@ export default {
     }),
     ...mapActions({
       userInfo: 'Personal/userInfo',
-    })
+    }),
+    initData() {
+      this.$data.sex = this.info.sex;
+      this.$data.age = this.info.age;
+      this.$data.correcTime = this.info.correct_time;
+      this.$data.tooth_socker = this.info.tooth_socket;
+      this.$data.tooth_question = this.info.tooth_question;
+    },
+    save() {
+      updateUserInfo({
+        sex:this.$data.sex,
+        age:this.$data.age,
+        correcTime:this.$data.correcTime,
+        tooth_socker:this.$data.tooth_socker,
+        tooth_question:this.$data.tooth_question
+      }).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            toast(res.data.result,{delay:1500});
+          }else {
+            toast(res.data.errMessage,{delay:1500});
+          }
+        }
+      })
+    }
   },
   created() {
     window.scrollTo(0,0);
-    this.userInfo();
+    this.userInfo().then(res => {
+      console.log(this.info);
+      this.initData();
+    });
     this.showTags();
-  },
-  watch: {
-    tags (val){
-      console.log(val)
-    }
   }
 }
 </script>

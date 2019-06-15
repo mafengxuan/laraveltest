@@ -157,4 +157,16 @@
       }
     }
   }
+  & .save {
+    width: 1.48rem;
+    height: 0.5rem;
+    text-align: center;
+    line-height: 0.5rem;
+    background: #eeeeee;
+    font-size: 0.3rem;
+    color: #07bed1;
+    border-radius: 0.08rem;
+    margin: 0 auto;
+    margin-top: 0.2rem;
+  }
 }
