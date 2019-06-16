@@ -17,7 +17,7 @@
     <div style="height:0.8rem;background:#fff;"></div>
     <div class="message_title" v-if='info'>
       <span>全部回复({{msg.length}})</span>
-      <span class="good_box"><img src="../images/icon/good.png" alt=""> <span>1350</span></span>
+      <span class="good_box"><img src="../images/icon/good.png" alt=""> <span>{{msg.praiseNum}}</span></span>
     </div>
     <div class="message" v-if='info'>
       <ul v-if="msg">
