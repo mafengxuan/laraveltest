@@ -14,11 +14,11 @@
         <div class="bottom_box">
           <ul v-if="info">
             <li>
-              <router-link to="/add" v-if="info.article">
+              <router-link to="/add" v-if="!Object.keys(info.article).length">
                 <div class="">发布</div>
                 <div class="">日记</div>
               </router-link>
-              <router-link to="/add" v-if="info && !info.article">
+              <router-link to="/add" v-else>
                 <div class="">我的</div>
                 <div class="">日记</div>
               </router-link>

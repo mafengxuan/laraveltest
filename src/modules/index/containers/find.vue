@@ -3,7 +3,7 @@
     <div class="banner_box">
       <swiper :options="swiperOption" ref="mySwiper">
         <swiper-slide attr-show="1" ref='slide' v-for="(val,key) in slideShow" :key="key">
-          <a :href="val.url"><img class="normal" :src="val.image" alt=""/></a>
+          <a :href="val.url"><img class="normal" :src="'/storage/'+val.image" alt=""/></a>
         </swiper-slide>
         <!-- Optional controls -->
         <div class="swiper-pagination"  slot="pagination"></div>
@@ -11,7 +11,11 @@
     </div>
     <div class="nav">
       <ul class="inner">
-        <li>
+        <li v-for="(val,key) in slideIcon" :key="key">
+          <div class="img_box"><img :src="'/storage/'+val.image" alt=""></div>
+          <div class="name">{{val.title}}</div>
+        </li>
+        <!-- <li>
           <div class="img_box"><img src="../images/icon/find_01.png" alt=""></div>
           <div class="name">正畸医生</div>
         </li>
@@ -26,7 +30,7 @@
         <li>
           <div class="img_box"><img src="../images/icon/find_04.png" alt=""></div>
           <div class="name">预约挂号</div>
-        </li>
+        </li> -->
       </ul>
     </div>
     <div class="list_box">
