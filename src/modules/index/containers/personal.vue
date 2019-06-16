@@ -50,7 +50,7 @@
           <div class="f_left">{{tags[0].label}}</div>
           <div class="f_right">
             <div class="con">
-              <select  v-model="sex" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+              <select  v-model="sex" style="border:0;outline: none;background:#fff;text-align:right;">
                 <option v-for="(val,key) in tags[0].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
               </select>
             </div>
@@ -61,8 +61,8 @@
           <div class="f_left">{{tags[1].label}}</div>
           <div class="f_right">
             <div class="con">
-              <select  v-model="age" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
-                <option v-for="(val,key) in tags[1].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
+              <select  v-model="age" style="border:0;outline: none;background:#fff;text-align:right;">
+                <option v-for="(val,key) in tags[1].data" :key="key" :data-val="val.value" style="color:#666;margin: 0px" >{{val.value}}</option>
               </select>
             </div>
             <img src="../images/icon/right.png" alt="">
@@ -72,7 +72,7 @@
           <div class="f_left">{{tags[2].label}}</div>
           <div class="f_right">
             <div class="con">
-              <select  v-model="correcTime" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+              <select  v-model="correct_time" style="border:0;outline: none;background:#fff;text-align:right;">
                 <option v-for="(val,key) in tags[2].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
               </select>
             </div>
@@ -83,7 +83,7 @@
           <div class="f_left">{{tags[3].label}}</div>
           <div class="f_right">
             <div class="con">
-              <select  v-model="tooth_socker" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+              <select  v-model="tooth_socket" style="border:0;outline: none;background:#fff;text-align:right;">
                 <option v-for="(val,key) in tags[3].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
               </select>
             </div>
@@ -94,7 +94,7 @@
           <div class="f_left">{{tags[4].label}}</div>
           <div class="f_right">
             <div class="con">
-              <select  v-model="tooth_question" style="border:0;outline: none;width:100%;background:#fff;text-align:right;" dir="rtl">
+              <select  v-model="tooth_question" style="border:0;outline: none;background:#fff;text-align:right;">
                 <option v-for="(val,key) in tags[4].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
               </select>
             </div>
@@ -120,6 +120,7 @@ import "../css/personal.css";
 import loading from '../../../common/components/loading';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import { updateUserInfo } from '../api/personal';
+import toast from '../../../common/components/toast';
 
 export default {
   components: {
@@ -129,8 +130,8 @@ export default {
     return {
       sex:'',
       age:'',
-      correcTime:'',
-      tooth_socker:'',
+      correct_time:'',
+      tooth_socket:'',
       tooth_question:'',
       content:''
     }
@@ -151,16 +152,18 @@ export default {
     initData() {
       this.$data.sex = this.info.sex;
       this.$data.age = this.info.age;
-      this.$data.correcTime = this.info.correct_time;
-      this.$data.tooth_socker = this.info.tooth_socket;
-      this.$data.tooth_question = this.info.tooth_question;
+      this.$data.correct_time = this.info.correct_time;
+      this.$data.tooth_socket = this.info.tooth_socket;
+      this.$data.tooth_socket = this.info.tooth_socket;
+      this.$data.content = this.info.content;
+      console.log(this);
     },
     save() {
       updateUserInfo({
         sex:this.$data.sex,
         age:this.$data.age,
-        correcTime:this.$data.correcTime,
-        tooth_socker:this.$data.tooth_socker,
+        correct_time:this.$data.correct_time,
+        tooth_socket:this.$data.tooth_socket,
         tooth_question:this.$data.tooth_question,
         content: this.$data.content
       }).then(res => {

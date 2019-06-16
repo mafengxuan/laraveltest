@@ -125,6 +125,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/article/content',
     name: 'article',
+    show:'hidden',
     meta: {
       title: '文章',
       icon: 'component'
