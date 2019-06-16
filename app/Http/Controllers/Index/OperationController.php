@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Index;
 
 use App\Helpers\Result;
 use App\Model\Article;
+use App\Model\Collect;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Praise;
@@ -62,12 +63,18 @@ class OperationController extends Controller
             return response()->json(Result::error('1','false'));
         }
 
-        $praise = new Praise();
-        $praise->userId = session('userId');
-        $praise->articleId = $request->articleId;
-        $praise->save();
+        if($request->cannel == 1) {
+            $collect = Collect::where('userId',session('userId'))->where('articleId',$request->articleId)->delete();
+            return response()->json(Result::ok('取消收藏成功'));
+        }else{
+            $collect = new Collect();
+            $collect->userId = session('userId');
+            $collect->articleId = $request->articleId;
+            $collect->save();
+            return response()->json(Result::ok('收藏成功'));
+        }
 
-        return response()->json(Result::ok('收藏成功'));
+
     }
 
 }

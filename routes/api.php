@@ -77,7 +77,8 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index','middleware' => ['wech
     Route::post('/praise', 'OperationController@praise');
     //转发
     Route::post('/forward', 'OperationController@forward');
-
+    //收藏
+    Route::post('/collect', 'OperationController@collect');
     //用户
 //    Route::post('/userInfo/store', 'UserInfoController@store');
     Route::get('/userInfo/show', 'UserInfoController@show');
