@@ -107,9 +107,9 @@ class UserInfoController extends Controller
             $userInfo->age = $request->age;
             $array[] = $request->age;
         }
-        if(!empty($request->correctTime)){
-            $userInfo->correctTime = $request->correctTime;
-            $array[] = $request->correctTime;
+        if(!empty($request->correct_time)){
+            $userInfo->correct_time = $request->correct_time;
+            $array[] = $request->correct_time;
         }
         if(!empty($request->tooth_socket)){
             $userInfo->tooth_socket = $request->tooth_socket;
