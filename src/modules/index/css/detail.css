@@ -259,6 +259,17 @@
     }
   }
 }
+.collection {
+  float: right;
+  display: inline-block;
+  padding: 0 0.1rem;
+  height: 0.4rem;
+  border: 1px solid #333333;
+  background: #e1e0e0;
+  font-size: 0.24rem;
+  color: #000000;
+  border-radius: 0.08rem;
+}
 .c_0 {
   color: #07bed1;
 }

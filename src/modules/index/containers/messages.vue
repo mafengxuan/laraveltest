@@ -2,22 +2,26 @@
   <div id="messages">
     <ul v-if="messages">
       <li v-for="(item,index) in messages" :key="index">
-        <div class="top_box">
-          <div class="logo_box">
-            <img src="http://lichenglong.pw/img/lcl.jpg" alt="">
+        <router-link :to="'/Detail?id='+item.id">
+          <div class="top_box">
+            <div class="logo_box">
+              <img src="http://lichenglong.pw/img/lcl.jpg" alt="">
+            </div>
+            <div class="info_box">
+              <div class="title">劲小松33</div>
+              <div class="time">2018年6月26日 09:00</div>
+            </div>
+            <div class="reply_box">
+              <router-link :to="'/Detail?id='+item.id+'&b=1'">
+                <div class="reply_btn">回复</div>
+              </router-link>
+            </div>
           </div>
-          <div class="info_box">
-            <div class="title">劲小松33</div>
-            <div class="time">2018年6月26日 09:00</div>
+          <div class="inner">{{item.content}}</div>
+          <div class="reply_con" v-if="item.article">
+            <span v-html="item.article.content"></span>
           </div>
-          <div class="reply_box">
-            <div class="reply_btn">回复</div>
-          </div>
-        </div>
-        <div class="inner">{{item.content}}</div>
-        <div class="reply_con" v-if="item.article">
-          <span v-html="item.article.content"></span>
-        </div>
+        </router-link>
       </li>
     </ul>
     <loading v-if="!messages"></loading>

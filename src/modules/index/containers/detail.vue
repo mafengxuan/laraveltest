@@ -11,10 +11,12 @@
         </div>
       </div>
       <div v-html="info.content" class="content"></div>
+      <div class="collection">已收藏</div>
+      <div style="clear:both;"></div>
     </div>
     <div style="height:0.8rem;background:#fff;"></div>
     <div class="message_title" v-if='info'>
-      <span>全部回复(1007)</span>
+      <span>全部回复({{msg.length}})</span>
       <span class="good_box"><img src="../images/icon/good.png" alt=""> <span>1350</span></span>
     </div>
     <div class="message" v-if='info'>
@@ -35,8 +37,8 @@
           <div class="inner">{{item.content}}</div>
           <div class="reply_con">
             <div v-for="(val,key) in item.reply" :key="key">
-              <i class="c_0">劲小松：</i>{{val.content}}
-              <div class="look_to">查看全部评论 ></div>
+              <i class="c_0">{val.{nickname}}：</i>{{val.content}}
+              <!-- <div class="look_to">查看全部评论 ></div> -->
             </div>
           </div>
         </li>
@@ -88,7 +90,30 @@ export default {
       clearList: 'Detail/clearList'
     }),
     getDetailData() {
-      this.getDetail(this.$route.query.id);
+      this.getDetail(this.$route.query.id).then(res => {
+        if(this.$route.query.b){
+          // document.getElementsByTagName('img').onload=function(){
+          //   // 加载完成
+          //   window.scrollTo(0, document.documentElement.clientHeight);
+          // };
+
+          var img = [],
+          flag = 0;
+          var imgTotal = document.getElementsByTagName('img');
+          for(var i = 0 ; i < imgTotal.length ; i++){
+            img[i] = new Image();
+            img[i].src = imgTotal[i].src;
+            img[i].onload = function(){
+               //第i张图片加载完成
+               flag++
+               if( flag == imgTotal.length ){
+                  //全部加载完成
+                  window.scrollTo(0, document.body.scrollHeight);
+               }
+            }
+          }
+        }
+      });
     },
     getCommentsList() {
       commentsList({

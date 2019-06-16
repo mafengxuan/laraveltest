@@ -165,7 +165,7 @@
       }
       & .label_inner {
         width: 100%;
-        @apply --flexJustify;
+        @apply --flexLeft;
         height: 0.4rem;
         line-height: 0.4rem;
         margin-top: 0.24rem;
@@ -176,25 +176,44 @@
           font-size: 0.26rem;
           color: #ffffff;
           border-radius: 0.1rem;
+          margin-right: 0.1rem;
         }
-        & .bg_r {
+        & span:nth-child(1) {
+          background: #f16475;
+        }
+        & span:nth-child(2) {
+          background: #ffaa48;
+        }
+        & span:nth-child(3) {
+          background: #00a44f;
+        }
+        & span:nth-child(4) {
+          background: #ff7041;
+        }
+        & span:nth-child(4) {
+          background: #19a2ea;
+        }
+        & span:nth-child(5) {
+          background: #949694;
+        }
+        /* & .bg_r {
           background: #f16475;
         }
         & .bg_y {
           background: #ffaa48;
-        }
-        & .bg_g {
+        } */
+        /* & .bg_g {
           background: #00a44f;
-        }
-        & .bg_o {
+        } */
+        /* & .bg_o {
           background: #ff7041;
-        }
-        & .bg_b {
+        } */
+        /* & .bg_b {
           background: #19a2ea;
         }
         & .bg_gray {
           background: #949694;
-        }
+        } */
       }
       & .img_box {
         width: 100%;

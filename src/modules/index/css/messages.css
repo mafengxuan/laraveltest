@@ -116,6 +116,9 @@
         background: #e6e6e6;
         margin-top: 0.12rem;
         margin-bottom: 0.16rem;
+        & img {
+          display: none;
+        }
         & span {
           overflow: hidden;
           display: block;

@@ -156,7 +156,6 @@ export default {
       this.$data.tooth_socket = this.info.tooth_socket;
       this.$data.tooth_socket = this.info.tooth_socket;
       this.$data.content = this.info.content;
-      console.log(this);
     },
     save() {
       updateUserInfo({
@@ -180,7 +179,6 @@ export default {
   created() {
     window.scrollTo(0,0);
     this.userInfo().then(res => {
-      console.log(this.info);
       this.initData();
     });
     this.showTags();
