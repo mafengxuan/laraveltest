@@ -90,12 +90,14 @@ class UserInfoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         //
-        $userInfo = UserInfo::find($id);
-        $userInfo->mobile = $request->mobile;
+        $userInfo = UserInfo::find(session('userId'));
 
+        if(!empty($request->sex)){
+            $userInfo->mobile = $request->mobile;
+        }
         $array = array();
         if(!empty($request->sex)){
             $userInfo->sex = $request->sex;
