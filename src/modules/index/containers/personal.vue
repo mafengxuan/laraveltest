@@ -104,7 +104,7 @@
         <li class="clearfix">
           <div class="f_left">日记简介</div>
           <div class="f_right">
-            <textarea name="date" placeholder="16~48个字内"></textarea>
+            <textarea name="date" v-model="content" placeholder="16~48个字内"></textarea>
             <img src="../images/icon/right.png" alt="">
           </div>
         </li>
@@ -131,7 +131,8 @@ export default {
       age:'',
       correcTime:'',
       tooth_socker:'',
-      tooth_question:''
+      tooth_question:'',
+      content:''
     }
   },
   computed: {
@@ -160,7 +161,8 @@ export default {
         age:this.$data.age,
         correcTime:this.$data.correcTime,
         tooth_socker:this.$data.tooth_socker,
-        tooth_question:this.$data.tooth_question
+        tooth_question:this.$data.tooth_question,
+        content: this.$data.content
       }).then(res => {
         if(res.status == 200 && res.data){
           if(res.data.status){
