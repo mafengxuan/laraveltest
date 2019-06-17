@@ -124,7 +124,7 @@ export default {
     img(data){
       this.$data.imgList.push(data);
       var l = this.$data.imgList.length;
-      this.$data.content += '<p><img index='+l+' src=/storage'+data+'></p>';
+      this.$data.content += '<img index='+l+' src=/storage'+data+'>';
       this.$data.loading = false;
     }
   }
