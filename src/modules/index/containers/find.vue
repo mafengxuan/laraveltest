@@ -12,8 +12,10 @@
     <div class="nav">
       <ul class="inner">
         <li v-for="(val,key) in slideIcon" :key="key">
-          <div class="img_box"><img :src="'/storage/'+val.image" alt=""></div>
-          <div class="name">{{val.title}}</div>
+          <a :href="val.url">
+            <div class="img_box"><img :src="'/storage/'+val.image" alt=""></div>
+            <div class="name">{{val.title}}</div>
+          </a>
         </li>
         <!-- <li>
           <div class="img_box"><img src="../images/icon/find_01.png" alt=""></div>
@@ -41,7 +43,7 @@
               <p>{{val.title}}</p>
             </div>
             <div class="l_r">
-              <img :src="val.image" alt="">
+              <img :src="'/storage/'+val.image" alt="">
             </div>
           </a>
         </li>

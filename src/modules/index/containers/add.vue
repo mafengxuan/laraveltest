@@ -1,13 +1,13 @@
 <template lang="html">
   <div id="add">
-    <div class="">
-      <quill-editor v-model="content"
-                    ref="myQuillEditor"
-                    class="editer"
-                    :options="editorOption"
-                    autofocus
-                    @change="onEditorChange($event)">
-      </quill-editor>
+    <quill-editor v-model="content"
+                  ref="myQuillEditor"
+                  class="editer"
+                  :options="editorOption"
+                  autofocus
+                  @change="onEditorChange($event)">
+    </quill-editor>
+    <div class="btn_box">
       <input @change="fileChange($event)" type="file" id="upload_file" multiple style="display: none"/>
       <div class="upImg" @click="chooseType">
         <img src="../images/icon/upImg.png" alt="">
@@ -39,6 +39,7 @@ export default {
     return {
       content:'',
       editorOption:{
+        placeholder: '来吧，尽情发挥吧...',
         modules: {
           toolbar: [
             ['bold', 'italic', 'underline', 'strike'],        // toggled buttons

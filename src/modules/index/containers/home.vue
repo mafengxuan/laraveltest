@@ -41,13 +41,15 @@
             </div>
           </router-link>
           <div class="icon_box">
-            <div class="i_inner">
+            <div class="i_inner" @click="shareTo">
               <img src="../images/icon/share.png" alt="">
               <span>{{item.forwardNum}}</span>
             </div>
             <div class="i_inner">
-              <img src="../images/icon/message.png" alt="">
-              <span>{{item.commentsNum}}</span>
+              <router-link :to="'/Detail?id='+item.id+'&b=1'">
+                <img src="../images/icon/message.png" alt="">
+                <span>{{item.commentsNum}}</span>
+              </router-link>
             </div>
             <div class="i_inner">
               <img v-if='item.praiseNum' src="../images/icon/goodD.png" alt="">
@@ -81,6 +83,9 @@
         </div>
       </div>
     </div>
+    <div class="share_box" :hidden="!shareType" @click="shareHiden">
+      <img src="../images/share.png" alt="">
+    </div>
     <loading v-if="!list"></loading>
   </div>
 </template>
@@ -98,7 +103,8 @@ export default {
     return {
       type: false,
       listType: 'new',
-      tagData: {}
+      tagData: {},
+      shareType: false
     }
   },
   computed: {
@@ -164,6 +170,12 @@ export default {
         toast('请将标签选择完整',{delay:1500});
         return;
       }
+    },
+    shareTo (){
+      this.$data.shareType = true;
+    },
+    shareHiden (){
+      this.$data.shareType = false;
     }
   },
   created() {

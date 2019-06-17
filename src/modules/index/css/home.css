@@ -230,9 +230,10 @@
           font-size: 0;
           text-align: center;
           & img {
-            display: inline-block;
-            max-width: 100%;
-            max-height: 100%;
+            width: 100%;
+            height: 100%;
+            -o-object-fit: cover;
+            object-fit: cover;
           }
         }
       }
@@ -255,6 +256,19 @@
           }
         }
       }
+    }
+  }
+  & .share_box {
+    position: fixed;
+    width: 7.5rem;
+    height: 100%;
+    top: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 100;
+    text-align: center;
+    & img {
+      display: inline-block;
+      width: 7.02rem;
     }
   }
 }

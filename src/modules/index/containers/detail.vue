@@ -35,9 +35,9 @@
             </div>
           </div>
           <div class="inner">{{item.content}}</div>
-          <div class="reply_con">
+          <div class="reply_con" v-if="item.reply.length">
             <div v-for="(val,key) in item.reply" :key="key">
-              <i class="c_0">{val.{nickname}}：</i>{{val.content}}
+              <i class="c_0">{{val.nickname}}：</i>{{val.content}}
               <!-- <div class="look_to">查看全部评论 ></div> -->
             </div>
           </div>
@@ -119,7 +119,6 @@ export default {
       commentsList({
         id: this.$route.query.id
       }).then(res => {
-        console.log(res);
         if(res.status == 200 && res.data){
           if(res.data.status){
             this.$data.msg = res.data.result;
