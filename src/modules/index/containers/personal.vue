@@ -60,7 +60,7 @@
         <li class="clearfix">
           <div class="f_left">{{tags[1].label}}</div>
           <div class="f_right">
-            <div class="con">
+            <div class="con" @click="selectData">
               <select  v-model="age" style="border:0;outline: none;background:#fff;text-align:right;">
                 <option v-for="(val,key) in tags[1].data" :key="key" :data-val="val.value" style="color:#666;margin: 0px" >{{val.value}}</option>
               </select>
@@ -119,7 +119,7 @@
 import "../css/personal.css";
 import loading from '../../../common/components/loading';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
-import { updateUserInfo } from '../api/personal';
+import { updateUserInfo,showTags } from '../api/personal';
 import toast from '../../../common/components/toast';
 
 export default {
@@ -133,12 +133,12 @@ export default {
       correct_time:'',
       tooth_socket:'',
       tooth_question:'',
-      content:''
+      content:'',
+      tags:''
     }
   },
   computed: {
     ...mapGetters({
-      tags:'Home/tags',
       info:'Personal/userInfo'
     })
   },
@@ -174,6 +174,9 @@ export default {
           }
         }
       })
+    },
+    selectData(e) {
+      document.getElementsByTagName('select')[1].click()
     }
   },
   created() {
@@ -181,7 +184,16 @@ export default {
     this.userInfo().then(res => {
       this.initData();
     });
-    this.showTags();
+    showTags().then(res => {
+      console.log(res);
+      if(res.status == 200 && res.data){
+        if(res.data.status){
+          this.$data.tags = res.data.result;
+        }else {
+          toast(res.data.errMessage,{delay:1500});
+        }
+      }
+    })
   }
 }
 </script>
