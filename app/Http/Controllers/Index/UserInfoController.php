@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Index;
 
 use App\Helpers\Result;
+use App\Helpers\Tags;
 use App\Model\Article;
 use App\User;
 use Illuminate\Http\Request;
@@ -99,33 +100,50 @@ class UserInfoController extends Controller
             $userInfo->mobile = $request->mobile;
         }
         $array = array();
+        $tag_remark = array();
         if(!empty($request->sex)){
             $userInfo->sex = $request->sex;
             $array[] = $request->sex;
+            $tag_remark[] = $request->sex;
         }
         if(!empty($request->age)){
             $userInfo->age = $request->age;
             $array[] = $request->age;
+            $tag_remark[] = Tags::ageRemark($request->age);
         }
         if(!empty($request->correct_time)){
             $userInfo->correct_time = $request->correct_time;
             $array[] = $request->correct_time;
+            $tag_remark[] = Tags::monthRemark($request->correct_time);
         }
         if(!empty($request->tooth_socket)){
             $userInfo->tooth_socket = $request->tooth_socket;
             $array[] = $request->tooth_socket;
+            $tag_remark[] = $request->tooth_socket;
         }
         if(!empty($request->tooth_question)){
             $userInfo->tooth_question = $request->tooth_question;
             $array[] = $request->tooth_question;
+            $tag_remark[] = $request->tooth_question;
         }
+
         $tags = implode(',',$array);
         $userInfo->tag = $tags;
+        $tag_remarks = implode(',',$tag_remark);
+        $userInfo->tag_remark = $tag_remarks;
+
         if(!empty($request->post('content'))){
             $userInfo->content = $request->post('content');
         }
         $userInfo->save();
         return response()->json(Result::ok('修改成功'));
+
+    }
+
+    public function showTags(){
+
+        $data = \App\Helpers\Tags::$userInfoTags;
+        return response()->json(Result::ok($data));
 
     }
 
