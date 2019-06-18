@@ -145,6 +145,11 @@ export default {
                 duration: 1 * 1000
               })
               this.getList();
+              this.form.title = '';
+              this.form.url = '';
+              this.form.order = '';
+              this.form.image = '';
+              this.$refs.file.value = ''
             }else {
               Message({
                 message: res.data.errMessage,
