@@ -176,7 +176,7 @@ export default {
       })
     },
     selectData(e) {
-      document.getElementsByTagName('select')[1].click()
+      // document.getElementsByTagName('select')[1].click()
     }
   },
   created() {
