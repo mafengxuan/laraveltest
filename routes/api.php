@@ -74,11 +74,11 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index','middleware' => ['wech
 
 
     //点赞
-    Route::post('/praise', 'OperationController@praise');
+    Route::post('/praise/{articleId}', 'OperationController@praise');
     //转发
     Route::post('/forward', 'OperationController@forward');
     //收藏
-    Route::post('/collect', 'OperationController@collect');
+    Route::post('/collect/{articleId}', 'OperationController@collect');
     //用户
 //    Route::post('/userInfo/store', 'UserInfoController@store');
     Route::get('/userInfo/show', 'UserInfoController@show');

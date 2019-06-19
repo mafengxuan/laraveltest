@@ -11,15 +11,15 @@ use App\Model\Praise;
 class OperationController extends Controller
 {
     //点赞
-    public function praise(Request $request)
+    public function praise(Request $request, $articleId)
     {
         //
-        if(empty($request->articleId)){
+        if(empty($articleId)){
             return response()->json(Result::error('1','false'));
         }
 
         if($request->cannel == 1){
-            $praise = Praise::where('userId',session('userId'))->where('articleId',$request->articleId)->delete();
+            $praise = Praise::where('userId',session('userId'))->where('articleId',$articleId)->delete();
 
             $article = Article::where('id',$request->articleId)->first();
             $article->decrement('praiseNum');
@@ -28,10 +28,10 @@ class OperationController extends Controller
         }else{
             $praise = new Praise();
             $praise->userId = session('userId');
-            $praise->articleId = $request->articleId;
+            $praise->articleId = $articleId;
             $praise->save();
 
-            $article = Article::where('id',$request->articleId)->first();
+            $article = Article::where('id',$articleId)->first();
             $article->increment('praiseNum');
             return response()->json(Result::ok('点赞成功'));
         }
@@ -56,20 +56,20 @@ class OperationController extends Controller
     }
 
     //收藏
-    public function collect(Request $request)
+    public function collect(Request $request, $articleId)
     {
         //
-        if(empty($request->articleId)){
+        if(empty($articleId)){
             return response()->json(Result::error('1','false'));
         }
 
         if($request->cannel == 1) {
-            $collect = Collect::where('userId',session('userId'))->where('articleId',$request->articleId)->delete();
+            $collect = Collect::where('userId',session('userId'))->where('articleId',$articleId)->delete();
             return response()->json(Result::ok('取消收藏成功'));
         }else{
             $collect = new Collect();
             $collect->userId = session('userId');
-            $collect->articleId = $request->articleId;
+            $collect->articleId = $articleId;
             $collect->save();
             return response()->json(Result::ok('收藏成功'));
         }
