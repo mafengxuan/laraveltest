@@ -196,7 +196,7 @@ class ArticleController extends Controller
         if(!empty($request->post('content'))){
             $article->content = trim($request->post('content'));
         }
-        $userInfo = UserInfo::find($article->userId)->toArray();
+        $userInfo = UserInfo::find(session('userId'))->toArray();
         $article->tag = $userInfo['tag_remark'];
 
         $article->save();
