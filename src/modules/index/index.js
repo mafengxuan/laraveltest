@@ -4,6 +4,9 @@ import store from "./store/store";
 import App from "./containers/app.vue";
 import Router from "./router";
 import VueAwesomeSwiper from 'vue-awesome-swiper';
+import Cube from 'cube-ui'
+
+Vue.use(Cube)
 
 // 要告诉 vue 使用 vueRouter
 Vue.use(vueRouter);

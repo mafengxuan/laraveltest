@@ -10,6 +10,7 @@
 <script>
 import '../../../common/css/base.css';
 import '../css/app.css';
+import '../css/cube.css';
 import flexible from '../../../common/utils/flexible';
 import HeaderComponent from '../components/header/header.vue';
 import FooterComponent from '../components/footer/footer.vue';

@@ -10,6 +10,8 @@ module.exports = function(env){
   var OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
   var FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin');
 
+  var TransformModulesPlugin = require('webpack-transform-modules-plugin')
+
   //var WebpackMd5Hash = require('webpack-md5-hash');
 
   var ROOT_PATH = path.resolve(__dirname);
@@ -24,7 +26,7 @@ module.exports = function(env){
   var isTest = NODE_ENV ==='testing' ? true : false;
 
   var entryTpl = {};
-  var plugins = [];
+  var plugins = [new TransformModulesPlugin()];
 
 
   var entryHtml = glob.sync(VIEWS_PATH + '/**/*.html');
@@ -163,7 +165,10 @@ module.exports = function(env){
         ]
     },
     resolve: {
-          extensions: ['.js','.vue','.json','.css']
+          extensions: ['.js','.vue','.json','.css'],
+          alias: {
+            'cube-ui': 'cube-ui/lib'
+          }
           //模块别名定义，方便后续直接引用别名，无须多写长长的地址
       },
     plugins: [
