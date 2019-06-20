@@ -225,7 +225,6 @@ export default {
       this.initData();
     });
     showTags().then(res => {
-      console.log(res);
       if(res.status == 200 && res.data){
         if(res.data.status){
           this.initTags(res.data.result);

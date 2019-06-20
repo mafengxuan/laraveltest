@@ -98,7 +98,7 @@ import '../css/home.css';
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 import loading from '../../../common/components/loading';
 import toast from '../../../common/components/toast';
-import { setPraise } from '../api/home';
+import { setPraise,showTagsList } from '../api/home';
 export default {
   components: {
     loading
@@ -127,7 +127,8 @@ export default {
       showTags: 'Home/showTags'
     }),
     ...mapMutations({
-      clearList: 'Home/clearList'
+      clearList: 'Home/clearList',
+      setTagsList: 'Home/setTagsList'
     }),
     layerShow() {
       this.$data.type = true;
@@ -149,8 +150,6 @@ export default {
       })
     },
     checkTags(val,id,index) {
-      console.log(val)
-      console.log(this.$refs['item'+id])
       for(var i = 0;i<this.$refs['item'+id].length;i++){
         this.$refs['item'+id][i].setAttribute("class", 'btn');
       }
@@ -175,6 +174,20 @@ export default {
         toast('请将标签选择完整',{delay:1500});
         return;
       }
+      this.$data.type = false;
+      this.$data.listType = '';
+      this.tagsList(data);
+    },
+    tagsList(data){
+      showTagsList(data).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            this.setTagsList(res.data.result);
+          }else {
+            toast(res.data.errMessage,{delay:1500});
+          }
+        }
+      })
     },
     shareTo (){
       this.$data.shareType = true;
@@ -183,7 +196,6 @@ export default {
       this.$data.shareType = false;
     },
     praise (e){
-      console.log(e.target.dataset)
       setPraise({
         id:e.target.dataset.id
       }).then(res => {

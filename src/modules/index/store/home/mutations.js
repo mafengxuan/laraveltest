@@ -15,6 +15,9 @@ const mutations = {
         state.error = error;
     }
   },
+  setTagsList(state,data){
+    state.list = data;
+  },
   initTagsData(state,tagData){
     for(var i=0;i<tagData.length;i++){
       for(var j=0;j<tagData[i].data.length;j++){
