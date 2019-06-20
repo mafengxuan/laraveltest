@@ -15,7 +15,7 @@
     <!-- 列表 -->
     <div class="list_box">
       <ul>
-        <li v-for="(item,index) in list" :key="index">
+        <li v-for="(item,index) in lists" :key="index">
           <router-link :to="'/Detail?id='+item.id">
             <div class="top_box">
               <div class="logo_box">
@@ -115,7 +115,8 @@ export default {
       type: false,
       listType: 'new',
       tagData: {},
-      shareType: false
+      shareType: false,
+      lists:''
     }
   },
   computed: {
@@ -145,6 +146,8 @@ export default {
     addAticleFun(data) {
       this.addAticle({
         showList: data
+      }).then(res => {
+        this.$data.lists = this.list;
       })
     },
     listTypeChange(data) {
