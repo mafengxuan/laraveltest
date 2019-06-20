@@ -40,7 +40,8 @@
 import { isvalidUsername } from '@/utils/validate'
 import { Message } from 'element-ui'
 import { mapGetters } from 'vuex'
-import _ from 'lodash'
+import _ from 'lodash';
+import { getToken, setToken, removeToken } from '@/utils/auth';
 
 export default {
   name: 'Login',
@@ -81,6 +82,9 @@ export default {
       },
       immediate: true
     }
+  },
+  created() {
+    removeToken()
   },
   methods: {
     showPwd() {

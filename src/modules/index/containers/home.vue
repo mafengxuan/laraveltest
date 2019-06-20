@@ -51,10 +51,13 @@
                 <span>{{item.commentsNum}}</span>
               </router-link>
             </div>
-            <div class="i_inner">
-              <img v-if='item.praiseNum' src="../images/icon/goodD.png" alt="">
-              <img v-else src="../images/icon/good.png" alt="">
-              <span>{{item.praiseNum}}</span>
+            <div v-if="!isPraise" class="i_inner" @click='praise($event)' :data-id="item.id">
+              <img src="../images/icon/good.png" alt="" :data-id="item.id">
+              <span :data-id="item.id">{{item.praiseNum}}</span>
+            </div>
+            <div  v-else class="i_inner" :data-id="item.id">
+              <img src="../images/icon/goodD.png" alt="" :data-id="item.id">
+              <span :data-id="item.id">{{item.praiseNum}}</span>
             </div>
           </div>
         </li>
@@ -95,6 +98,7 @@ import '../css/home.css';
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 import loading from '../../../common/components/loading';
 import toast from '../../../common/components/toast';
+import { setPraise } from '../api/home';
 export default {
   components: {
     loading
@@ -104,7 +108,8 @@ export default {
       type: false,
       listType: 'new',
       tagData: {},
-      shareType: false
+      shareType: false,
+      isPraise: false
     }
   },
   computed: {
@@ -176,6 +181,20 @@ export default {
     },
     shareHiden (){
       this.$data.shareType = false;
+    },
+    praise (e){
+      console.log(e.target.dataset)
+      setPraise({
+        id:e.target.dataset.id
+      }).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            this.$data.isPraise = true;
+          }else {
+            toast(res.data.errMessage,{delay:1500});
+          }
+        }
+      })
     }
   },
   created() {
