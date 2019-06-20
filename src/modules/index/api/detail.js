@@ -7,3 +7,7 @@ export function commentsList(data) {
 export function addComments(data) {
   return Axios.post('/api/index/addComments',data);
 }
+
+export function collect(data) {
+  return Axios.post('/api/index/collect/'+data.id,data);
+}

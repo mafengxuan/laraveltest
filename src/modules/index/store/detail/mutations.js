@@ -9,6 +9,9 @@ const mutations = {
   },
   clearList(state) {
     state.info = '';
+  },
+  setCollect(state,data) {
+    state.info.collected = true;
   }
 };
 

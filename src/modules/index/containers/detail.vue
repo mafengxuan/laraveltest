@@ -11,7 +11,7 @@
         </div>
       </div>
       <div v-html="info.content" class="content"></div>
-      <div class="collection">已收藏</div>
+      <div class="collection" @click="collect">{{info.collected?'已收藏':'收藏'}}</div>
       <div style="clear:both;"></div>
     </div>
     <div style="height:0.8rem;background:#fff;"></div>
@@ -59,7 +59,7 @@
 import "../css/detail.css";
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import loading from '../../../common/components/loading';
-import { commentsList,addComments } from '../api/detail';
+import { commentsList,addComments,collect } from '../api/detail';
 import toast from '../../../common/components/toast';
 export default {
   components: {
@@ -87,7 +87,8 @@ export default {
       getDetail: 'Detail/getDetail'
     }),
     ...mapMutations({
-      clearList: 'Detail/clearList'
+      clearList: 'Detail/clearList',
+      setCollect: 'Detail/setCollect'
     }),
     getDetailData() {
       this.getDetail(this.$route.query.id).then(res => {
@@ -140,6 +141,11 @@ export default {
             toast(res.data.errMessage,{delay:1500});
           }
         }
+      })
+    },
+    collect() {
+      collect({id:this.$route.query.id}).then(res => {
+        this.setCollect()
       })
     }
   }

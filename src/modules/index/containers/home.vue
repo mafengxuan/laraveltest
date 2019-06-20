@@ -51,17 +51,23 @@
                 <span>{{item.commentsNum}}</span>
               </router-link>
             </div>
-            <div v-if="!isPraise" class="i_inner" @click='praise($event)' :data-id="item.id">
-              <img src="../images/icon/good.png" alt="" :data-id="item.id">
-              <span :data-id="item.id">{{item.praiseNum}}</span>
+            <div v-if="!item.praise" class="i_inner">
+              <img src="../images/icon/good.png" alt="" :ref='"good"+item.id' @click='praise($event)' :data-id="item.id" :data-Num="item.praiseNum" :data-praise="1">
+              <img src="../images/icon/goodD.png" :ref='"goodD"+item.id' alt=""style="display:none;" @click='praise($event)' :data-id="item.id" :data-Num="item.praiseNum" :data-praise="1">
+              <span :ref='"praise"+item.id'>{{item.praiseNum}}</span>
             </div>
-            <div  v-else class="i_inner" :data-id="item.id">
-              <img src="../images/icon/goodD.png" alt="" :data-id="item.id">
-              <span :data-id="item.id">{{item.praiseNum}}</span>
+            <div  v-else class="i_inner">
+              <img src="../images/icon/good.png" :ref='"good"+item.id' alt="" style="display:none;" :data-id="item.id" :data-Num="item.praiseNum" :data-praise="0" @click='praise($event)'>
+              <img src="../images/icon/goodD.png" :ref='"goodD"+item.id' alt="" :data-id="item.id" :data-Num="item.praiseNum" :data-praise="0" @click='praise($event)'>
+              <span :ref='"praise"+item.id'>{{item.praiseNum}}</span>
             </div>
           </div>
         </li>
       </ul>
+    </div>
+    <!-- 底部提示信息 -->
+    <div class="bottom-tip no_more">
+      <span class="loading-hook">{{pullupMsg}}</span>
     </div>
     <div class="bomb_layer" :hidden="!type">
       <div class="mark" @click="layerHide"></div>
@@ -105,11 +111,11 @@ export default {
   },
   data() {
     return {
+      pullupMsg:"加载更多",
       type: false,
       listType: 'new',
       tagData: {},
-      shareType: false,
-      isPraise: false
+      shareType: false
     }
   },
   computed: {
@@ -196,17 +202,72 @@ export default {
       this.$data.shareType = false;
     },
     praise (e){
-      setPraise({
-        id:e.target.dataset.id
-      }).then(res => {
+      console.log(this);
+      console.log(e);
+      var val = this.$refs['praise'+e.target.dataset.id][0].innerHTML;
+      var params = '';
+      if(+e.target.dataset.praise){
+        params = {
+          id: e.target.dataset.id
+        }
+        this.$refs['praise'+e.target.dataset.id][0].innerHTML = +val + 1;
+        this.$refs['good'+e.target.dataset.id][0].setAttribute("data-praise", '0');
+        this.$refs['goodD'+e.target.dataset.id][0].setAttribute("data-praise", '0');
+        this.$refs['good'+e.target.dataset.id][0].style.display = 'none';
+        this.$refs['goodD'+e.target.dataset.id][0].style.display = 'block';
+      }else {
+        params = {
+          id: e.target.dataset.id,
+          cancle:1
+        }
+        this.$refs['praise'+e.target.dataset.id][0].innerHTML = +val - 1 == 0 ? 0 : +val - 1;
+        this.$refs['good'+e.target.dataset.id][0].setAttribute("data-praise", '1');
+        this.$refs['goodD'+e.target.dataset.id][0].setAttribute("data-praise", '1');
+        this.$refs['good'+e.target.dataset.id][0].style.display = 'block';
+        this.$refs['goodD'+e.target.dataset.id][0].style.display = 'none';
+      }
+      setPraise(params).then(res => {
         if(res.status == 200 && res.data){
           if(res.data.status){
-            this.$data.isPraise = true;
+
           }else {
             toast(res.data.errMessage,{delay:1500});
           }
         }
       })
+    },
+    initScroll() {
+      const that = this;
+      //滚动事件触发
+      window.onscroll = throttle(function() {
+        if(that.getScrollTop() + that.getClientHeight() +30 >= that.getScrollHeight()) {
+
+        }
+      },300);
+    },
+    //获取滚动条当前的位置
+    getScrollTop() {
+      var scrollTop = 0;
+      if(document.documentElement && document.documentElement.scrollTop) {
+          scrollTop = document.documentElement.scrollTop;
+      } else if(document.body) {
+          scrollTop = document.body.scrollTop;
+      }
+      return scrollTop;
+    },
+    //获取当前可视范围的高度
+    getClientHeight() {
+      var clientHeight = 0;
+      if(document.body.clientHeight && document.documentElement.clientHeight) {
+          clientHeight = Math.min(document.body.clientHeight, document.documentElement.clientHeight);
+      } else {
+          clientHeight = Math.max(document.body.clientHeight, document.documentElement.clientHeight);
+      }
+      return clientHeight;
+    },
+    //获取文档完整的高度
+    getScrollHeight() {
+      return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
     }
   },
   created() {
@@ -216,3 +277,12 @@ export default {
   }
 }
 </script>
+<style>
+  .no_more {
+    font-size: 0.26rem;
+    color: #BABABA;
+    text-align: center;
+    padding-top: 0.2rem;
+    padding-bottom: 0.2rem;
+  }
+</style>

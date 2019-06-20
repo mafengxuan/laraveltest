@@ -1,7 +1,7 @@
 import Axios from 'axios';
 
 export function setPraise(data) {
-  return Axios.post('/api/index/praise',data);
+  return Axios.post('/api/index/praise/'+data.id,data);
 }
 
 export function showTagsList(tags) {
