@@ -18,7 +18,7 @@ class OperationController extends Controller
             return response()->json(Result::error('1','false'));
         }
 
-        if($request->cannel == 1){
+        if($request->cancel == 1){
             $praise = Praise::where('userId',session('userId'))->where('articleId',$articleId)->delete();
 
             $article = Article::where('id',$request->articleId)->first();
@@ -63,7 +63,7 @@ class OperationController extends Controller
             return response()->json(Result::error('1','false'));
         }
 
-        if($request->cannel == 1) {
+        if($request->cancel == 1) {
             $collect = Collect::where('userId',session('userId'))->where('articleId',$articleId)->delete();
             return response()->json(Result::ok('取消收藏成功'));
         }else{

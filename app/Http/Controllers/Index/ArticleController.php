@@ -50,7 +50,7 @@ class ArticleController extends Controller
         $article->image = json_encode($request->image);
         $article->content = trim($request->post('content'));
         $userInfo = UserInfo::find(session('userId'))->toArray();
-        $article->tag = $userInfo['tag'];
+        $article->tag = $userInfo['tag_remark'];
         $article->isDraft = 0;
 
         $article->save();
@@ -196,6 +196,9 @@ class ArticleController extends Controller
         if(!empty($request->post('content'))){
             $article->content = trim($request->post('content'));
         }
+        $userInfo = UserInfo::find($article->userId)->toArray();
+        $article->tag = $userInfo['tag_remark'];
+
         $article->save();
         return response()->json(Result::ok('修改成功'));
     }
