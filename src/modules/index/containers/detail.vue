@@ -144,8 +144,19 @@ export default {
       })
     },
     collect() {
-      collect({id:this.$route.query.id}).then(res => {
-        this.setCollect()
+      var parames = '';
+      if(this.info.collected){
+        parames = {
+          id:this.$route.query.id,
+          cancel:1
+        }
+      }else {
+        parames = {
+          id:this.$route.query.id
+        }
+      }
+      collect(parames).then(res => {
+        this.setCollect(this.info.collected)
       })
     }
   }

@@ -13,7 +13,7 @@
       </div>
     </div>
     <!-- 列表 -->
-    <div class="list_box">
+    <div class="list_box" v-if="lists.length">
       <ul>
         <li v-for="(item,index) in lists" :key="index">
           <router-link :to="'/Detail?id='+item.id">
@@ -64,10 +64,14 @@
           </div>
         </li>
       </ul>
+      <!-- 底部提示信息 -->
+      <div class="bottom-tip no_more">
+        <span class="loading-hook">{{pullupMsg}}</span>
+      </div>
     </div>
-    <!-- 底部提示信息 -->
-    <div class="bottom-tip no_more">
-      <span class="loading-hook">{{pullupMsg}}</span>
+    <div v-if="!lists.length && listType=='collect'" style="margin-top: 2.2rem;">
+      <div class="no_tip">您还没有收藏过日记哦</div>
+      <div class="no_tip">去   <span class="btn" @click="listTypeChange('new')"> 首页 </span>  看看吧</div>
     </div>
     <div class="bomb_layer" :hidden="!type">
       <div class="mark" @click="layerHide"></div>
@@ -104,19 +108,21 @@ import '../css/home.css';
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 import loading from '../../../common/components/loading';
 import toast from '../../../common/components/toast';
-import { setPraise,showTagsList } from '../api/home';
+import { setPraise,showTagsList,getList } from '../api/home';
+import { throttle } from 'lodash';
 export default {
   components: {
     loading
   },
   data() {
     return {
-      pullupMsg:"加载更多",
+      pullupMsg:"↓松开立即加载更多",
       type: false,
       listType: 'new',
       tagData: {},
       shareType: false,
-      lists:''
+      lists:'',
+      page:1
     }
   },
   computed: {
@@ -156,6 +162,10 @@ export default {
       this.$data.listType = data;
       this.addAticle({
         showList: data
+      }).then(res => {
+        this.$data.page = 1;
+        this.pullupMsg = '↓松开立即加载更多';
+        this.$data.lists = this.list;
       })
     },
     checkTags(val,id,index) {
@@ -191,7 +201,10 @@ export default {
       showTagsList(data).then(res => {
         if(res.status == 200 && res.data){
           if(res.data.status){
-            this.setTagsList(res.data.result);
+            // this.setTagsList(res.data.result);
+            this.$data.page = 1;
+            this.pullupMsg = '↓松开立即加载更多';
+            this.$data.lists = res.data.result;
           }else {
             toast(res.data.errMessage,{delay:1500});
           }
@@ -205,8 +218,6 @@ export default {
       this.$data.shareType = false;
     },
     praise (e){
-      console.log(this);
-      console.log(e);
       var val = this.$refs['praise'+e.target.dataset.id][0].innerHTML;
       var params = '';
       if(+e.target.dataset.praise){
@@ -221,7 +232,7 @@ export default {
       }else {
         params = {
           id: e.target.dataset.id,
-          cancle:1
+          cancel:1
         }
         this.$refs['praise'+e.target.dataset.id][0].innerHTML = +val - 1 == 0 ? 0 : +val - 1;
         this.$refs['good'+e.target.dataset.id][0].setAttribute("data-praise", '1');
@@ -244,7 +255,23 @@ export default {
       //滚动事件触发
       window.onscroll = throttle(function() {
         if(that.getScrollTop() + that.getClientHeight() +30 >= that.getScrollHeight()) {
-
+          if(that.pullupMsg == '没有更多日记啦'){return;}
+          that.pullupMsg = '正在加载更多日记...';
+          that.$data.page = that.$data.page + 1;
+          getList({type:that.$data.listType,page:that.$data.page}).then(res => {
+            if(res.status == 200 && res.data){
+              if(res.data.status){
+                if(res.data.result.length <= 0){
+                  that.pullupMsg = '没有更多日记啦';
+                  return;
+                }
+                that.pullupMsg = '↓松开立即加载更多';
+                that.$data.lists = that.$data.lists.concat(res.data.result);
+              }else {
+                toast(res.data.errMessage,{delay:1500});
+              }
+            }
+          })
         }
       },300);
     },
@@ -276,7 +303,8 @@ export default {
   created() {
     window.scrollTo(0,0);
     this.addAticleFun('new');
-    this.showTags()
+    this.showTags();
+    this.initScroll();
   }
 }
 </script>

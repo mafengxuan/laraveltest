@@ -7,3 +7,11 @@ export function setPraise(data) {
 export function showTagsList(tags) {
   return Axios.get('/api/index/article/showListAsTag/'+tags);
 }
+
+export function getList(data) {
+  if(data.type){
+    return Axios.get('/api/index/article/showList/'+data.type+'?page='+data.page);
+  }else {
+
+  }
+}

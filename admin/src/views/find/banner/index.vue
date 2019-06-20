@@ -38,6 +38,7 @@
           <div class="img_box">
             <img :src="'/storage'+form.image" alt="">
           </div>
+          <div class="">图片尺寸900*500</div>
           <input @change="fileChange($event)" type="file" id="upload_file" ref="file" v-loading.fullscreen.lock="fullscreenLoading" multiple/>
         </el-form-item>
       </el-form>

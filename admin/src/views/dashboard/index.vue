@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
-    <div style="margin-bottom: 15px;">Your name：{{ name }} </div>
-    <div style="margin-bottom: 15px;">Your roles：<span v-for="role in roles" key="123">{{ [role] }}</span> </div>
+    <!-- <div style="margin-bottom: 15px;">Your name：{{ name }} </div>
+    <div style="margin-bottom: 15px;">Your roles：<span v-for="role in roles" key="123">{{ [role] }}</span> </div> -->
   </div>
 </template>
 

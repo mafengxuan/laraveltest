@@ -11,7 +11,11 @@ const mutations = {
     state.info = '';
   },
   setCollect(state,data) {
-    state.info.collected = true;
+    if(data){
+      state.info.collected = false;
+    }else {
+      state.info.collected = true;
+    }
   }
 };
 

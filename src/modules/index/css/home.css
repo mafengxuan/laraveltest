@@ -258,6 +258,23 @@
       }
     }
   }
+  & .no_tip {
+    text-align: center;
+    font-size: 0.32rem;
+    color: #494949;
+    margin-top: 0.3rem;
+    & .btn {
+      display: inline-block;
+      width: 1.18rem;
+      height: 0.4rem;
+      line-height: 0.4rem;
+      text-align: center;
+      color: #fff;
+      font-size: 0.32rem;
+      background: #07bed1;
+      border-radius: 0.08rem;
+    }
+  }
   & .share_box {
     position: fixed;
     width: 7.5rem;
