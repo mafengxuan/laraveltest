@@ -370,3 +370,11 @@
     }
   }
 }
+.redbag {
+  position: fixed;
+  right: 0.24rem;
+  bottom: 3rem;
+  & img {
+    width: 0.77rem;
+  }
+}

@@ -30,7 +30,7 @@ export default {
   },
   methods: {
     isShowFooter(data) {
-      if(/\/Detail|\/add/.test(data)){
+      if(/\/Detail|\/add|\/BagRuler/.test(data)){
         this.$data.isFooter = false;
       }else {
         this.$data.isFooter = true;

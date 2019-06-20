@@ -100,6 +100,9 @@
       <img src="../images/share.png" alt="">
     </div>
     <loading v-if="!list"></loading>
+    <div class="redbag">
+      <a href="#/BagRuler"><img src="../images/redbag.png" alt=""></a>
+    </div>
   </div>
 </template>
 
