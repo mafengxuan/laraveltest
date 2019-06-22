@@ -65,6 +65,13 @@ class MoneyController extends Controller
 
     }
 
+    public function receive($id){
+        $money = Money::where('userId',session('userId'))->where('id',$id)->first();
+        $money->status = 1;
+        $money->save();
+        return response()->json(Result::ok('领取成功'));
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
