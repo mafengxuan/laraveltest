@@ -54,6 +54,15 @@ class UserInfoController extends Controller
         return response()->json(Result::ok('添加成功'));
     }
 
+    public function storeExtInfo(Request $request){
+        $userInfo = UserInfo::find(session('userId'));
+        $userInfo->mobile = $request->mobile;
+        $userInfo->doctor = $request->doctor;
+        $userInfo->name = $request->name;
+        $userInfo->save();
+        return response()->json(Result::ok('添加成功'));
+    }
+
     /**
      * Display the specified resource.
      *
