@@ -53,7 +53,7 @@ class MoneyController extends Controller
     public function showList()
     {
         //
-        $money = Money::where('userId',session('userId'))->where('status',1)->get();
+        $money = Money::where('userId',session('userId'))->get();
         return response()->json(Result::ok($money));
 
     }
