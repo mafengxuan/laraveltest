@@ -133,6 +133,7 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
     Route::post('/sendMoney/{id}','MoneyController@send');
     //红包记录页
     Route::get('/moneyList/{id}','MoneyController@showList');
+    Route::get('/money/store','MoneyController@store');
     //帖子列表管理
     Route::get('/articleList/{status}','ArticleController@showList');
     //评论管理

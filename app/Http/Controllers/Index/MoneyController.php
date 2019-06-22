@@ -39,6 +39,13 @@ class MoneyController extends Controller
     public function store(Request $request)
     {
         //
+        $money = new Money();
+        $money->userId = $request->userId;
+        $money->articleId = $request->articleId;
+        $money->price =  $request->price;
+        $money->status = 0;
+        $money->save();
+        return response()->json(Result::ok('添加成功'));
     }
 
 
