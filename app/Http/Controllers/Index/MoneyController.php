@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Index;
 
 use App\Helpers\Result;
+use App\Model\Rule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Money;
@@ -40,15 +41,13 @@ class MoneyController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+
+    public function showRule()
     {
-        //
+
+        $rule = Rule::where('type',2)->first();
+        return response()->json(Result::ok($rule));
+
     }
 
     public function showList()

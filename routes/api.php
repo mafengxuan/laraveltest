@@ -90,6 +90,7 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index','middleware' => ['wech
 
     //红包列表
     Route::get('/moneyList', 'MoneyController@showList');
+    Route::get('/moneyRule', 'MoneyController@showRule');
 
     //规则
     Route::get('/rule/showAll','RuleController@showAll');
