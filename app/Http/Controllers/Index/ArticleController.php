@@ -44,6 +44,11 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         //
+        $checkArticle = Article::where('userId',session('userId'))->first()->toArray();
+        if(!empty($checkArticle)){
+            return response()->json(Result::error(1,'已添加过文章'));
+        }
+
         $article = new Article();
         $article->qrCode = '';
         $article->userId = session('userId');
