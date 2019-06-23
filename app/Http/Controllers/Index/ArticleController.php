@@ -56,7 +56,7 @@ class ArticleController extends Controller
         $article->content = trim($request->post('content'));
         $userInfo = UserInfo::find(session('userId'))->toArray();
         $article->tag = $userInfo['tag_remark'];
-        $article->isDraft = 0;
+        $article->isDraft = $request->isDraft;
 
         $article->save();
 
@@ -203,6 +203,7 @@ class ArticleController extends Controller
         }
         $userInfo = UserInfo::find(session('userId'))->toArray();
         $article->tag = $userInfo['tag_remark'];
+        $article->isDraft = $request->isDraft;
 
         $article->save();
         return response()->json(Result::ok('修改成功'));
