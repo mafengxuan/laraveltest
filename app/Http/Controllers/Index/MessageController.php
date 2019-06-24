@@ -63,8 +63,8 @@ class MessageController extends Controller
 
     public function aboutMe(){
         $userId = session('userId');
-        $articleId = Article::where('userId',$userId)->first();
-        $comments = Comment::where('articleId',$articleId)->orderBy('created_at','desc')->with('article')->with('user')->with('reply')->get()->toArray();
+        $article = Article::where('userId',$userId)->first();
+        $comments = Comment::where('articleId',$article['id'])->orderBy('created_at','desc')->with('article')->with('user')->with('reply')->get()->toArray();
         return response()->json(Result::ok($comments));
     }
     /**
