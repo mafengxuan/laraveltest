@@ -245,7 +245,11 @@
         margin-top: 0.25rem;
         margin-bottom: 0.36rem;
         & .i_inner {
+          width: 0.8rem;
           @apply --flexCenter;
+          & a {
+            @apply --flexCenter;
+          }
           & img {
             width: 0.42rem;
             margin-right: 0.1rem;

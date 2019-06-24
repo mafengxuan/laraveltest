@@ -12,14 +12,12 @@
               <div class="time">2018年6月26日 09:00</div>
             </div>
             <div class="reply_box">
-              <router-link :to="'/Detail?id='+item.id+'&b=1'">
-                <div class="reply_btn">回复</div>
-              </router-link>
+              <div class="reply_btn" @click="showPrompt($event)">回复</div>
             </div>
           </div>
           <div class="inner">{{item.content}}</div>
-          <div class="reply_con" v-if="item.article">
-            <span v-html="item.article.content"></span>
+          <div class="reply_con" v-if="item.reply.length">
+            <span v-for="(val,i) in item.reply"><i class="c_0" style="color:#07bed1;">{{val.nickname}}：</i>{{val.content}}</span>
           </div>
         </router-link>
       </li>
@@ -57,6 +55,33 @@ export default {
           }
         }
       })
+    },
+    showPrompt(e) {
+      if ( e && e.preventDefault ) {
+              //阻止默认浏览器动作(W3C)
+              e.preventDefault();
+      }else{
+          //IE中阻止函数器默认动作的方式
+          window.event.returnValue = false;
+          return false;
+      }
+
+      this.dialog = this.$createDialog({
+        type: 'prompt',
+        title: '回复',
+        prompt: {
+          value: '',
+          placeholder: '请输入'
+        },
+        onConfirm: (e, promptValue) => {
+          this.$createToast({
+            type: 'warn',
+            time: 1000,
+            txt: `Prompt value: ${promptValue || ''}`
+          }).show()
+        }
+      }).show();
+      return;
     }
   }
 }

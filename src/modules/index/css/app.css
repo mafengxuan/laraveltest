@@ -1,3 +1,6 @@
+body {
+  margin: 0 auto;
+}
 .toast-in-middle{
     top: 50%;
     left: 50%;

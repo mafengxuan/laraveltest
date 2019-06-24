@@ -14,7 +14,7 @@
         <div class="bottom_box">
           <ul v-if="info">
             <li>
-              <router-link to="/add" v-if="!Object.keys(info.article).length">
+              <router-link to="/add" v-if="!info.article">
                 <div class="">发布</div>
                 <div class="">日记</div>
               </router-link>
@@ -24,15 +24,15 @@
               </router-link>
             </li>
             <li>
-              <div class="">{{info.article.forwardNum}}</div>
+              <div class="">{{info.article && info.article.forwardNum ? info.article.forwardNum:'0'}}</div>
               <div class="">转发</div>
             </li>
             <li>
-              <div class="">{{info.article.commentsNum}}</div>
+              <div class="">{{info.article && info.article.commentsNum ? info.article.commentsNum: '0'}}</div>
               <div class="">评论</div>
             </li>
             <li>
-              <div class="">{{info.article.praiseNum}}</div>
+              <div class="">{{info.article && info.article.praiseNum ? info.article.praiseNum:'0'}}</div>
               <div class="">获赞</div>
             </li>
             <li>

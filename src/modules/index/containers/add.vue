@@ -15,6 +15,26 @@
       <div class="push" @click="push">发布</div>
       <div class="save" @click="save">保存草稿</div>
     </div>
+    <div class="Info_dialog" v-if="Info">
+      <div class="Info_dialog_box">
+        <div class="close cubeic-close" @click="Info=false"></div>
+        <div style="height:0.7rem;"></div>
+        <div class="item">
+          <span>您的姓名</span>
+          <input type="text" name="" v-model="name">
+        </div>
+        <div class="item">
+          <span>您的手机</span>
+          <input type="text" name="" v-model="mobile">
+        </div>
+        <div class="item">
+          <span>主治医生</span>
+          <input type="text" name="" v-model="doctor">
+        </div>
+        <div class="btn" @click="saveUserInfo">提交</div>
+        <div class="tip">请填写您在劲松口腔就诊时预留的姓名和电话，以及您的正畸医生姓名。</div>
+      </div>
+    </div>
     <loading v-if="loading"></loading>
   </div>
 </template>
@@ -28,6 +48,7 @@ import '../css/quillbubble.css';
 import toast from '../../../common/components/toast';
 import loading from '../../../common/components/loading';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
+import { storeExtInfo } from '../api/add';
 
 export default {
   components: {
@@ -48,7 +69,11 @@ export default {
         }
       },
       imgList:[],
-      loading: false
+      loading: false,
+      Info: false,
+      name:"",
+      mobile:"",
+      doctor:''
     }
   },
   computed: {
@@ -85,6 +110,7 @@ export default {
       console.log(this.$data.content);
       if(!this.$data.content){
         toast('内容不能为空',{delay:1500});
+        return;
       }
       this.addAticle({
         qrCode:'test',
@@ -98,23 +124,32 @@ export default {
       });
     },
     push() {
-      console.log(this.$data.content);
       if(!this.$data.content){
         toast('内容不能为空',{delay:1000});
+        return;
       }
-      this.addAticle({
-        qrCode:'test',
-        image: this.$data.imgList,
-        content: this.$data.content,
-        isDraf:0
-      }).then(res => {
-        setTimeout(() => {
-          this.$router.push('/');
-        }, 1000)
-      });
+      this.$data.Info = true;
     },
     onEditorChange({ editor, html, text }) {
       console.log(html)
+    },
+    saveUserInfo(){
+      storeExtInfo({
+        name: this.$data.name,
+        mobile: this.$data.mobile,
+        doctor: this.$data.doctor
+      }).then(res => {
+        this.addAticle({
+          qrCode:'test',
+          image: this.$data.imgList,
+          content: this.$data.content,
+          isDraf:0
+        }).then(res => {
+          setTimeout(() => {
+            this.$router.push('/');
+          }, 1000)
+        });
+      })
     }
   },
   created() {

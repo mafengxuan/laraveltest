@@ -21,3 +21,11 @@ export function online(data) {
      isOnline: data.online
   });
 }
+
+export function getRedBagList(data) {
+  return Axios.get('/api/admin/moneyList/'+data.id);
+}
+
+export function sendRedBag(data) {
+  return Axios.post('/api/admin/money/store',data);
+}
