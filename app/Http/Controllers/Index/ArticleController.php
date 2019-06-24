@@ -44,7 +44,7 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         //
-        $checkArticle = Article::where('userId',session('userId'))->first()->toArray();
+        $checkArticle = Article::where('userId',session('userId'))->first();
         if(!empty($checkArticle)){
             return response()->json(Result::error(1,'已添加过文章'));
         }
@@ -55,7 +55,6 @@ class ArticleController extends Controller
         $article->image = json_encode($request->image);
         $article->content = trim($request->post('content'));
         $userInfo = UserInfo::find(session('userId'))->toArray();
-        dump($userInfo);die;
         $article->tag = $userInfo['tag_remark'];
         $article->isDraft = $request->isDraft;
 
