@@ -119,7 +119,7 @@ export default {
   },
   data() {
     return {
-      pullupMsg:"↓松开立即加载更多",
+      pullupMsg:"",
       type: false,
       listType: 'new',
       tagData: {},
@@ -167,7 +167,7 @@ export default {
         showList: data
       }).then(res => {
         this.$data.page = 1;
-        this.pullupMsg = '↓松开立即加载更多';
+        // this.pullupMsg = '↓松开立即加载更多';
         this.$data.lists = this.list;
       })
     },

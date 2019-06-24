@@ -5,14 +5,14 @@
         <router-link :to="'/Detail?id='+item.id">
           <div class="top_box">
             <div class="logo_box">
-              <img src="http://lichenglong.pw/img/lcl.jpg" alt="">
+              <img :src="item.user.imgUrl" alt="">
             </div>
             <div class="info_box">
               <div class="title">劲小松33</div>
               <div class="time">2018年6月26日 09:00</div>
             </div>
             <div class="reply_box">
-              <div class="reply_btn" @click="showPrompt($event)">回复</div>
+              <div class="reply_btn" @click="showPrompt($event)" :data-commentId="item.id" :data-userId="item.userId" :data-nickname="item.userId"  :data-reUserId="item.user.userId" :data-reNickname="item.user.nickName">回复</div>
             </div>
           </div>
           <div class="inner">{{item.content}}</div>
@@ -28,7 +28,7 @@
 
 <script>
 import '../css/messages.css'
-import { getMsg } from '../api/messages';
+import { getMsg,addReply } from '../api/messages';
 import toast from '../../../common/components/toast';
 import loading from '../../../common/components/loading';
 export default {
@@ -66,6 +66,8 @@ export default {
           return false;
       }
 
+      console.log(e.target.dataset);
+
       this.dialog = this.$createDialog({
         type: 'prompt',
         title: '回复',
@@ -74,11 +76,15 @@ export default {
           placeholder: '请输入'
         },
         onConfirm: (e, promptValue) => {
-          this.$createToast({
-            type: 'warn',
-            time: 1000,
-            txt: `Prompt value: ${promptValue || ''}`
-          }).show()
+          addReply({
+            commentId:e.target.dataset.commentid,
+            userId:e.target.dataset.userid,
+            nickname:e.target.dataset.nickname,
+            reUserId:e.target.dataset.reuserid,
+            reNickname:e.target.dataset.renickname,
+          }).then(res => {
+
+          })
         }
       }).show();
       return;

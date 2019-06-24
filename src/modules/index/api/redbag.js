@@ -7,3 +7,7 @@ export function getRuler(data) {
 export function getRulerList(data) {
   return Axios.get('/api/index/moneyList');
 }
+
+export function receiveMoney(data) {
+  return Axios.post('/api/index/receiveMoney/'+data.id,data);
+}

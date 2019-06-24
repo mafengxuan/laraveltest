@@ -17,7 +17,7 @@
     <div style="height:0.8rem;background:#fff;"></div>
     <div class="message_title" v-if='info'>
       <span>全部回复({{msg.length}})</span>
-      <span class="good_box"><img src="../images/icon/good.png" alt=""> <span>{{msg.praiseNum}}</span></span>
+      <!-- <span class="good_box"><img src="../images/icon/good.png" alt=""> <span>{{msg.praiseNum}}</span></span> -->
     </div>
     <div class="message" v-if='info'>
       <ul v-if="msg">
@@ -31,7 +31,7 @@
               <div class="time">{{item.id}}楼 {{item.created_at}}</div>
             </div>
             <div class="reply_box">
-              <div class="reply_btn"><img src="../images/icon/goodD.png" alt=""> <span>1350</span>  </div>
+              <!-- <div class="reply_btn"><img src="../images/icon/goodD.png" alt=""> <span>1350</span>  </div> -->
             </div>
           </div>
           <div class="inner">{{item.content}}</div>
@@ -137,6 +137,7 @@ export default {
         if(res.status == 200 && res.data){
           if(res.data.status){
             toast(res.data.result,{delay:1500});
+            this.getCommentsList();
           }else {
             toast(res.data.errMessage,{delay:1500});
           }

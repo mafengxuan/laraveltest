@@ -14,7 +14,7 @@
               <div class="time">{{item.created_at.split(' ')[0]}}</div>
               <div class="date">矫正日记</div>
               <div class="money">{{item.price}}元</div>
-              <div class="btn">点击领取</div>
+              <div class="btn" :data-id="item.id" :data-articleId="item.articleId" :data-userId="item.userId" :data-price="item.price" @click="getPrice($event)">点击领取</div>
             </li>
           </ul>
         </div>
@@ -27,7 +27,7 @@
 <script>
 import loading from '../../../common/components/loading';
 import toast from '../../../common/components/toast';
-import { getRuler,getRulerList } from '../api/redbag';
+import { getRuler,getRulerList,receiveMoney } from '../api/redbag';
 import "../css/redbag.css";
 export default {
   components: {
@@ -58,6 +58,24 @@ export default {
     },
     myRedBagClose() {
       this.$data.ruler = false;
+    },
+    getPrice(e) {
+      console.log(e.target.dataset);
+      receiveMoney({
+        id: e.target.dataset.id,
+        userId: e.target.dataset.userid,
+        price: e.target.dataset.price,
+        articleId: e.target.dataset.articleid
+      }).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            toast(res.data.result,{delay:1500});
+            this.$data.ruler = false;
+          }else {
+            toast(res.data.errMessage,{delay:1500});
+          }
+        }
+      })
     }
   },
   created() {
