@@ -2,17 +2,17 @@
   <div id="messages">
     <ul v-if="messages">
       <li v-for="(item,index) in messages" :key="index">
-        <router-link :to="'/Detail?id='+item.id">
+        <router-link :to="'/Detail?id='+item.article.id">
           <div class="top_box">
             <div class="logo_box">
               <img :src="item.user.imgUrl" alt="">
             </div>
             <div class="info_box">
-              <div class="title">劲小松33</div>
-              <div class="time">2018年6月26日 09:00</div>
+              <div class="title">{{item.user.nickName}}</div>
+              <div class="time">{{item.user.created_at}}</div>
             </div>
             <div class="reply_box">
-              <div class="reply_btn" @click="showPrompt($event)" :data-commentId="item.id" :data-userId="item.userId" :data-nickname="item.userId"  :data-reUserId="item.user.userId" :data-reNickname="item.user.nickName">回复</div>
+              <div class="reply_btn" @click="showPrompt($event)" :data-commentId="item.id" :data-reUserId="item.user.userId" :data-reNickname="item.user.nickName">回复</div>
             </div>
           </div>
           <div class="inner">{{item.content}}</div>
@@ -75,15 +75,25 @@ export default {
           value: '',
           placeholder: '请输入'
         },
-        onConfirm: (e, promptValue) => {
+        onConfirm: (en, promptValue) => {
+          if(!promptValue){
+            toast('请输入内容',{delay:1500});
+            return;
+          }
           addReply({
+            content: promptValue,
             commentId:e.target.dataset.commentid,
-            userId:e.target.dataset.userid,
-            nickname:e.target.dataset.nickname,
             reUserId:e.target.dataset.reuserid,
             reNickname:e.target.dataset.renickname,
           }).then(res => {
-
+            if(res.status == 200 && res.data){
+              if(res.data.status){
+                toast(res.data.result,{delay:1500});
+                this.getMessages();
+              }else {
+                toast(res.data.errMessage,{delay:1500});
+              }
+            }
           })
         }
       }).show();

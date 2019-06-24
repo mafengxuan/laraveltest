@@ -6,18 +6,20 @@
       <ul>
         <li v-for="(item,index) in msg" :key="index">
           <div class="img_box">
-            <img src="https://ss0.baidu.com/6ONWsjip0QIZ8tyhnq/it/u=949383615,3755507436&fm=58" alt="">
+            <img :src="item.user.imgUrl" alt="">
           </div>
           <div class="info_box">
-            <div class="info_box_top">名字 {{item.created_at}}</div>
+            <div class="info_box_top">{{item.user.nickName}} {{item.created_at}}</div>
             <div class="info_box_bottom">{{item.content}}</div>
           </div>
           <div class="btn">
-            <el-button plain>回复</el-button>
+            <el-button plain style="position:relative;width:70px;height:40px;line-height:0;top:2px;"><div @click="replayMsg($event)" :data-commentId="item.id" :data-reUserId="item.user.userId" :data-reNickname="item.user.nickName" style="position:absolute;left:0;top;0;width:70px;height:40px;">回复</div></el-button>
             <el-button type="danger" plain @click="deleteMsg(item.id)">删除</el-button>
           </div>
           <div style="clear:both;"></div>
-          <div class="huifu" v-if="item.reply.length">官方回复</div>
+          <div class="" v-if="item.reply.length">
+            <div class="huifu" v-for="(val,i) in item.reply">{{val.nickname}}: {{val.content}}</div>
+          </div>
         </li>
       </ul>
     </div>
@@ -32,19 +34,42 @@
         <el-button type="primary" @click="deleteMsgSure">确 定</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogreply"
+      width="30%"
+      :before-close="handleClose">
+      <el-input
+        placeholder="请输入内容"
+        v-model="remark"
+        style="margin-top:20px;">
+      </el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogreply = false">取 消</el-button>
+        <el-button type="primary" @click="replayMsgSure">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
 <script>
 import { Message } from 'element-ui';
-import { articleShow,articleMsg,deleteMsg } from '../../../api/content';
+import { articleShow,articleMsg,deleteMsg,addReply } from '../../../api/content';
 export default {
   data() {
     return {
       data:'',
       msg:"",
       commentId:'',
-      dialogVisible: false
+      dialogVisible: false,
+      dialogreply: false,
+      remark:"",
+      replay: {
+        content:'',
+        commentId:"",
+        reUserId:"",
+        reNickname:''
+      }
     }
   },
   created() {
@@ -99,6 +124,55 @@ export default {
             type: 'error',
             duration: 1 * 1000
           })
+        }
+      })
+    },
+    replayMsg(e){
+      if ( e && e.preventDefault ) {
+              //阻止默认浏览器动作(W3C)
+              e.preventDefault();
+      }else{
+          //IE中阻止函数器默认动作的方式
+          window.event.returnValue = false;
+          return false;
+      }
+      this.$data.dialogreply = true;
+      console.log(e.target.dataset);
+      this.$data.replay.commentId=e.target.dataset.commentid;
+      this.$data.replay.reUserId=e.target.dataset.reuserid;
+      this.$data.replay.reNickname=e.target.dataset.renickname;
+    },
+    replayMsgSure() {
+      if(!this.$data.remark){
+        Message({
+          message: '请输入内容',
+          type: 'error',
+          duration: 1 * 1000
+        })
+        return;
+      }
+      addReply({
+        content: this.$data.remark,
+        commentId:this.$data.replay.commentId,
+        reUserId:this.$data.replay.reUserId,
+        reNickname:this.$data.replay.reNickname
+      }).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            Message({
+              message: res.data.result,
+              type: 'success',
+              duration: 1 * 1000
+            })
+            this.$data.dialogreply = false;
+            this.getArticle();
+          }else {
+            Message({
+              message: res.data.errMessage,
+              type: 'error',
+              duration: 1 * 1000
+            })
+          }
         }
       })
     }
