@@ -55,6 +55,7 @@ class ArticleController extends Controller
         $article->image = json_encode($request->image);
         $article->content = trim($request->post('content'));
         $userInfo = UserInfo::find(session('userId'))->toArray();
+        dump($userInfo);die;
         $article->tag = $userInfo['tag_remark'];
         $article->isDraft = $request->isDraft;
 
