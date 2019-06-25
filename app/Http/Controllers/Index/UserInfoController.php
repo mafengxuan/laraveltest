@@ -166,4 +166,18 @@ class UserInfoController extends Controller
     {
         //
     }
+
+
+    public function checkStore()
+    {
+        $userId = session('userId');
+        $userInfo = UserInfo::find($userId);
+        if(empty($userInfo)){
+            return response()->json(Result::error(1,'用户信息未查到'));
+        }
+        if(empty($userInfo['age']) || empty($userInfo['correct_time']) || empty($userInfo['tooth_socket']) || empty($userInfo['tooth_question'])  || empty($userInfo['content'])){
+            return response()->json(Result::error(2,'请完善个人资料'));
+        }
+        return response()->json(Result::ok());
+    }
 }
