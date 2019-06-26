@@ -173,6 +173,29 @@
     margin: 0 auto;
     margin-top: 0.2rem;
   }
+  & .cube-dialog-main {
+    width: 5.6rem;
+  }
+  & .cube-checker {
+    @apply --flexLeft;
+    flex-wrap: wrap;
+    padding: 0 0.20rem;
+  }
+  & .cube-checker-item {
+    border: 1px solid #eee;
+    margin-bottom: 0.10rem;
+  }
+  & .cube-checker-item_active {
+    color: #07bed1;
+    border: 1px solid #07bed1;
+    background: none;
+  }
+  & .cube-checker-item_active:after {
+    border: none;
+  }
+  & .cube-dialog-btn_highlight {
+    color: #07bed1;
+  }
 }
 select {
   appearance:none;

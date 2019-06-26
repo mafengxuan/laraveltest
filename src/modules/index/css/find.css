@@ -67,7 +67,7 @@
     & .inner {
       @apply  --flexJustify;
       & li {
-        width: 1.16rem;
+        width: 1.4rem;
         & .img_box {
           width: 0.84rem;
           height: 0.84rem;

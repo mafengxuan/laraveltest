@@ -65,7 +65,7 @@
         <li class="clearfix">
           <div class="f_left">{{tags[1].label}}</div>
           <div class="f_right">
-            <div class="con" @click="selectData">
+            <div class="con">
               <!-- <select  v-model="age" style="border:0;outline: none;background:#fff;text-align:right;">
                 <option v-for="(val,key) in tags[1].data" :key="key" :data-val="val.value" style="color:#666;margin: 0px" >{{val.value}}</option>
               </select> -->
@@ -117,11 +117,14 @@
               <!-- <select  v-model="tooth_question" style="border:0;outline: none;background:#fff;text-align:right;">
                 <option v-for="(val,key) in tags[4].data" :key="key" style="color:#666;margin: 0px" >{{val.value}}</option>
               </select> -->
-              <cube-select
+              <!-- <cube-select
                 v-model="tooth_question"
                 :options="tagsArr[4]"
                 @change="save">
-              </cube-select>
+              </cube-select> -->
+              <div @click="showPopup('myPopup')" style="height:0.4rem;">
+                {{tooth_question?tooth_question:'请选择'}}
+              </div>
             </div>
             <img src="../images/icon/right.png" alt="">
           </div>
@@ -135,6 +138,28 @@
         </li>
       </ul>
     </div>
+
+    <cube-popup type="my-popup" ref="myPopup">
+      <div class="cube-dialog-main">
+          <!-- <span class="cube-dialog-close">
+            <i class="cubeic-close"></i>
+          </span> -->
+          <div class="cube-dialog-prompt">
+            <h2 class="cube-dialog-title"><p class="cube-dialog-title-def">请选择牙齿问题</p></h2>
+            <div class="cube-dialog-content">
+              <cube-checker
+                v-if="tagsArr[4]"
+                v-model="tooth_questionList"
+                :options="tagsArr[4]" />
+            </div>
+            <div class="cube-dialog-btns border-right-1px">
+              <a href="javascript:;" class="cube-dialog-btn border-top-1px" @click="hidePopup('myPopup')">取消</a>
+              <a href="javascript:;" class="cube-dialog-btn border-top-1px cube-dialog-btn_highlight" @click="save">确定</a>
+            </div>
+          </div>
+      </div>
+    </cube-popup>
+
     <!-- <div class="save" @click="save">保存</div> -->
     <loading v-if='!info && !tags'></loading>
   </div>
@@ -153,8 +178,6 @@ export default {
   },
   data() {
     return {
-      options: [2013, 2014, 2015, 2016, 2017, 2018],
-      value: 2016,
       sex:'',
       age:'',
       correct_time:'',
@@ -162,7 +185,8 @@ export default {
       tooth_question:'',
       content:'',
       tags:'',
-      tagsArr:""
+      tagsArr:"",
+      tooth_questionList:[],
     }
   },
   computed: {
@@ -182,22 +206,30 @@ export default {
       this.$data.age = this.info.age;
       this.$data.correct_time = this.info.correct_time;
       this.$data.tooth_socket = this.info.tooth_socket;
-      this.$data.tooth_socket = this.info.tooth_socket;
+      this.$data.tooth_question = this.info.tooth_question;
       this.$data.content = this.info.content;
     },
     initTags(result) {
-      console.log(result);
       var tags = {};
       for(var i=0;i<result.length;i++){
         var data = [];
         for(var j=0;j<result[i].data.length;j++){
-          data.push(result[i].data[j].value);
+          if(result[i].key == "tooth_question"){
+            var ques = {
+              text: result[i].data[j].value,
+              value: result[i].data[j].value
+            }
+            data.push(ques);
+          }else {
+            data.push(result[i].data[j].value);
+          }
         }
         tags[i] = data;
       }
       this.$data.tagsArr = tags;
     },
     save() {
+      this.$data.tooth_question = this.$data.tooth_questionList.join(',');
       updateUserInfo({
         sex:this.$data.sex,
         age:this.$data.age,
@@ -206,6 +238,7 @@ export default {
         tooth_question:this.$data.tooth_question,
         content: this.$data.content
       }).then(res => {
+        this.$refs['myPopup'].hide();
         if(res.status == 200 && res.data){
           if(res.data.status){
             toast(res.data.result,{delay:1500});
@@ -215,8 +248,13 @@ export default {
         }
       })
     },
-    selectData(e) {
-      // document.getElementsByTagName('select')[1].click()
+    showPopup(refId) {
+      const component = this.$refs[refId]
+      component.show();
+    },
+    hidePopup(refId) {
+      const component = this.$refs[refId]
+      component.hide();
     }
   },
   created() {

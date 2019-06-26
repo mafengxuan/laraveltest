@@ -81,7 +81,7 @@
             <li v-for="(item,index) in tags" :key="index">
               <div class="type">{{item.label}}</div>
               <div class="btn_box">
-                <span class="btn" v-for="(val,i) in item.data" :ref='"item"+item.id' @click="checkTags(val.value,item.id,i)">{{val.value}}</span>
+                <span class="btn" v-for="(val,i) in item.data" :ref='"item"+item.id' @click="checkTags(item.key,val.value,item.id,i)">{{val.value}}</span>
                 <span class="btn" style="height:0;margin:0;border:0"></span>
                 <span class="btn" style="height:0;margin:0;border:0"></span>
                 <span class="btn" style="height:0;margin:0;border:0"></span>
@@ -171,12 +171,25 @@ export default {
         this.$data.lists = this.list;
       })
     },
-    checkTags(val,id,index) {
-      for(var i = 0;i<this.$refs['item'+id].length;i++){
-        this.$refs['item'+id][i].setAttribute("class", 'btn');
+    checkTags(key,val,id,index) {
+      console.log(key);
+      if(key == 'tooth_question'){
+        var name = this.$refs['item'+id][index].getAttribute('class');
+        if(name.indexOf('active') != -1){
+          this.$refs['item'+id][index].setAttribute("class", 'btn');
+          // this.$data.tagData.splice(id+index, 1);
+          delete this.$data.tagData[id+index]
+        }else {
+          this.$refs['item'+id][index].setAttribute("class", 'btn active');
+          this.$data.tagData[id+index] = val;
+        }
+      }else {
+        for(var i = 0;i<this.$refs['item'+id].length;i++){
+          this.$refs['item'+id][i].setAttribute("class", 'btn');
+        }
+        this.$refs['item'+id][index].setAttribute("class", 'btn active');
+        this.$data.tagData[id] = val;
       }
-      this.$refs['item'+id][index].setAttribute("class", 'btn active');
-      this.$data.tagData[id] = val;
     },
     reset() {
       for(var key in this.$refs){
