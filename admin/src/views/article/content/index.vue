@@ -1,5 +1,6 @@
 <template lang="html">
   <div class="app-container">
+     <el-button type="primary" style="margin-bottom: 20px;" @click="goBack">返回</el-button>
     <div v-html="data.content" class="content"></div>
     <div class="reply">
       <div class="top"><span>文章留言({{msg.length}})</span></div>
@@ -175,6 +176,9 @@ export default {
           }
         }
       })
+    },
+    goBack() {
+      this.$router.go(-1);
     }
   }
 }

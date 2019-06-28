@@ -4,8 +4,7 @@
                   ref="myQuillEditor"
                   class="editer"
                   :options="editorOption"
-                  autofocus
-                  @change="onEditorChange($event)">
+                  autofocus>
     </quill-editor>
     <div>
       <input @change="fileChange($event)" ref="file" type="file" id="quill-upload" style="display:none;" name="" value="">

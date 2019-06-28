@@ -25,21 +25,22 @@ export const constantRouterMap = [
   { path: '/login', component: () => import('@/views/login/index'), hidden: true },
   { path: '/404', component: () => import('@/views/404'), hidden: true },
 
+  // {
+  //   path: '/',
+  //   component: Layout,
+  //   redirect: '/dashboard',
+  //   children: [{
+  //     path: 'Dashboard',
+  //     name: 'Dashboard',
+  //     component: () => import('@/views/dashboard/index'),
+  //     meta: { title: 'Dashboard', icon: 'dashboard' }
+  //   }]
+  // },
+
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
-    children: [{
-      path: 'Dashboard',
-      name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard' }
-    }]
-  },
-  {
-    path: '/diary',
-    component: Layout,
-    redirect: '/diary/audit',
+    redirect: '/diary',
     name: 'diary',
     meta: {
       title: '审核日志',
@@ -47,9 +48,9 @@ export const constantRouterMap = [
     },
     children: [
       {
-        path: 'audit',
-        name: 'audit',
-        component: () => import('@/views/diary/audit/index'),
+        path: 'diary',
+        name: 'diary',
+        component: () => import('@/views/diary/index'),
         meta: { title: '待审核' }
       },
       {
@@ -63,6 +64,24 @@ export const constantRouterMap = [
         name: 'overrule',
         component: () => import('@/views/diary/overrule/index'),
         meta: { title: '被驳回' }
+      }
+    ]
+  },
+  {
+    path: '/bagRuler',
+    component: Layout,
+    redirect: '/bagRuler',
+    name: 'bagRuler',
+    meta: {
+      title: '红包记录',
+      icon: 'money'
+    },
+    children: [
+      {
+        path: 'bagRuler',
+        name: 'bagRuler',
+        component: () => import('@/views/bagRuler/index'),
+        meta: { title: '红包记录' }
       }
     ]
   },
@@ -125,7 +144,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: '/article/content',
     name: 'article',
-    show:'hidden',
+    hidden: true,
     meta: {
       title: '文章',
       icon: 'component'
