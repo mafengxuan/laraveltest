@@ -52,7 +52,7 @@ class MoneyController extends Controller
     {
         //
 
-        $money = Money::where(1);
+        $money = Money::with('user');
         if(!empty($request->nickname)){
             $money = $money->where('nickname',$request->nickname);
         }
