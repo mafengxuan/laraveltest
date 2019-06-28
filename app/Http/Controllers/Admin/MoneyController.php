@@ -91,6 +91,7 @@ class MoneyController extends Controller
     public function send($id){
         $money = Money::find($id);
         $money->status = 1;
+        $money->auditTime = date("Y-m-d HH:ii:ss");
         $money->save();
         return response()->json(Result::ok('发送红包成功'));
     }
