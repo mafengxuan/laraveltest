@@ -135,7 +135,8 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
     //对审核通过帖子可分批次发放定额红包
     Route::post('/sendMoney/{id}','MoneyController@send');
     //红包记录页
-    Route::get('/moneyList','MoneyController@showList');
+    Route::get('/moneyList/{id}','MoneyController@showList');
+    Route::get('/moneyAllList','MoneyController@showAllList');
     Route::post('/money/store','MoneyController@store');
     //帖子列表管理
     Route::get('/articleList/{status}','ArticleController@showList');

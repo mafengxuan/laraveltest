@@ -39,7 +39,16 @@ class MoneyController extends Controller
         //
     }
 
-    public function showList(Request $request)
+    public function showList($id)
+    {
+        //
+        $money = Money::where('articleId', $id)->orderBy('created_at','desc');
+        $money = $money->get();
+        return response()->json(Result::ok($money));
+
+    }
+
+    public function showAllList(Request $request)
     {
         //
 
