@@ -43,7 +43,7 @@ class UserInfoController extends Controller
         //
         $userInfo = new UserInfo();
         $userInfo->openId = $request->openId;
-        $userInfo->nickName = $request->nickName;
+        $userInfo->nickname = $request->nickname;
         $userInfo->name = $request->name;
         $userInfo->sex = $request->sex;
         $userInfo->province = $request->province;

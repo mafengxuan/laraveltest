@@ -48,14 +48,14 @@ class WechatLogin
 //            if(!empty($userInfo)){
 //                $request->session()->put('userId',$userInfo['userId']);
 //                $request->session()->put('openId',$userInfo['openId']);
-//                $request->session()->put('nickName',$userInfo['nickName']);
+//                $request->session()->put('nickname',$userInfo['nickname']);
 //                $request->session()->put('headimgurl',$userInfo['imgUrl']);
 //                $request->session()->put('mobile',$userInfo['mobile']);
 //            }else{
 //                $originalInfo = $openInfo['original'];
 //                $users = new UserInfo;
 //                $users->openId = $originalInfo['openid'];
-//                $users->nickName = $originalInfo['nickname'];
+//                $users->nickname = $originalInfo['nickname'];
 //                    if($originalInfo['sex'] == 1){
 //                        $users->sex = '男';
 //                    }else{
@@ -68,7 +68,7 @@ class WechatLogin
 //                $userInfo = UserInfo::where('openId',$openId)->first();
 //                $request->session()->put('userId',$userInfo['userId']);
 //                $request->session()->put('openId',$userInfo['openId']);
-//                $request->session()->put('nickName',$userInfo['nickName']);
+//                $request->session()->put('nickname',$userInfo['nickname']);
 //                $request->session()->put('headimgurl',$userInfo['imgUrl']);
 //                $request->session()->put('mobile',$userInfo['mobile']);
 //            }
@@ -78,7 +78,7 @@ class WechatLogin
             $userInfo = UserInfo::find(1);
             $request->session()->put('userId',$userInfo['userId']);
             $request->session()->put('openId',$userInfo['openId']);
-            $request->session()->put('nickName',$userInfo['nickName']);
+            $request->session()->put('nickname',$userInfo['nickname']);
             $request->session()->put('headimgurl',$userInfo['imgUrl']);
             $request->session()->put('mobile',$userInfo['mobile']);
         }
