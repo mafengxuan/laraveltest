@@ -172,7 +172,6 @@ export default {
       })
     },
     checkTags(key,val,id,index) {
-      console.log(key);
       if(key == 'tooth_question'){
         var name = this.$refs['item'+id][index].getAttribute('class');
         if(name.indexOf('active') != -1){
@@ -318,7 +317,12 @@ export default {
   },
   created() {
     window.scrollTo(0,0);
-    this.addAticleFun('new');
+    if(this.$route.query.type && this.$route.query.type == 'collect'){
+      this.$data.listType = 'collect';
+      this.addAticleFun('collect');
+    }else {
+      this.addAticleFun('new');
+    }
     this.showTags();
     this.initScroll();
   }

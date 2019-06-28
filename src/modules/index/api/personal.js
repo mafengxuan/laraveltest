@@ -7,3 +7,7 @@ export function updateUserInfo(data) {
 export function showTags(data) {
   return Axios.get('/api/index/userInfo/showTags');
 }
+
+export function checkStore() {
+  return Axios.get('/api/index/userInfo/checkStore');
+}

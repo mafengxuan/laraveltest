@@ -14,14 +14,14 @@
         <div class="bottom_box">
           <ul v-if="info">
             <li>
-              <router-link to="/add" v-if="!info.article">
+              <div v-if="!info.article" @click="checkStoreTo">
                 <div class="">发布</div>
                 <div class="">日记</div>
-              </router-link>
-              <router-link to="/add" v-else>
+              </div>
+              <div v-else @click="checkStoreTo">
                 <div class="">我的</div>
                 <div class="">日记</div>
-              </router-link>
+              </div>
             </li>
             <li>
               <div class="">{{info.article && info.article.forwardNum ? info.article.forwardNum:'0'}}</div>
@@ -36,8 +36,10 @@
               <div class="">获赞</div>
             </li>
             <li>
-              <div class="">收藏</div>
-              <div class="">日记</div>
+              <router-link to="/?type=collect">
+                <div class="">收藏</div>
+                <div class="">日记</div>
+              </router-link>
             </li>
           </ul>
         </div>
@@ -169,7 +171,7 @@
 import "../css/personal.css";
 import loading from '../../../common/components/loading';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
-import { updateUserInfo,showTags } from '../api/personal';
+import { updateUserInfo,showTags,checkStore } from '../api/personal';
 import toast from '../../../common/components/toast';
 
 export default {
@@ -255,6 +257,17 @@ export default {
     hidePopup(refId) {
       const component = this.$refs[refId]
       component.hide();
+    },
+    checkStoreTo() {
+      checkStore().then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            this.$router.push('/add');
+          }else {
+            toast(res.data.errMessage,{delay:1500});
+          }
+        }
+      })
     }
   },
   created() {

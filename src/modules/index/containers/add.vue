@@ -149,7 +149,16 @@ export default {
       }).then(res => {
         if(res.status == 200 && res.data){
           if(res.data.status){
-            toast(res.data.result,{delay:1500});
+            // toast(res.data.result,{delay:1500});
+            this.$createDialog({
+              type: 'alert',
+              title: '发布成功',
+              content: '工作人员会在工作日24小时内审核!',
+              icon: 'cubeic-alert',
+              onConfirm: () => {
+                this.$router.replace('/');
+              }
+            }).show()
           }else {
             toast(res.data.errMessage,{delay:1500});
           }
@@ -182,7 +191,15 @@ export default {
           isDraft:0
         }).then(res => {
           setTimeout(() => {
-            this.$router.push('/');
+            this.$createDialog({
+              type: 'alert',
+              title: '发布成功',
+              content: '工作人员会在工作日24小时内审核!',
+              icon: 'cubeic-alert',
+              onConfirm: () => {
+                this.$router.replace('/');
+              }
+            }).show()
           }, 1000)
         });
       })
