@@ -9,8 +9,17 @@
         type="daterange"
         range-separator="至"
         start-placeholder="开始日期"
-        end-placeholder="结束日期">
+        end-placeholder="结束日期"
+        style="margin-right:20px;">
       </el-date-picker>
+      <el-select v-model="status" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value">
+        </el-option>
+      </el-select>
       <el-button type="primary" style="margin-left:20px;" @click="selectList" class="point">筛选</el-button>
     </div>
     <el-table v-loading="listLoading" :data="list" border style="width: 100%">
@@ -18,163 +27,109 @@
       <el-table-column prop="user.nickName" label="微信昵称"></el-table-column>
       <el-table-column prop="user.name" label="姓名"></el-table-column>
       <el-table-column prop="mobile" label="电话"></el-table-column>
-      <el-table-column prop="" label="主治医生"></el-table-column>
       <el-table-column prop="user.created_at" label="上传时间" width="180"></el-table-column>
-      <el-table-column prop="" label="查看文章" width="90">
+      <el-table-column prop="article.auditTime" label="审核时间"></el-table-column>
+      <el-table-column prop="price" label="金额"></el-table-column>
+      <el-table-column prop="" label="领取状态" width="90">
         <template slot-scope="scope">
-          <el-tag type="primary" class="point"><a :href="'/admin#/article/content?id='+scope.row.id">查看</a></el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column label="操作">
-        <template slot-scope="scope">
-          <el-tag type="success"><div @click="dialogShow(scope.row.id)" class="point">通过审核</div></el-tag>
-          <el-tag type="warning"><div @click="rejectShow(scope.row.id)" class="point">驳回</div></el-tag>
+          <div style="color:#909399;" v-if="scope.row.status">已领取</div>
+          <div v-else style="color:#f56c6c;">未领取</div>
         </template>
       </el-table-column>
     </el-table>
-    <el-dialog
-      title="提示"
-      :visible.sync="dialogVisible"
-      width="30%"
-      :before-close="handleClose">
-      <span v-if='type == "audit"'>确定通过</span>
-      <span v-if='type == "reject"'>确定驳回</span>
-      <el-input
-        type="textarea"
-        :rows="2"
-        placeholder="请输入内容"
-        v-model="remark"
-        style="margin-top:20px;"
-        v-if='type == "reject"'>
-      </el-input>
-      <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
-        <el-button type="primary" @click="dialogSure">确 定</el-button>
-      </span>
-    </el-dialog>
   </div>
 </template>
 
 <script>
 import { Message } from 'element-ui';
-import { mapGetters } from 'vuex';
-import store from '../../store'
+import { moneyAllList } from '../../api/bagRuler'
 export default {
   data() {
     return {
-      listLoading: true,
+      listLoading:true,
       name:'',
       dateVal:'',
-      dialogVisible: false,
-      id:'',
-      type:'',
-      remark:''
+      list:'',
+      options: [
+        {
+          value: '1',
+          label: '已领取'
+        },{
+          value: '0',
+          label: '未领取'
+        }
+      ],
+      status:''
     }
-  },
-  computed: {
-    ...mapGetters([
-      'list',
-      'messages',
-      'errCode',
-      'audit',
-      'reject'
-    ])
   },
   created() {
     this.fetchData()
   },
   methods: {
-    fetchData (){
-      this.$store.dispatch('getList', {type:0,nickName:'',sDate: '',eDate: ''}).then(res => {
-        this.$data.listLoading = false;
-        if(this.errCode == '001'){
-          store.dispatch('FedLogOut').then(() => {
+    fetchData() {
+      moneyAllList({
+        nickName:'',
+        status: '',
+        sDate: '',
+        eDate: ''
+      }).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            this.$data.listLoading = false;
+            this.$data.list = res.data.result;
+          }else {
             Message({
-              message: this.messages,
+              message: res.data.errMessage,
               type: 'error',
               duration: 1 * 1000
             })
-            this.$router.push('/');
-          })
-        }else if(this.errCode){
-          Message({
-            message: this.messages,
-            type: 'error',
-            duration: 1 * 1000
-          })
+          }
         }
       })
     },
-    dialogShow(id) {
-      this.$data.id = id;
-      this.$data.dialogVisible = true;
-      this.$data.type = 'audit';
-    },
-    dialogSure() {
-      this.$data.dialogVisible = false;
-      if(this.$data.type == 'audit'){
-        this.fetchAudit();
-      }else if(this.$data.type == 'reject'){
-        this.fetchReject();
-      }
-    },
-    // 通过审核
-    fetchAudit() {
-      var that = this;
-      this.$store.dispatch('setAudit', this.$data.id).then(() => {
-        Message({
-          message: that.audit,
-          type: 'success',
-          duration: 1 * 1000
-        })
-        that.fetchData();
-      })
-    },
     selectList() {
-      if(!this.$data.name && !this.$data.dateVal){
-        return;
-      }
+      // if(!this.$data.name && !this.$data.dateVal){
+      //   return;
+      // }
+      this.$data.listLoading = true;
       if(this.$data.dateVal){
-        this.$store.dispatch('getList',{
-          type:0,
+        moneyAllList({
           nickName:this.$data.name,
+          status: this.$data.status,
           sDate: this.$data.dateVal[0]?this.dateToString(this.$data.dateVal[0]):'',
           eDate: this.$data.dateVal[1]?this.dateToString(this.$data.dateVal[1]):''
+        }).then(res => {
+          if(res.data.status){
+            this.$data.listLoading = false;
+            this.$data.list = res.data.result;
+          }else {
+            Message({
+              message: res.data.errMessage,
+              type: 'error',
+              duration: 1 * 1000
+            })
+          }
         })
       }else {
-        this.$store.dispatch('getList',{
-          type:0,
+        moneyAllList({
           nickName:this.$data.name,
+          status: this.$data.status,
           sDate: '',
           eDate: ''
+        }).then(res => {
+          if(res.data.status){
+            this.$data.listLoading = false;
+            this.$data.list = res.data.result;
+          }else {
+            Message({
+              message: res.data.errMessage,
+              type: 'error',
+              duration: 1 * 1000
+            })
+          }
         })
       }
-    },
-    dateToString(date){
-      var year = date.getFullYear();
-      var month = date.getMonth() + 1;
-      var day = date.getDate();
-      return year+'-'+month+'-'+day
-    },
-    // 驳回
-    rejectShow(id) {
-      this.$data.id = id;
-      this.$data.dialogVisible = true;
-      this.$data.type = 'reject';
-    },
-    fetchReject(){
-      var that = this;
-      this.$store.dispatch('setReject', {
-        id: this.$data.id,
-        remark: this.$data.remark
-      }).then(() => {
-        Message({
-          message: that.reject,
-          type: 'success',
-          duration: 1 * 1000
-        })
-        that.fetchData();
-      })
+
     }
   }
 }

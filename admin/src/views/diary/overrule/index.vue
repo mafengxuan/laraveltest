@@ -19,7 +19,7 @@
       <el-table-column prop="user.name" label="姓名"></el-table-column>
       <el-table-column prop="mobile" label="电话"></el-table-column>
       <el-table-column prop="user.created_at" label="上传时间" width="180"></el-table-column>
-      <el-table-column prop="" label="审核时间"></el-table-column>
+      <el-table-column prop="article.auditTime" label="审核时间"></el-table-column>
       <el-table-column prop="" label="驳回原因" width="90">
         <template slot-scope="scope">
           <el-tag type="primary"><div @click="showOverrule(scope.row.remark)" class="point">查看原因</div></el-tag>
