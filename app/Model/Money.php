@@ -24,6 +24,6 @@ class Money extends Model
 
     public function article()
     {
-        return $this->hasOne('App\Model\Article','userId','userId');
+        return $this->hasOne('App\Model\Article','id','articleId');
     }
 }
