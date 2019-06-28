@@ -24,7 +24,6 @@ class MoneyController extends Controller
         $money->articleId = $request->articleId;
         $money->price = $request->price;
         $money->status = 0;
-        $money->auditTime = date("Y-m-d HH:ii:ss");
         $money->save();
         return response()->json(Result::ok('添加红包成功'));
     }
@@ -53,7 +52,7 @@ class MoneyController extends Controller
     {
         //
 
-        $money = Money::with('user');
+        $money = Money::with('user')->with('article');
         if(!empty($request->nickname)){
             $money = $money->where('nickname',$request->nickname);
         }
