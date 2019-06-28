@@ -24,6 +24,7 @@ class MoneyController extends Controller
         $money->articleId = $request->articleId;
         $money->price = $request->price;
         $money->status = 0;
+        $money->auditTime = date("Y-m-d HH:ii:ss");
         $money->save();
         return response()->json(Result::ok('添加红包成功'));
     }
@@ -91,7 +92,6 @@ class MoneyController extends Controller
     public function send($id){
         $money = Money::find($id);
         $money->status = 1;
-        $money->auditTime = date("Y-m-d HH:ii:ss");
         $money->save();
         return response()->json(Result::ok('发送红包成功'));
     }
