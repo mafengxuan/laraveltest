@@ -15,7 +15,7 @@
     </div>
     <el-table v-loading="listLoading" :data="list" border style="width: 100%">
       <el-table-column prop="id" label="序号" sortable></el-table-column>
-      <el-table-column prop="user.nickName" label="微信昵称"></el-table-column>
+      <el-table-column prop="user.nickname" label="微信昵称"></el-table-column>
       <el-table-column prop="user.name" label="姓名"></el-table-column>
       <el-table-column prop="mobile" label="电话"></el-table-column>
       <el-table-column prop="" label="主治医生"></el-table-column>
@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     fetchData (){
-      this.$store.dispatch('getList', {type:0,nickName:'',sDate: '',eDate: ''}).then(res => {
+      this.$store.dispatch('getList', {type:0,nickname:'',sDate: '',eDate: ''}).then(res => {
         this.$data.listLoading = false;
         if(this.errCode == '001'){
           store.dispatch('FedLogOut').then(() => {
@@ -137,14 +137,14 @@ export default {
       if(this.$data.dateVal){
         this.$store.dispatch('getList',{
           type:0,
-          nickName:this.$data.name,
+          nickname:this.$data.name,
           sDate: this.$data.dateVal[0]?this.dateToString(this.$data.dateVal[0]):'',
           eDate: this.$data.dateVal[1]?this.dateToString(this.$data.dateVal[1]):''
         })
       }else {
         this.$store.dispatch('getList',{
           type:0,
-          nickName:this.$data.name,
+          nickname:this.$data.name,
           sDate: '',
           eDate: ''
         })

@@ -10,11 +10,11 @@
             <img :src="item.user.imgUrl" alt="">
           </div>
           <div class="info_box">
-            <div class="info_box_top">{{item.user.nickName}} {{item.created_at}}</div>
+            <div class="info_box_top">{{item.user.nickname}} {{item.created_at}}</div>
             <div class="info_box_bottom">{{item.content}}</div>
           </div>
           <div class="btn">
-            <el-button plain style="position:relative;width:70px;height:40px;line-height:0;top:2px;"><div @click="replayMsg($event)" :data-commentId="item.id" :data-reUserId="item.user.userId" :data-reNickname="item.user.nickName" style="position:absolute;left:0;top;0;width:70px;height:40px;">回复</div></el-button>
+            <el-button plain style="position:relative;width:70px;height:40px;line-height:0;top:2px;"><div @click="replayMsg($event)" :data-commentId="item.id" :data-reUserId="item.user.userId" :data-reNickname="item.user.nickname" style="position:absolute;left:0;top;0;width:70px;height:40px;">回复</div></el-button>
             <el-button type="danger" plain @click="deleteMsg(item.id)">删除</el-button>
           </div>
           <div style="clear:both;"></div>

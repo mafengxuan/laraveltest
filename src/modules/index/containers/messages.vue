@@ -8,11 +8,11 @@
               <img :src="item.user.imgUrl" alt="">
             </div>
             <div class="info_box">
-              <div class="title">{{item.user.nickName}}</div>
+              <div class="title">{{item.user.nickanme}}</div>
               <div class="time">{{item.user.created_at}}</div>
             </div>
             <div class="reply_box">
-              <div class="reply_btn" @click="showPrompt($event)" :data-commentId="item.id" :data-reUserId="item.user.userId" :data-reNickname="item.user.nickName">回复</div>
+              <div class="reply_btn" @click="showPrompt($event)" :data-commentId="item.id" :data-reUserId="item.user.userId" :data-reNickname="item.user.nickname">回复</div>
             </div>
           </div>
           <div class="inner">{{item.content}}</div>

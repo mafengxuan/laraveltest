@@ -6,7 +6,7 @@
           <img :src="info.user.imgUrl" alt="">
         </div>
         <div class="info_box">
-          <div class="title" v-if="info.user">{{info.user.nickName}}</div>
+          <div class="title" v-if="info.user">{{info.user.nickname}}</div>
           <div class="time">更新时间：{{info.updated_at}}</div>
         </div>
       </div>
@@ -27,7 +27,7 @@
               <img :src="item.user.imgUrl" alt="">
             </div>
             <div class="info_box">
-              <div class="title">{{item.user.nickName}}</div>
+              <div class="title">{{item.user.nickname}}</div>
               <div class="time">{{item.id}}楼 {{item.created_at}}</div>
             </div>
             <div class="reply_box">

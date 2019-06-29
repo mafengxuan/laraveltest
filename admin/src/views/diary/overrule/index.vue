@@ -15,7 +15,7 @@
     </div>
     <el-table v-loading="listLoading" :data="list" border style="width: 100%">
       <el-table-column prop="id" label="序号" sortable></el-table-column>
-      <el-table-column prop="user.nickName" label="微信昵称"></el-table-column>
+      <el-table-column prop="user.nickname" label="微信昵称"></el-table-column>
       <el-table-column prop="user.name" label="姓名"></el-table-column>
       <el-table-column prop="mobile" label="电话"></el-table-column>
       <el-table-column prop="user.created_at" label="上传时间" width="180"></el-table-column>
@@ -79,7 +79,7 @@ export default {
   },
   methods: {
     getList() {
-      articleList({type:2,nickName:'',sDate: '',eDate: ''}).then(res => {
+      articleList({type:2,nickname:'',sDate: '',eDate: ''}).then(res => {
         if(res.status == 200 && res.data){
           if(res.data.status){
             this.$data.list = res.data.result;
@@ -101,7 +101,7 @@ export default {
       if(this.$data.dateVal){
         articleList({
           type:2,
-          nickName:this.$data.name,
+          nickname:this.$data.name,
           sDate: this.$data.dateVal[0]?this.dateToString(this.$data.dateVal[0]):'',
           eDate: this.$data.dateVal[1]?this.dateToString(this.$data.dateVal[1]):''
         }).then(res => {
@@ -121,7 +121,7 @@ export default {
       }else {
         articleList({
           type:2,
-          nickName:this.$data.name,
+          nickname:this.$data.name,
           sDate: '',
           eDate: ''
         }).then(res => {

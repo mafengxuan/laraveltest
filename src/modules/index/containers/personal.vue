@@ -7,7 +7,7 @@
             <img :src="info.imgUrl" alt="">
           </div>
           <div class="info_box">
-            <div class="title">{{info.nickName}}</div>
+            <div class="title">{{info.nickname}}</div>
             <div class="time">更新时间：{{info.updated_at}}</div>
           </div>
         </div>
