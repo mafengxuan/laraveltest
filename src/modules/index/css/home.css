@@ -166,10 +166,11 @@
       & .label_inner {
         width: 100%;
         @apply --flexLeft;
-        height: 0.4rem;
         line-height: 0.4rem;
         margin-top: 0.24rem;
+        flex-wrap: wrap;
         & span {
+          display: block;
           height: 0.4rem;
           line-height: 0.4rem;
           padding: 0 0.1rem;
@@ -177,43 +178,53 @@
           color: #ffffff;
           border-radius: 0.1rem;
           margin-right: 0.1rem;
+          margin-bottom: 0.1rem;
         }
         & span:nth-child(1) {
-          background: #f16475;
+          background: #e63288;
         }
         & span:nth-child(2) {
-          background: #ffaa48;
+          background: #ff7041;
         }
         & span:nth-child(3) {
-          background: #00a44f;
-        }
-        & span:nth-child(4) {
-          background: #ff7041;
-        }
-        & span:nth-child(4) {
           background: #19a2ea;
+        }
+        & span:nth-child(4) {
+          background: #ff7200;
         }
         & span:nth-child(5) {
-          background: #949694;
-        }
-        /* & .bg_r {
-          background: #f16475;
-        }
-        & .bg_y {
           background: #ffaa48;
-        } */
-        /* & .bg_g {
-          background: #00a44f;
-        } */
-        /* & .bg_o {
-          background: #ff7041;
-        } */
-        /* & .bg_b {
-          background: #19a2ea;
         }
-        & .bg_gray {
-          background: #949694;
-        } */
+        & span:nth-child(6) {
+          background: #0b8f84;
+        }
+        & span:nth-child(7) {
+          background: #ff5bf5;
+        }
+        & span:nth-child(8) {
+          background: #f1575f;
+        }
+        & span:nth-child(9) {
+          background: #00a44f;
+        }
+        & span:nth-child(10) {
+          background: #5b93de;
+        }
+        & span:nth-child(11) {
+          background: #a682d2;
+        }
+        & span:nth-child(12) {
+          background: #5fc6cf;
+        }
+        & span:nth-child(13) {
+          background: #ff699e;
+        }
+        & span:nth-child(14) {
+          background: #278861;
+        }
+        & span:nth-child(15) {
+          background: #ff9e6f;
+        }
       }
       & .img_box {
         width: 100%;
