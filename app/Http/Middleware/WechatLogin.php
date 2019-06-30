@@ -47,6 +47,7 @@ class WechatLogin
 ////            return redirect()->action('Wechat\IndexController@index', ['returnUrl'=>$returnUrl]);
 //            return redirect()->route('wechat',['returnUrl'=>$returnUrl]);
             return Result::error('999');
+            exit;
         }
 
         return $next($request);
