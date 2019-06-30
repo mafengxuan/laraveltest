@@ -40,4 +40,12 @@ class IndexController extends Controller {
         }
         return redirect($request->returnUrl);
     }
+
+    public function check(Request $request){
+        if(empty(session('userId'))){
+            return response()->json(Result::error(999));
+        }else{
+            return response()->json(Result::ok());
+        }
+    }
 }

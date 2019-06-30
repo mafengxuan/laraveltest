@@ -30,6 +30,7 @@ Route::group(['namespace' => 'Admin'], function() {
 });
 
 Route::get('/wechat','Wechat\IndexController@index')->middleware('wechat.oauth')->name('wechat');
+Route::get('/checkLogin','Wechat\IndexController@check');
 
 
 Route::group(['middleware' => ['wechat.oauth','wechatLogin']], function () {
