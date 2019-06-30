@@ -33,7 +33,7 @@ Route::get('/wechat','Wechat\IndexController@index')->middleware('wechat.oauth')
 
 
 Route::group(['middleware' => ['wechat.oauth','wechatLogin']], function () {
-    Route::get('/wechat', function () {
+    Route::get('/wechatTest', function () {
         $user = session('wechat.oauth_user.default'); // 拿到授权用户资料
         dump($user);
         dump(session());
