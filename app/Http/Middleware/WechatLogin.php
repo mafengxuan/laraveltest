@@ -46,8 +46,7 @@ class WechatLogin
 //            $returnUrl = $_SERVER['HTTP_REFERER'];
 ////            return redirect()->action('Wechat\IndexController@index', ['returnUrl'=>$returnUrl]);
 //            return redirect()->route('wechat',['returnUrl'=>$returnUrl]);
-            return Result::error('999');
-            exit;
+            return response()->json(Result::error(999));
         }
 
         return $next($request);
