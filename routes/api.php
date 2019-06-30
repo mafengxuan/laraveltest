@@ -42,6 +42,10 @@ Route::group(['middleware' => ['wechat.oauth','wechatLogin']], function () {
     });
 });
 
+Route::get('/clearSession',function(Request $request){
+    $request->session()->flush();
+});
+
 
 Route::group(['namespace' => 'Index', 'prefix' => 'index','middleware' => ['wechat.oauth','wechatLogin']], function(){
     Route::get('/', 'IndexController@index');
