@@ -66,7 +66,6 @@ class WechatLogin
                 $users->imgUrl = $originalInfo['headimgurl'];
                 $users->save();
                 $userInfo = UserInfo::where('openId',$openId)->first();
-                dd($userInfo);
                 $request->session()->put('userId',$userInfo['userId']);
                 $request->session()->put('openId',$userInfo['openId']);
                 $request->session()->put('nickname',$userInfo['nickname']);
