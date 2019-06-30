@@ -11,6 +11,9 @@ class IndexController extends Controller {
 
 
     public function index(Request $request){
+        dd($request);
+        die;
+
         if(!empty(session('wechat.oauth_user.default')) && empty(session('openId'))){
             $openInfo = session('wechat.oauth_user.default');
             $openId = $openInfo['original']['openid'];

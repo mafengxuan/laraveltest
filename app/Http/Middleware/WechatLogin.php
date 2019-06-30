@@ -76,7 +76,8 @@ class WechatLogin
 //        }
 
         if(empty(session('userId'))){
-            dd($_SERVER['HTTP_REFERER']);
+            $returnUrl = $_SERVER['HTTP_REFERER'];
+            return redirect()->route('/Wechat/index', ['returnUrl'=>$returnUrl]);
         }
 
         return $next($request);
