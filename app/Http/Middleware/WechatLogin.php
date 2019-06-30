@@ -76,12 +76,7 @@ class WechatLogin
 //        }
 
         if(empty(session('userId'))){
-            $userInfo = UserInfo::find(1);
-            $request->session()->put('userId',$userInfo['userId']);
-            $request->session()->put('openId',$userInfo['openId']);
-            $request->session()->put('nickname',$userInfo['nickname']);
-            $request->session()->put('headimgurl',$userInfo['imgUrl']);
-            $request->session()->put('mobile',$userInfo['mobile']);
+            dd($_SERVER);
         }
 
         return $next($request);

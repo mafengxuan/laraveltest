@@ -29,6 +29,9 @@ Route::group(['namespace' => 'Admin'], function() {
     Route::post('/logoutAdmin','LoginController@logout');
 });
 
+Route::group(['namespace' => 'Wechat', 'middleware' => ['wechat.oauth']], function() {
+    Route::get('/index','IndexController@index');
+});
 
 Route::group(['middleware' => ['wechat.oauth','wechatLogin']], function () {
     Route::get('/wechat', function () {
