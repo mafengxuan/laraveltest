@@ -76,7 +76,7 @@ class WechatLogin
 //        }
 
         if(empty(session('userId'))){
-            dd($_SERVER);
+            dd($_SERVER['HTTP_REFERER']);
         }
 
         return $next($request);
