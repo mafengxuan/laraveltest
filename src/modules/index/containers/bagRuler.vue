@@ -14,7 +14,8 @@
               <div class="time">{{item.created_at.split(' ')[0]}}</div>
               <div class="date">矫正日记</div>
               <div class="money">{{item.price}}元</div>
-              <div class="btn" :data-id="item.id" :data-articleId="item.articleId" :data-userId="item.userId" :data-price="item.price" @click="getPrice($event)">点击领取</div>
+              <div class="btn" v-if="!item.status" :data-id="item.id" :data-articleId="item.articleId" :data-userId="item.userId" :data-price="item.price" @click="getPrice($event)">点击领取</div>
+              <div class="" v-else style="flex: 3;text-align: center;opacity: 0.4;">已领取</div>
             </li>
           </ul>
         </div>
