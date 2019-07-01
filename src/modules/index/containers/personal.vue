@@ -270,14 +270,14 @@ export default {
       component.hide();
     },
     checkStoreTo(type) {
-      if(type == 'push'){
-        this.$data.protocol = true;
-        this.timer();
-        return;
-      }
       checkStore().then(res => {
         if(res.status == 200 && res.data){
           if(res.data.status){
+            if(type == 'push'){
+              this.$data.protocol = true;
+              this.timer();
+              return;
+            }
             this.$router.push('/add');
           }else {
             toast(res.data.errMessage,{delay:1500});
