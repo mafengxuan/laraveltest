@@ -167,7 +167,7 @@ class WechatMessage{
         $date = date("Y-m-d",time());
         $num = SendMessage::where('openId',$openId)->where('sendDate',$date)->count();
 
-        if($num > 10){
+        if($num >= 10){
             return false;
         }else{
             $sendMessage = new SendMessage();
