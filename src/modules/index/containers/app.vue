@@ -14,6 +14,7 @@ import '../css/cube.css';
 import flexible from '../../../common/utils/flexible';
 import HeaderComponent from '../components/header/header.vue';
 import FooterComponent from '../components/footer/footer.vue';
+import { checkLogin } from '../api/app'
 export default {
   components: {
     HeaderComponent,
@@ -27,6 +28,15 @@ export default {
   },
   created() {
     flexible(750,750);
+    checkLogin().then(res => {
+      if(res.status == 200 && res.data){
+        if(res.data.status){
+
+        }else {
+          location.href = '/api/wechat?returnUrl='+ window.location.href;
+        }
+      }
+    })
   },
   methods: {
     isShowFooter(data) {
