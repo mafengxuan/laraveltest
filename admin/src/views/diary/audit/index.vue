@@ -18,7 +18,7 @@
       <el-table-column prop="user.nickname" label="微信昵称"></el-table-column>
       <el-table-column prop="user.name" label="姓名"></el-table-column>
       <el-table-column prop="user.mobile" label="电话"></el-table-column>
-      <el-table-column prop="" label="主治医生"></el-table-column>
+      <el-table-column prop="user.doctor" label="主治医生"></el-table-column>
       <el-table-column prop="user.created_at" label="上传时间" width="180"></el-table-column>
       <el-table-column prop="" label="查看文章" width="90">
         <template slot-scope="scope">

@@ -289,6 +289,8 @@ export default {
       var that = this;
       this.$data.t = setInterval(function(){
         if(that.$data.time <= 0) {
+          that.$data.protocol = false;
+          that.checkStoreTo();
           clearInterval(that.$data.t);
           return;
         }
