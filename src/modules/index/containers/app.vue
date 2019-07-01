@@ -33,7 +33,7 @@ export default {
         if(res.data.status){
 
         }else {
-          location.href = '/api/wechat?returnUrl='+ window.location.href;
+          location.href = '/api/wechat?returnUrl='+ encodeURIComponent(window.location.href);
         }
       }
     })
