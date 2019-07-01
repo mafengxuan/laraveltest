@@ -121,7 +121,7 @@ export default {
         isDraft:1
       }).then(res => {
         setTimeout(() => {
-          this.$router.push('/');
+          // this.$router.push('/');
         }, 1500)
       });
     },
@@ -156,7 +156,6 @@ export default {
               content: '工作人员会在工作日24小时内审核!',
               icon: 'cubeic-alert',
               onConfirm: () => {
-                this.$router.replace('/');
               }
             }).show()
           }else {
@@ -190,6 +189,7 @@ export default {
           content: this.$data.content,
           isDraft:0
         }).then(res => {
+          this.$data.Info = false;
           setTimeout(() => {
             this.$createDialog({
               type: 'alert',
@@ -197,10 +197,9 @@ export default {
               content: '工作人员会在工作日24小时内审核!',
               icon: 'cubeic-alert',
               onConfirm: () => {
-                this.$router.replace('/');
               }
             }).show()
-          }, 1000)
+          }, 0)
         });
       })
     }
@@ -225,7 +224,7 @@ export default {
     img(data){
       this.$data.imgList.push(data);
       var l = this.$data.imgList.length;
-      this.$data.content += '<img index='+l+' src=/storage'+data+'>';
+      this.$data.content += '<p><img index='+l+' src=/storage'+data+' /></p>'+'<p><br/></p>';
       this.$data.loading = false;
     }
   }

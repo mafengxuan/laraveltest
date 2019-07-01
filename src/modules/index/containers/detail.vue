@@ -141,6 +141,7 @@ export default {
           }else {
             toast(res.data.errMessage,{delay:1500});
           }
+          this.$data.content = '';
         }
       })
     },

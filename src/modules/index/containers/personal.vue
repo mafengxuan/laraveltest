@@ -124,7 +124,7 @@
                 :options="tagsArr[4]"
                 @change="save">
               </cube-select> -->
-              <div @click="showPopup('myPopup')" style="height:0.4rem;">
+              <div @click="showPopup('myPopup')">
                 {{tooth_question?tooth_question:'请选择'}}
               </div>
             </div>

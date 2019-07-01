@@ -26,7 +26,7 @@
                 <div class="time">更新时间：{{item.user.updated_at}}</div>
               </div>
             </div>
-            <div class="inner" v-html="item.content">{{item.content}}</div>
+            <div class="inner" v-html="item.user.content">{{item.content}}</div>
             <div class="label_inner">
               <span class="bg_r" v-for="(val,key) in item.user.tag.split(',')" :key="key">{{val}}</span>
               <!-- <span class="bg_y">23岁</span>
@@ -125,7 +125,8 @@ export default {
       tagData: {},
       shareType: false,
       lists:'',
-      page:1
+      page:1,
+      count:""
     }
   },
   computed: {
@@ -156,7 +157,11 @@ export default {
       this.addAticle({
         showList: data
       }).then(res => {
-        this.$data.lists = this.list;
+        this.$data.lists = this.list.data;
+        this.$data.count = this.list.count;
+        if(this.$data.lists.length < this.list.count){
+          this.pullupMsg = '没有更多日记啦';
+        }
       })
     },
     listTypeChange(data) {
@@ -168,7 +173,11 @@ export default {
       }).then(res => {
         this.$data.page = 1;
         // this.pullupMsg = '↓松开立即加载更多';
-        this.$data.lists = this.list;
+        this.$data.lists = this.list.data;
+        this.$data.count = this.list.count;
+        if(this.$data.lists.length < this.list.count){
+          this.pullupMsg = '没有更多日记啦';
+        }
       })
     },
     checkTags(key,val,id,index) {
@@ -204,10 +213,10 @@ export default {
         data += this.$data.tagData[key]+',';
       }
       data = data.substring(0,data.length-1)
-      if(data.split(',').length < 5){
-        toast('请将标签选择完整',{delay:1500});
-        return;
-      }
+      // if(data.split(',').length < 5){
+      //   toast('请将标签选择完整',{delay:1500});
+      //   return;
+      // }
       this.$data.type = false;
       this.$data.listType = '';
       this.tagsList(data);
@@ -276,12 +285,13 @@ export default {
           getList({type:that.$data.listType,page:that.$data.page}).then(res => {
             if(res.status == 200 && res.data){
               if(res.data.status){
-                if(res.data.result.length <= 0){
+                if(res.data.result.length < res.data.result.count){
                   that.pullupMsg = '没有更多日记啦';
                   return;
                 }
                 that.pullupMsg = '↓松开立即加载更多';
-                that.$data.lists = that.$data.lists.concat(res.data.result);
+                that.$data.lists = that.$data.lists.concat(res.data.result.data);
+                this.$data.count = res.data.result.count;
               }else {
                 toast(res.data.errMessage,{delay:1500});
               }

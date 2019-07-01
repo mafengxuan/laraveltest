@@ -12,7 +12,7 @@ const mutations = {
   setAddAticle(state,listData) {
     let {isSuccess, data ,error, type} = listData;
     if(isSuccess){
-      toast(data,{delay:1500});
+      // toast(data,{delay:1500});
     }else{
       toast(error,{delay:1500});
     }
