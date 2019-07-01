@@ -130,8 +130,13 @@ class ArticleController extends Controller
         $page = $request->page;
         $result = array();
         if(empty($page)){
-            $article = $article->limit(10);
-            $result['page'] = 0;
+            $page = 1;
+
+        }
+
+        if($page == 1){
+            $article = $article->forPage($page,10);
+            $result['page'] = 1;
             $result['count'] = 10;
         }else{
             $article = $article->forPage($page,5);
