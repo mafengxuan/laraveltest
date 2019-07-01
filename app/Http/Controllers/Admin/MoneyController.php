@@ -27,6 +27,8 @@ class MoneyController extends Controller
         $money->price = $request->price;
         $money->status = 0;
         $money->save();
+        $userInfo = UserInfo::find($request->userId);
+        WechatMessage::sendMoney($userInfo['openId'],$userInfo['nickname'],$request->price);
         return response()->json(Result::ok('添加红包成功'));
     }
 
