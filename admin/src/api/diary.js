@@ -3,7 +3,7 @@ import Axios from 'axios';
 
 export function articleList(data) {
   return request({
-    url: '/api/admin/articleList/'+data.type+'?nickName='+data.nickName+'&sDate='+data.sDate+'&eDate='+data.eDate,
+    url: '/api/admin/articleList/'+data.type+'?nickname='+data.nickname+'&sDate='+data.sDate+'&eDate='+data.eDate,
     method: 'get',
     data: data
   });
