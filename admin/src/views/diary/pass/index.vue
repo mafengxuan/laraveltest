@@ -15,9 +15,9 @@
     </div>
     <el-table v-loading="listLoading" :data="list" border style="width: 100%">
       <el-table-column prop="id" label="序号"></el-table-column>
-      <el-table-column prop="nickname" label="微信昵称"></el-table-column>
-      <el-table-column prop="name" label="姓名"></el-table-column>
-      <el-table-column prop="mobile" label="电话"></el-table-column>
+      <el-table-column prop="user.nickname" label="微信昵称"></el-table-column>
+      <el-table-column prop="user.name" label="姓名"></el-table-column>
+      <el-table-column prop="user.mobile" label="电话"></el-table-column>
       <el-table-column prop="auditTime" label="审核时间" width='160'></el-table-column>
       <el-table-column prop="viewNum" label="阅读量"></el-table-column>
       <el-table-column prop="forwardNum" label="转发" sortable></el-table-column>

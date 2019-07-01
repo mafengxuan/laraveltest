@@ -18,17 +18,17 @@
         <li v-for="(item,index) in lists" :key="index">
           <router-link :to="'/Detail?id='+item.id">
             <div class="top_box">
-              <div class="logo_box">
+              <div class="logo_box" v-if="item.user">
                 <img :src="item.user.imgUrl" alt="">
               </div>
               <div class="info_box">
-                <div class="title">{{item.user.nickName}}</div>
-                <div class="time">更新时间：{{item.user.updated_at}}</div>
+                <div class="title" v-if="item.user">{{item.user.nickname}}</div>
+                <div class="time" v-if="item.user">更新时间：{{item.user.updated_at}}</div>
               </div>
             </div>
-            <div class="inner" v-html="item.user.content">{{item.content}}</div>
-            <div class="label_inner">
-              <span class="bg_r" v-for="(val,key) in item.user.tag.split(',')" :key="key">{{val}}</span>
+            <div class="inner" v-if="item.user" v-html="item.user.content">{{item.content}}</div>
+            <div class="label_inner" v-if="item.user">
+              <span class="bg_r" v-for="(val,key) in item.tag.split(',')" :key="key">{{val}}</span>
               <!-- <span class="bg_y">23岁</span>
               <span class="bg_g">隐适美</span>
               <span class="bg_o">地包天</span>
@@ -285,13 +285,14 @@ export default {
           getList({type:that.$data.listType,page:that.$data.page}).then(res => {
             if(res.status == 200 && res.data){
               if(res.data.status){
-                if(res.data.result.length < res.data.result.count){
+                console.log(res.data.result.data.length)
+                if(res.data.result.data.length < res.data.result.count){
                   that.pullupMsg = '没有更多日记啦';
                   return;
                 }
                 that.pullupMsg = '↓松开立即加载更多';
                 that.$data.lists = that.$data.lists.concat(res.data.result.data);
-                this.$data.count = res.data.result.count;
+                that.$data.count = res.data.result.count;
               }else {
                 toast(res.data.errMessage,{delay:1500});
               }

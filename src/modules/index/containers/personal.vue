@@ -14,7 +14,7 @@
         <div class="bottom_box">
           <ul v-if="info">
             <li>
-              <div v-if="!info.article" @click="checkStoreTo">
+              <div v-if="!info.article" @click="checkStoreTo('push')">
                 <div class="">发布</div>
                 <div class="">日记</div>
               </div>
@@ -162,6 +162,14 @@
       </div>
     </cube-popup>
 
+    <div class="protocol_box" v-if="protocol">
+      <div class="content">
+        <div class="title">劲松口腔矫正日记协议</div>
+        <div class="inner">知道大家为什么都爱叫我小兔嘛？因为，我长了两颗大兔牙…其实，从一开始我就觉得自己的牙齿很难看，想去做牙齿矫正去做牙齿矫正去做牙齿矫正矫...知道大家为什么都爱叫我小兔嘛？因为，我长了两颗大兔牙…其实，从一开始我就觉得自己的牙齿很难看，想去做牙齿矫正去做牙齿矫正去做牙齿矫正矫...知道大家为什么都爱叫我小兔嘛？因为，我长了两颗大兔牙其实，从一开始我就觉得自己的牙齿很难看，想去做牙齿矫正去做牙齿矫正去做牙齿矫正矫...知道大家为什么都爱叫我小兔嘛...</div>
+        <div class="btn" @click="sureCheckStoreTo">确定 {{time}}S</div>
+      </div>
+    </div>
+
     <!-- <div class="save" @click="save">保存</div> -->
     <loading v-if='!info && !tags'></loading>
   </div>
@@ -189,6 +197,9 @@ export default {
       tags:'',
       tagsArr:"",
       tooth_questionList:[],
+      protocol: false,
+      time:5,
+      t:''
     }
   },
   computed: {
@@ -258,7 +269,12 @@ export default {
       const component = this.$refs[refId]
       component.hide();
     },
-    checkStoreTo() {
+    checkStoreTo(type) {
+      if(type == 'push'){
+        this.$data.protocol = true;
+        this.timer();
+        return;
+      }
       checkStore().then(res => {
         if(res.status == 200 && res.data){
           if(res.data.status){
@@ -268,6 +284,20 @@ export default {
           }
         }
       })
+    },
+    timer(){
+      var that = this;
+      this.$data.t = setInterval(function(){
+        if(that.$data.time <= 0) {
+          clearInterval(that.$data.t);
+          return;
+        }
+        that.$data.time--;
+      },1000)
+    },
+    sureCheckStoreTo() {
+      clearInterval(this.$data.t);
+      this.checkStoreTo();
     }
   },
   created() {
