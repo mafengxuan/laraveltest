@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Result;
+use App\Helpers\WechatMessage;
+use App\Model\UserInfo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Money;
@@ -90,8 +92,13 @@ class MoneyController extends Controller
 
     public function send($id){
         $money = Money::find($id);
+        $price = $money['price'];
+        $userId = $money['userId'];
         $money->status = 1;
         $money->save();
+
+        $userInfo = UserInfo::find($userId);
+        WechatMessage::sendMoney($userInfo['openId'],$userInfo['nickname'],$price);
         return response()->json(Result::ok('发送红包成功'));
     }
 }

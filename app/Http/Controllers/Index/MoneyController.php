@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Index;
 
 use App\Helpers\Result;
+use App\Helpers\WechatMessage;
 use App\Model\Rule;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -67,8 +68,11 @@ class MoneyController extends Controller
 
     public function receive($id){
         $money = Money::where('userId',session('userId'))->where('id',$id)->first();
+        $price = $money['price'];
         $money->status = 1;
         $money->save();
+
+        WechatMessage::getMoney(session('openId'),session('nickname'),$price);
         return response()->json(Result::ok('领取成功'));
     }
 

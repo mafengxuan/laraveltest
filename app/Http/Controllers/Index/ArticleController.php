@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Index;
 
 use App\Helpers\Result;
+use App\Helpers\WechatMessage;
 use App\Model\Collect;
 use App\Model\Praise;
 use App\Model\Tags;
@@ -59,6 +60,8 @@ class ArticleController extends Controller
         $article->isDraft = $request->isDraft;
 
         $article->save();
+
+        WechatMessage::submitAudit(session('openId'),session('nickname'));
 
         return response()->json(Result::ok('添加成功'));
     }
@@ -214,8 +217,11 @@ class ArticleController extends Controller
         $userInfo = UserInfo::find(session('userId'))->toArray();
         $article->tag = $userInfo['tag_remark'];
         $article->isDraft = $request->isDraft;
-
+        $article->status = 0;
+        $article->isOnline = 0;
         $article->save();
+        WechatMessage::submitAudit(session('openId'),session('nickname'));
+
         return response()->json(Result::ok('修改成功'));
     }
 

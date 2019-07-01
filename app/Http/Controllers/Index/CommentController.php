@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Index;
 
 use App\Helpers\Result;
+use App\Helpers\WechatMessage;
 use App\Model\Article;
 use App\Model\Comment;
+use App\Model\UserInfo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Reply;
@@ -28,7 +30,9 @@ class CommentController extends Controller
         $comment->save();
 
         Article::where('id', $request->articleId)->increment('commentsNum');
-
+        $article = Article::with('user')->find($request->articleId);
+        $openId = $article['user']['openId'];
+        WechatMessage::comment($openId,session('nickname'),$request->post('content'));
         return response()->json(Result::ok('评论成功'));
     }
 

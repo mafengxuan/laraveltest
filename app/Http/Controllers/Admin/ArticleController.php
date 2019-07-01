@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Helpers\Result;
+use App\Helpers\WechatMessage;
+use App\Model\UserInfo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Article;
@@ -72,9 +74,12 @@ class ArticleController extends Controller
     public function audit($id){
 
         $article = Article::find($id);
+        $userId = $article['userId'];
         $article->status = 1;
         $article->auditTime = date('Y-m-d H:i:s',time());
         $article->save();
+        $userInfo = UserInfo::find($userId);
+        WechatMessage::successAudit($userInfo['openId'], $id);
         return response()->json(Result::ok('审核通过'));
     }
 
@@ -109,9 +114,12 @@ class ArticleController extends Controller
     //驳回
     public function reject(Request $request,$id){
         $article = Article::find($id);
+        $userId = $article['userId'];
         $article->status = 2;
         $article->remark = $request->remark;
         $article->save();
+        $userInfo = UserInfo::find($userId);
+        WechatMessage::rejectAudit($userInfo['openId'],$userInfo['nickname'],$request->remark);
         return response()->json(Result::ok('驳回成功'));
     }
 
