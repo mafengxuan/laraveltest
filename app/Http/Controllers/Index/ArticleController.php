@@ -128,19 +128,24 @@ class ArticleController extends Controller
                 break;
         }
         $page = $request->page;
+        $result = array();
         if(empty($page)){
             $article = $article->limit(10);
+            $result['page'] = 0;
+            $result['count'] = 10;
         }else{
             $article = $article->forPage($page,5);
+            $result['page'] = $page;
+            $result['count'] = 5;
         }
 
         $article = $article->with('tags')->with('praise')->with('user')->get();
-
         foreach($article as $k => $v){
             $article[$k]['image'] = json_decode($v['image'],true);
         }
+        $result['data'] = $article;
 
-        return response()->json(Result::ok($article));
+        return response()->json(Result::ok($result));
     }
 
     public function showListAsTag($tag){
