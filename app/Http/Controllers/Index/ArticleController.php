@@ -156,26 +156,33 @@ class ArticleController extends Controller
         return response()->json(Result::ok($result));
     }
 
-    public function showListAsTag($tag){
-//        $tagsArr = explode(',',$tags);
-//        $list = Tags::wherein('id',$tagsArr)->with('article')->get();
-//        $data = array();
-//        foreach($list as $k => $v){
-//            foreach($v['article'] as $kk => $vv){
-//                if(isset($data[$vv['id']])){
-//                    continue;
-//                }
-//                $data[$vv['id']] = $vv;
-//            }
-//        }
-//        $data = array_values($data);
+    public function showListAsTag(Request $request,$tag){
+
+
         $article = Article::where('status',1)->where('isOnline',1)->where('isDraft',0);
         $article = $article->where('tag',$tag)->orderBy('created_at','desc');
         $article = $article->get();
         foreach($article as $k => $v){
             $article[$k]['image'] = json_decode($v['image'],true);
         }
-        return response()->json(Result::ok($article));
+        $page = $request->page;
+        $result = array();
+        if(empty($page)){
+            $page = 1;
+
+        }
+
+        if($page == 1){
+            $article = $article->forPage($page,10);
+            $result['page'] = 1;
+            $result['count'] = 10;
+        }else{
+            $article = $article->forPage($page,5);
+            $result['page'] = $page;
+            $result['count'] = 5;
+        }
+        $result['data'] = $article;
+        return response()->json(Result::ok($result));
     }
 
     public function showTags(){
