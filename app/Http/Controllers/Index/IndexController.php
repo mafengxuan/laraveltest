@@ -25,7 +25,8 @@ class IndexController extends Controller
     public function test(){
 
 //        $a = Article::where('userId',1)->sum('praiseNum')->sum('commentsNum')->sum('forwardNum')->get();
-        $a = Article::where('userId',1)->sum('viewNum');
-        dump($a);
+        $a = 'test';
+        $b = explode(',',$a);
+        dd($b);
     }
 }

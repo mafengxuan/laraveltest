@@ -169,7 +169,7 @@ class ArticleController extends Controller
         $article = Article::where('status',1)->where('isOnline',1);
         $tags = explode(',',$tag);
         foreach ($tags as $k => $v){
-            $article = $article->where('tag','like','%'.$v.'%');
+            $article = $article->where('tag_remark','like','%'.$v.'%');
         }
         $article = $article->orderBy('created_at','desc');
 
