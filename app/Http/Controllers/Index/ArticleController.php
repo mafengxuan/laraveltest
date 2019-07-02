@@ -248,20 +248,20 @@ class ArticleController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $article = Article::find($id);
-        if(!empty($request->image)){
-            $article->image = json_encode($request->image);
-        }
-        if(!empty($request->post('content'))){
-            $article->content = trim($request->post('content'));
-        }
-        $userInfo = UserInfo::find(session('userId'))->toArray();
-        $article->tag = $userInfo['tag_remark'];
-        $article->isDraft = $request->isDraft;
-        $article->status = 0;
-        $article->isOnline = 0;
-        $article->save();
-        WechatMessage::submitAudit(session('openId'),session('nickname'));
+//        $article = Article::find($id);
+//        if(!empty($request->image)){
+//            $article->image = json_encode($request->image);
+//        }
+//        if(!empty($request->post('content'))){
+//            $article->content = trim($request->post('content'));
+//        }
+//        $userInfo = UserInfo::find(session('userId'))->toArray();
+//        $article->tag = $userInfo['tag_remark'];
+//        $article->isDraft = 0;
+//        $article->status = 0;
+//        $article->isOnline = 0;
+//        $article->save();
+//        WechatMessage::submitAudit(session('openId'),session('nickname'));
 
         return response()->json(Result::ok('修改成功'));
     }
