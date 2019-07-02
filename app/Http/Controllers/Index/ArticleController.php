@@ -53,7 +53,19 @@ class ArticleController extends Controller
 
         $article->qrCode = '';
         $article->userId = session('userId');
-        $article->image = json_encode($request->image);
+        if(empty($article['image'])){
+            $images = [];
+        }else{
+            $images = json_decode($article['image'],true);
+        }
+
+        if(!empty($request->image)){
+            foreach ($request->image as $image){
+                $images[] = $image;
+            }
+        }
+        $article->image = json_encode($images);
+
         $article->content = trim($request->post('content'));
 
         $userInfo = UserInfo::find(session('userId'))->toArray();
@@ -61,6 +73,8 @@ class ArticleController extends Controller
         $article->tag_remark = $userInfo['tag_remark'];
         $article->status = $request->status;
         $article->isDraft = 0;
+        $article->status = 0;
+        $article->isOnline = 0;
         $article->remark = '';
 
         $article->save();
