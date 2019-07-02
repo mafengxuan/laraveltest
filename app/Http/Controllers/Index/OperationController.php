@@ -44,8 +44,8 @@ class OperationController extends Controller
             return response()->json(Result::error('1','false'));
         }
 
-        $article1 = Article::where('id',$request->articleId)->first();
-        $article1->increment('forwardNum');
+        $article = Article::where('id',$request->articleId)->first();
+        $article->increment('forwardNum');
         return response()->json(Result::ok('转发成功'));
     }
 
