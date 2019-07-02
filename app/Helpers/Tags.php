@@ -37,7 +37,7 @@ class Tags
             'data' => [
                 [
                     'key' => 5,
-                    'value' => '0~12岁'
+                    'value' => '5~12岁'
                 ],
                 [
                     'key' => 6,
@@ -644,7 +644,7 @@ class Tags
             case '10岁':
             case '11岁':
             case '12岁':
-                return '0~12岁';
+                return '5~12岁';
             case '13岁':
             case '14岁':
             case '15岁':
