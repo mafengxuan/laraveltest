@@ -49,13 +49,20 @@ class ArticleController extends Controller
         $article = Article::where('userId',session('userId'))->where('status',$request->status)->first();
         if(empty($article)){
             $article = new Article();
+
+            $myArticle = Article::where('userId',session('userId'))->orderBy('status','desc')->with('user')->first();
+            if(empty($myArticle['image'])){
+                $images = [];
+            }else{
+                $images = json_decode($myArticle['image'],true);
+            }
         }
+
+
 
         $article->qrCode = '';
         $article->userId = session('userId');
-        if(empty($article['image'])){
-            $images = [];
-        }else{
+        if(!empty($article['image'])){
             $images = json_decode($article['image'],true);
         }
 
