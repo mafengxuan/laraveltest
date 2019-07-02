@@ -134,7 +134,7 @@
         <li class="clearfix">
           <div class="f_left">日记简介</div>
           <div class="f_right">
-            <textarea name="date" v-model="content" placeholder="16~48个字内" @blur="save"></textarea>
+            <textarea name="date" v-model="content" placeholder="16~48个字内" @change="contentChange" @blur="save('content')"></textarea>
             <img src="../images/icon/right.png" alt="">
           </div>
         </li>
@@ -241,7 +241,14 @@ export default {
       }
       this.$data.tagsArr = tags;
     },
-    save() {
+    save(content) {
+      console.log(123)
+      if(content == 'content'){
+        if(this.$data.content.length < 16){
+          toast('至少输入16个字',{delay:1500});
+          return;
+        }
+      }
       this.$data.tooth_question = this.$data.tooth_questionList.join(',');
       updateUserInfo({
         sex:this.$data.sex,
@@ -260,6 +267,10 @@ export default {
           }
         }
       })
+    },
+    contentChange(){
+      console.log(this.$data.content)
+      this.$data.content = this.$data.content.substr(0,48);
     },
     showPopup(refId) {
       const component = this.$refs[refId]
