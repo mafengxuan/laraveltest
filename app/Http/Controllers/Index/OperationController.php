@@ -46,12 +46,6 @@ class OperationController extends Controller
 
         $article1 = Article::where('id',$request->articleId)->first();
         $article1->increment('forwardNum');
-        $article2 = new Article();
-        $article2->qrCode = $article1->qrCode;
-        $article2->userId = session('userId');
-        $article2->image = $article1->image;
-        $article2->content = '转发: '.$article1->content;
-        $article2->save();
         return response()->json(Result::ok('转发成功'));
     }
 
