@@ -17,5 +17,5 @@ export function getList(data) {
 }
 
 export function forward(data) {
-  return Axios.post('/api/index/forward/'+data);
+  return Axios.post('/api/index/forward',data);
 }

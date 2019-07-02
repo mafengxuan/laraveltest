@@ -9,5 +9,5 @@ export function updateArticle(data) {
 }
 
 export function getArticle(data) {
-  return Axios.get('/api/index/userInfo/show');
+  return Axios.get('/api/index/userInfo/showMyArticle');
 }

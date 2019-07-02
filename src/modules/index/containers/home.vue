@@ -41,7 +41,7 @@
             </div>
           </router-link>
           <div class="icon_box">
-            <div class="i_inner" @click="shareTo">
+            <div class="i_inner" @click="shareTo(item.id)">
               <img src="../images/icon/share.png" alt="">
               <span>{{item.forwardNum}}</span>
             </div>
@@ -239,8 +239,9 @@ export default {
         }
       })
     },
-    shareTo (){
+    shareTo (id){
       this.$data.shareType = true;
+      forward({articleId:id});
     },
     shareHiden (){
       this.$data.shareType = false;

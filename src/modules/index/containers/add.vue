@@ -210,9 +210,9 @@ export default {
     getArticle().then(res => {
       if(res.status == 200 && res.data){
         if(res.data.status){
-          if(res.data.result && res.data.result.article && res.data.result.article.content){
-            this.$data.content = res.data.result.article.content;
-            this.$data.id = res.data.result.article.id;
+          if(res.data.result && res.data.result.content){
+            this.$data.content = res.data.result.content;
+            this.$data.id = res.data.result.id;
             this.$data.isSave = true;
           }
         }else {
