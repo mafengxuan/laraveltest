@@ -20,11 +20,17 @@ class ReplyController extends Controller
     public function addReply(Request $request){
         $reply = new Reply();
         $reply->commentId = $request->commentId;
-        $reply->content = $request->post('content');
         $reply->reUserId = $request->reUserId;
         $reply->reNickname = $request->reNickname;
         $reply->userId = session('userId');
         $reply->nickname = session('nickname');
+
+        if($request->reUserId == session('userId')){
+            $reply->content = $request->post('content');
+        }else{
+            $reply->content = '回复 '.$request->reNickname.' '.$request->post('content');
+        }
+
         $reply->save();
 
         return response()->json(Result::ok('回复成功'));
