@@ -111,7 +111,7 @@ import '../css/home.css';
 import { mapState, mapGetters, mapActions, mapMutations } from 'vuex';
 import loading from '../../../common/components/loading';
 import toast from '../../../common/components/toast';
-import { setPraise,showTagsList,getList } from '../api/home';
+import { setPraise,showTagsList,getList,forward } from '../api/home';
 import { throttle } from 'lodash';
 export default {
   components: {
@@ -226,9 +226,13 @@ export default {
         if(res.status == 200 && res.data){
           if(res.data.status){
             // this.setTagsList(res.data.result);
+            if(res.data.result.data.length < res.data.result.count){
+              that.pullupMsg = '没有更多日记啦';
+              return;
+            }
             this.$data.page = 1;
             this.pullupMsg = '↓松开立即加载更多';
-            this.$data.lists = res.data.result;
+            this.$data.lists = res.data.result.data;
           }else {
             toast(res.data.errMessage,{delay:1500});
           }

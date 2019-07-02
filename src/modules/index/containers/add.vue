@@ -51,6 +51,7 @@ import loading from '../../../common/components/loading';
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import { storeExtInfo,getArticle,updateArticle } from '../api/add';
 
+
 export default {
   components: {
     //使用编辑器
@@ -118,7 +119,7 @@ export default {
         qrCode:'test',
         image: this.$data.imgList,
         content: this.$data.content,
-        isDraft:1
+        status: 4
       }).then(res => {
         setTimeout(() => {
           // this.$router.push('/');
@@ -144,7 +145,7 @@ export default {
         qrCode:'test',
         image: this.$data.imgList,
         content: this.$data.content,
-        isDraft:0,
+        status: 3,
         id:this.$data.id
       }).then(res => {
         if(res.status == 200 && res.data){
@@ -187,7 +188,7 @@ export default {
           qrCode:'test',
           image: this.$data.imgList,
           content: this.$data.content,
-          isDraft:0
+          status: 3
         }).then(res => {
           this.$data.Info = false;
           setTimeout(() => {

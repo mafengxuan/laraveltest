@@ -8,7 +8,7 @@
               <img :src="item.user.imgUrl" alt="">
             </div>
             <div class="info_box">
-              <div class="title">{{item.user.nickanme}}</div>
+              <div class="title">{{item.user.nickname}}</div>
               <div class="time">{{item.user.created_at}}</div>
             </div>
             <div class="reply_box">

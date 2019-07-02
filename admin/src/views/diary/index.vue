@@ -85,7 +85,7 @@ export default {
   },
   methods: {
     fetchData (){
-      this.$store.dispatch('getList', {type:0,nickname:'',sDate: '',eDate: ''}).then(res => {
+      this.$store.dispatch('getList', {type:3,nickname:'',sDate: '',eDate: ''}).then(res => {
         this.$data.listLoading = false;
         if(this.errCode == '001'){
           store.dispatch('FedLogOut').then(() => {
@@ -136,14 +136,14 @@ export default {
       }
       if(this.$data.dateVal){
         this.$store.dispatch('getList',{
-          type:0,
+          type:3,
           nickname:this.$data.name,
           sDate: this.$data.dateVal[0]?this.dateToString(this.$data.dateVal[0]):'',
           eDate: this.$data.dateVal[1]?this.dateToString(this.$data.dateVal[1]):''
         })
       }else {
         this.$store.dispatch('getList',{
-          type:0,
+          type:3,
           nickname:this.$data.name,
           sDate: '',
           eDate: ''
