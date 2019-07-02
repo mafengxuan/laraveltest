@@ -141,28 +141,36 @@ export default {
         toast('内容不能为空',{delay:1000});
         return;
       }
-      updateArticle({
+      this.addAticle({
         qrCode:'test',
         image: this.$data.imgList,
         content: this.$data.content,
         status: 3,
         id:this.$data.id
       }).then(res => {
-        if(res.status == 200 && res.data){
-          if(res.data.status){
-            // toast(res.data.result,{delay:1500});
-            this.$createDialog({
-              type: 'alert',
-              title: '发布成功',
-              content: '工作人员会在工作日24小时内审核!',
-              icon: 'cubeic-alert',
-              onConfirm: () => {
-              }
-            }).show()
-          }else {
-            toast(res.data.errMessage,{delay:1500});
+        this.$createDialog({
+          type: 'alert',
+          title: '发布成功',
+          content: '工作人员会在工作日24小时内审核!',
+          icon: 'cubeic-alert',
+          onConfirm: () => {
           }
-        }
+        }).show()
+        // if(res.status == 200 && res.data){
+        //   if(res.data.status){
+        //     // toast(res.data.result,{delay:1500});
+        //     this.$createDialog({
+        //       type: 'alert',
+        //       title: '发布成功',
+        //       content: '工作人员会在工作日24小时内审核!',
+        //       icon: 'cubeic-alert',
+        //       onConfirm: () => {
+        //       }
+        //     }).show()
+        //   }else {
+        //     toast(res.data.errMessage,{delay:1500});
+        //   }
+        // }
       });
     },
     saveUserInfo(){
