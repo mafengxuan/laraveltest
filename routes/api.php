@@ -88,7 +88,8 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index','middleware' => ['wech
     Route::post('/collect/{articleId}', 'OperationController@collect');
     //用户
 //    Route::post('/userInfo/store', 'UserInfoController@store');
-    Route::get('/userInfo/show', 'UserInfoController@showMyArticle');
+    Route::get('/userInfo/show', 'UserInfoController@show');
+    Route::get('/userInfo/showMyArticle', 'UserInfoController@showMyArticle');
     Route::get('/userInfo/showTags', 'UserInfoController@showTags');
     Route::post('/userInfo/update', 'UserInfoController@update');
     Route::post('/userInfo/storeExtInfo', 'UserInfoController@storeExtInfo');

@@ -68,6 +68,22 @@ class UserInfoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function show()
+    {
+        //
+        $userInfo = UserInfo::with('article')->find(session('userId'));
+        //年龄 牙套类型 矫正时间 牙齿问题 个人简介 转发 评论 点赞
+
+        if(!empty($userInfo)){
+            return response()->json(Result::ok($userInfo));
+        }else{
+            return response()->json(Result::error('1','not found'));
+
+        }
+    }
+
+
     public function showMyArticle()
     {
         $result = Article::where('userId',session('userId'))->orderBy('created_at','desc')->with('user')->first();
