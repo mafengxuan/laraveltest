@@ -73,7 +73,6 @@ class ArticleController extends Controller
         $article->tag_remark = $userInfo['tag_remark'];
         $article->status = $request->status;
         $article->isDraft = 0;
-        $article->status = 0;
         $article->isOnline = 0;
         $article->remark = '';
 
