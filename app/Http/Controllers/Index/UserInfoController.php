@@ -73,8 +73,6 @@ class UserInfoController extends Controller
     {
         //
         $userInfo = UserInfo::with('article')->find(session('userId'));
-        //年龄 牙套类型 矫正时间 牙齿问题 个人简介 转发 评论 点赞
-
         if(!empty($userInfo)){
             return response()->json(Result::ok($userInfo));
         }else{
