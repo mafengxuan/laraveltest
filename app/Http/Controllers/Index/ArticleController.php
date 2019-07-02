@@ -45,23 +45,29 @@ class ArticleController extends Controller
     public function store(Request $request)
     {
         //
-        $checkArticle = Article::where('userId',session('userId'))->first();
-        if(!empty($checkArticle)){
-            return response()->json(Result::error(1,'已添加过文章'));
+
+        $article = Article::where('userId',session('userId'))->where('status',$request->status)->first();
+        if(empty($article)){
+            $article = new Article();
         }
 
-        $article = new Article();
         $article->qrCode = '';
         $article->userId = session('userId');
         $article->image = json_encode($request->image);
         $article->content = trim($request->post('content'));
+
         $userInfo = UserInfo::find(session('userId'))->toArray();
-        $article->tag = $userInfo['tag_remark'];
-        $article->isDraft = $request->isDraft;
+        $article->tag = $userInfo['tag'];
+        $article->tag_remark = $userInfo['tag_remark'];
+        $article->status = $request->status;
+        $article->isDraft = 0;
 
         $article->save();
 
-        WechatMessage::submitAudit(session('openId'),session('nickname'));
+        if($request->status == 3){
+            WechatMessage::submitAudit(session('openId'),session('nickname'));
+            $dropDraft = Article::where('userId',session('userId'))->where('status',4)->delete();
+        }
 
         return response()->json(Result::ok('添加成功'));
     }
@@ -98,7 +104,7 @@ class ArticleController extends Controller
     public function showMyArticle()
     {
         //
-        $article = Article::where('userId',session('userId'))->first();
+        $article = Article::where('userId',session('userId'))->orderBy('status','desc')->with('user')->first();
         return response()->json(Result::ok($article));
     }
 

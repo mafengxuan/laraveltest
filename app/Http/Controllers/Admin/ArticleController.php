@@ -75,9 +75,26 @@ class ArticleController extends Controller
 
         $article = Article::find($id);
         $userId = $article['userId'];
-        $article->status = 1;
-        $article->auditTime = date('Y-m-d H:i:s',time());
-        $article->save();
+        $content = $article['content'];
+        $image = $article['image'];
+        $tag = $article['tag'];
+        $tag_remark = $article['tag_remark'];
+
+        $oldArticle = Article::where('userId',$userId)->where('status',1)->first();
+        if(!empty($oldArticle)){
+            $oldArticle->content = $content;
+            $oldArticle->image = $image;
+            $oldArticle->tag = $tag;
+            $oldArticle->tag_remark = $tag_remark;
+            $oldArticle->auditTime = date('Y-m-d H:i:s',time());
+            $oldArticle->save();
+            $article->delete();
+        }else{
+            $article->status = 1;
+            $article->isOnline = 1;
+            $article->auditTime = date('Y-m-d H:i:s',time());
+            $article->save();
+        }
         $userInfo = UserInfo::find($userId);
         WechatMessage::successAudit($userInfo['openId'], $id);
         return response()->json(Result::ok('审核通过'));
@@ -87,9 +104,17 @@ class ArticleController extends Controller
     public function reAudit($id){
 
         $article = Article::find($id);
-        $article->status = 0;
-        $article->auditTime = '';
-        $article->save();
+        $userId = $article['userId'];
+
+        $checkArticle = Article::where('userId',$userId)->where('status',3)->first();
+        if(!empty($checkArticle)){
+            $article->delete();
+        }else{
+            $article->status = 3;
+            $article->auditTime = '';
+            $article->remark = '';
+            $article->save();
+        }
         return response()->json(Result::ok('重新审核'));
     }
 
