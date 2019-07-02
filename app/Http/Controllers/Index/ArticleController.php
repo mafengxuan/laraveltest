@@ -61,6 +61,7 @@ class ArticleController extends Controller
         $article->tag_remark = $userInfo['tag_remark'];
         $article->status = $request->status;
         $article->isDraft = 0;
+        $article->remark = '';
 
         $article->save();
 
@@ -153,7 +154,7 @@ class ArticleController extends Controller
             $result['count'] = 5;
         }
 
-        $article = $article->with('tags')->with('praise')->with('user')->get();
+        $article = $article->with('praise')->with('user')->get();
         foreach($article as $k => $v){
             $article[$k]['image'] = json_decode($v['image'],true);
         }
@@ -165,12 +166,13 @@ class ArticleController extends Controller
     public function showListAsTag(Request $request,$tag){
 
 
-        $article = Article::where('status',1)->where('isOnline',1)->where('isDraft',0);
-        $article = $article->where('tag',$tag)->orderBy('created_at','desc');
-        $article = $article->get();
-        foreach($article as $k => $v){
-            $article[$k]['image'] = json_decode($v['image'],true);
+        $article = Article::where('status',1)->where('isOnline',1);
+        $tags = explode(',',$tag);
+        foreach ($tags as $k => $v){
+            $article = $article->where('tag','like','%'.$v.'%');
         }
+        $article = $article->orderBy('created_at','desc');
+
         $page = $request->page;
         $result = array();
         if(empty($page)){
@@ -187,6 +189,12 @@ class ArticleController extends Controller
             $result['page'] = $page;
             $result['count'] = 5;
         }
+
+        $article = $article->with('praise')->with('user')->get();
+        foreach($article as $k => $v){
+            $article[$k]['image'] = json_decode($v['image'],true);
+        }
+
         $result['data'] = $article;
         return response()->json(Result::ok($result));
     }
