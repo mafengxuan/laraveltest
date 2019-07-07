@@ -1,0 +1,72 @@
+:root {
+  --flexCenter: {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  --flexJustify: {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  --flexLeft: {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+  }
+  --flexColumn {
+    flex-direction: column
+  }
+  --flexCenterLeft: {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+  }
+  --flexCenterTopLeft: {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+  }
+  --flexJustifyTop: {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+  }
+}
+
+#app {
+  height: 100%;
+}
+#newAdd {
+  height: 100%;
+  background: #fff;
+  margin-top: -0.88rem;
+  @apply --flexJustify;
+  & .newAdd_box {
+    height: 100%;
+    flex: 1;
+  }
+  & .ql-toolbar  {
+    display: none;
+  }
+  & .ql-editor.ql-blank::before {
+    font-style: normal;
+  }
+  & .ql-editor {
+    height: 2.7rem;
+  }
+  & .ql-container.ql-snow {
+    border: 0;
+  }
+  & .addImg {
+    width: 1.6rem;
+    height: 1.6rem;
+    border: 1px dashed #999999;
+    margin-left: 0.34rem;
+    margin-top: 0.3rem;
+    @apply --flexCenter;
+    & img {
+      width: 0.75rem;
+    }
+  }
+}

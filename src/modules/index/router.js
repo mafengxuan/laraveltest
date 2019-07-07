@@ -4,6 +4,8 @@ const Find = () => import(/* webpackChunkName: "index/Find" */ './containers/fin
 const Personal = () => import(/* webpackChunkName: "index/Personal" */ './containers/personal.vue');
 const Detail = () => import(/* webpackChunkName: "index/Detail" */ './containers/detail.vue');
 const Add = () => import(/* webpackChunkName: "index/Add" */ './containers/add.vue');
+const NewAdd = () => import(/* webpackChunkName: "index/Add" */ './containers/newAdd.vue');
+const EditDetail = () => import(/* webpackChunkName: "index/Add" */ './containers/editDetail');
 const BagRuler = () => import(/* webpackChunkName: "index/Add" */ './containers/bagRuler.vue');
 
 export default [
@@ -41,6 +43,16 @@ export default [
     path: "/Add",
     title: "Add",
     component: Add
+  },
+  {
+    path: "/NewAdd",
+    title: "NewAdd",
+    component: NewAdd
+  },
+  {
+    path: "/EditDetail",
+    title: "EditDetail",
+    component: EditDetail
   },
   {
     path: "/BagRuler",
