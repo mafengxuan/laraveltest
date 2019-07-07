@@ -111,6 +111,11 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index','middleware' => ['wech
     //发现
     Route::get('/discovery/showList', 'DiscoveryController@showList');
 
+    //小文章
+    Route::get('/detail/tag','DetailController@tag');
+    Route::post('/detail/store','DetailController@store');
+    Route::post('/detail/update/{id}','DetailController@update');
+
 });
 
 

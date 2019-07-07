@@ -27,11 +27,21 @@ class Article extends Model
 
     public function praise()
     {
-        return $this->hasOne('App\Model\Praise','articleId','id')->where('userId',session('userId'));
+        return $this->hasOne('App\Model\Praise', 'articleId', 'id')->where('userId', session('userId'));
     }
 
     public function user()
     {
-        return $this->hasOne('App\Model\UserInfo','userId','userId');
+        return $this->hasOne('App\Model\UserInfo', 'userId', 'userId');
+    }
+
+    public function detail()
+    {
+        return $this->hasMany('App\Model\Detail', 'userId', 'userId')->where('status', 1)->orderBy('order','desc')->orderBy('created_at','desc');
+    }
+
+    public function auditDetail()
+    {
+        return $this->hasMany('App\Model\Detail', 'userId', 'userId')->where('status', 3)->orderBy('order','desc')->orderBy('created_at','desc');
     }
 }

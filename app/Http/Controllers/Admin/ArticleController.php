@@ -22,7 +22,11 @@ class ArticleController extends Controller
     public function show($id)
     {
         //
-        $article = Article::with('user')->find($id);
+        $article = Article::with('user')->with('auditDetail')->find($id);
+        $article['image'] = json_decode($article['image'],true);
+        foreach ($article['auditDetail'] as $k => $v){
+            $article['auditDetail'][$k]['image'] = json_decode($v['image'],true);
+        }
         return response()->json(Result::ok($article));
     }
 

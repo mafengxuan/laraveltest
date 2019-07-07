@@ -52,8 +52,6 @@ class ArticleController extends Controller
 
             $myArticle = Article::where('userId',session('userId'))->orderBy('status','desc')->with('user')->first();
             if(empty($myArticle['image'])){
-                $images = [];
-            }else{
                 $images = json_decode($myArticle['image'],true);
             }
         }
@@ -67,6 +65,7 @@ class ArticleController extends Controller
         }
 
         if(!empty($request->image)){
+            $images = [];
             foreach ($request->image as $image){
                 $images[] = $image;
             }

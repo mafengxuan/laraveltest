@@ -402,3 +402,17 @@ CREATE TABLE `sendMessage` (
   `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `userId` int(11) NOT NULL DEFAULT '0',
+  `status` tinyint(4) NOT NULL DEFAULT '0' COMMENT '1审核通过2审核未通过3待审核4草稿箱',
+  `image` varchar(255)  DEFAULT '' COMMENT '图片',
+  `title` varchar(120)  DEFAULT '',
+  `order` int(11) NOT NULL DEFAULT 0 COMMENT '排序',
+  `pid` int(11) NOT NULL DEFAULT 0,
+  `content` text NOT NULL COMMENT '内容',
+  `created_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00' COMMENT '创建时间',
+  `updated_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '修改时间',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
