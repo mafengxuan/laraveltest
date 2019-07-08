@@ -24,7 +24,7 @@ class DetailController extends Controller
         $detail = new Detail();
         $detail->userId = session('userId');
 
-        $detail->status = $request->status;
+        $detail->status = 3;
         $images = [];
         if(!empty($request->image)){
             foreach ($request->image as $image){
@@ -78,7 +78,7 @@ class DetailController extends Controller
             $detail = new Detail();
         }
         $detail->userId = session('userId');
-        $detail->status = $request->status;
+        $detail->status = 3;
         if(!empty($request->image)){
             foreach ($request->image as $image){
                 $images[] = $image;
