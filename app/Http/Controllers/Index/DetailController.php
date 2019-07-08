@@ -33,7 +33,7 @@ class DetailController extends Controller
         }
         $detail->title = $request->title;
         $detail->order = $request->order;
-        $detail->pid = $request->pid;
+        $detail->pid = 0;
         $detail->image = json_encode($images);
         $detail->content = trim($request->post('content'));
         $detail->remark = '';
