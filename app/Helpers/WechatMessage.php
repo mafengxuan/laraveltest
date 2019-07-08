@@ -13,9 +13,6 @@ use App\Model\SendMessage;
 class WechatMessage{
 
     public static function getMoney($openId, $nickname, $money){
-        if(!self::checkSend($openId)){
-            return;
-        }
 
         $app = app('wechat.official_account');
         $template_id = 'pGZVd9cAVkHcxcf_OFEg1UY_xwZSnSCPGkZV4liz5c4';
@@ -40,9 +37,6 @@ class WechatMessage{
     }
 
     public static function sendMoney($openId, $nickname, $money){
-        if(!self::checkSend($openId)){
-            return;
-        }
 
         $app = app('wechat.official_account');
         $template_id = 'pGZVd9cAVkHcxcf_OFEg1UY_xwZSnSCPGkZV4liz5c4';
@@ -67,9 +61,7 @@ class WechatMessage{
     }
 
     public static function submitAudit($openId, $nickname){
-        if(!self::checkSend($openId)){
-            return;
-        }
+
 
         $app = app('wechat.official_account');
         $template_id = 'bJdnjAVbOKSVh16PEP-j8Pink-pEKTwCIYmaL6m18Uk';
@@ -92,9 +84,7 @@ class WechatMessage{
     }
 
     public static function successAudit($openId,$articleId){
-        if(!self::checkSend($openId)){
-            return;
-        }
+
 
         $app = app('wechat.official_account');
         $template_id = 'bgm3Ks6nTYok8tlTPOch2sp0j_njg0xb3H4KdFpwPik';
@@ -116,9 +106,7 @@ class WechatMessage{
     }
 
     public static function rejectAudit($openId,$nickname,$remark){
-        if(!self::checkSend($openId)){
-            return;
-        }
+
 
         $app = app('wechat.official_account');
         $template_id = '2gNnu-Hri-Wbr4YVi4nlszwQVG11QJSa-miDebRsY1w';
@@ -167,7 +155,7 @@ class WechatMessage{
         $date = date("Y-m-d",time());
         $num = SendMessage::where('openId',$openId)->where('sendDate',$date)->count();
 
-        if($num >= 10){
+        if($num >= 1){
             return false;
         }else{
             $sendMessage = new SendMessage();
