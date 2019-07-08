@@ -2,17 +2,37 @@
   <div id="newAdd">
     <div class="newAdd_box">
       <div style="height:0.88rem;"></div>
+      <div class="time_box">
+        <div class="text">矫正时间</div>
+        <cube-select
+          v-model="title"
+          :options="tagsArr[2]"
+          @change="tagsChage">
+        </cube-select>
+      </div>
       <quill-editor v-model="content"
                     ref="myQuillEditor"
                     class="editer"
                     :options="editorOption"
                     autofocus>
       </quill-editor>
-      <input @change="fileChange($event)" type="file" id="upload_file" multiple style="display: none"/>
-      <div class="addImg" @click="chooseType">
-        <img src="../images/add.png" alt="">
+      <div class="img_box">
+        <div class="list" v-for="(item,index) in imgList" :key="index">
+          <img class="img_n" :src="'/storage/'+item.src" alt="">
+          <div class="close cubeic-close" :data-id="item.id" @click='closeImg($event)'></div>
+        </div>
+        <div class="addImg" @click="chooseType" v-if="imgList.length < 3">
+          <img src="../images/add.png" alt="">
+        </div>
+        <div class="list" style="height:0;margin:0.padding:0;"></div>
       </div>
+      <input @change="fileChange($event)" type="file" id="upload_file" multiple style="display: none"/>
     </div>
+    <div style="height:0.8rem;"></div>
+    <div class="btn_box">
+      <div class="push" @click="save">保存</div>
+    </div>
+    <loading v-if="loadings"></loading>
   </div>
 </template>
 
@@ -23,6 +43,9 @@ import '../css/quillsnow.css';
 import '../css/quillbubble.css';
 import { quillEditor } from 'vue-quill-editor'; //调用编辑器
 import loading from '../../../common/components/loading';
+import { uploadImage,detailStore } from '../api/newAdd';
+import { showTags } from '../api/personal';
+import toast from '../../../common/components/toast';
 export default {
   components: {
     //使用编辑器
@@ -32,6 +55,9 @@ export default {
   data(){
     return {
       content:'',
+      title: '',
+      order:'',
+      image:[],
       editorOption:{
         placeholder: '来吧，尽情发挥吧...',
         modules: {
@@ -40,7 +66,12 @@ export default {
             ['blockquote', 'code-block']
           ]
         }
-      }
+      },
+      imgList: [],
+      imgNum: '',
+      tags:"",
+      tagsArr:'',
+      loadings: false
     }
   },
   methods: {
@@ -62,8 +93,86 @@ export default {
       }
       var formData = new FormData();
       formData.append('files[]', files);
-      // this.uploadImage(formData)
-    }
+      this.$data.loadings = true;
+      uploadImage(formData).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            this.$data.imgNum = +this.$data.imgNum + 1;
+            this.$data.imgList.push({
+              id: this.$data.imgNum,
+              src: res.data.result
+            })
+          }else {
+            toast(res.data.errMessage,{delay:1500});
+          }
+        }
+        this.$data.loadings = false;
+      })
+    },
+    closeImg (event){
+      this.$data.loadings = true;
+      document.getElementById('upload_file').value = '';
+      var id = event.target.dataset.id;
+      for(var i=0;i<this.$data.imgList.length;i++) {
+        if(id == this.$data.imgList[i].id){
+          this.$data.imgList.splice(i, 1);
+        }
+      }
+      this.$data.loadings = false;
+    },
+    initTags(result) {
+      var tags = {};
+      for(var i=0;i<result.length;i++){
+        var data = [];
+        for(var j=0;j<result[i].data.length;j++){
+          if(result[i].key == "tooth_question"){
+            var ques = {
+              text: result[i].data[j].value,
+              value: result[i].data[j].value
+            }
+            data.push(ques);
+          }else {
+            data.push(result[i].data[j].value);
+          }
+        }
+        tags[i] = data;
+      }
+      this.$data.tagsArr = tags;
+    },
+    tagsChage(value, index, text){
+      console.log(value);
+      for(var i=0;i<this.$data.tags[2].data.length;i++){
+        if(value == this.$data.tags[2].data[i].value) {
+          this.$data.order = this.$data.tags[2].data[i].key;
+        }
+      }
+    },
+    save (){
+      this.$data.image = [];
+      for(var i=0;i<this.$data.imgList.length;i++){
+        this.$data.image.push(this.$data.imgList[i].src);
+      }
+      detailStore({
+        title: this.$data.title,
+        content: this.$data.content,
+        order: this.$data.order,
+        image: this.$data.image
+      })
+    },
+  },
+  created() {
+    var that = this;
+    window.scrollTo(0,0);
+    showTags().then(res => {
+      if(res.status == 200 && res.data){
+        if(res.data.status){
+          that.initTags(res.data.result);
+          that.$data.tags = res.data.result;
+        }else {
+          toast(res.data.errMessage,{delay:1500});
+        }
+      }
+    })
   }
 }
 </script>
