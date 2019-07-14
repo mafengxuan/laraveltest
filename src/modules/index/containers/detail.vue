@@ -10,10 +10,70 @@
           <div class="time">更新时间：{{info.updated_at}}</div>
         </div>
       </div>
-      <div v-html="info.content" class="content"></div>
+      <div class="inner" v-if="info.user">{{info.user.content}}</div>
+      <!-- <div v-html="info.content" class="content"></div>
       <div class="collection" @click="collect">{{info.collected?'已收藏':'收藏'}}</div>
-      <div style="clear:both;"></div>
+      <div style="clear:both;"></div> -->
+      <div class="label_inner"><span class="bg_r">男</span><span class="bg_r">5岁</span><span class="bg_r">36个月</span><span class="bg_r">钢丝矫正</span></div>
+      <div class="img_box">
+        <div class="list">
+          <img class="img_n" src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt="">
+        </div>
+        <div class="list">
+          <img class="img_n" src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt="">
+        </div>
+        <div class="list">
+          <img class="img_n" src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt="">
+        </div>
+        <div class="list"></div>
+      </div>
     </div>
+    <div class="editDetail_title">矫正历程</div>
+    <div class="editDetail_list">
+      <div class="title"><img src="../images/time.png" alt="">  <span>矫正第3个月</span></div>
+      <ul>
+        <li>
+          <div class="content">10月有矫正牙齿的想法，与老公商量后决定实行！想彻底整顿一下自己的口腔问题</div>
+          <div class="img_boxs">
+            <div class="img_box_list">
+              <img src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt="">
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="editDetail_list">
+      <div class="title"><img src="../images/time.png" alt="">  <span>矫正第3个月</span></div>
+      <ul>
+        <li>
+          <div class="content">10月有矫正牙齿的想法，与老公商量后决定实行！想彻底整顿一下自己的口腔问题</div>
+          <div class="img_boxs">
+            <div class="img_box_list_two">
+              <div class="one"><img src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt=""></div>
+              <div class="two"><img src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt=""></div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="editDetail_list">
+      <div class="title"><img src="../images/time.png" alt="">  <span>矫正第3个月</span></div>
+      <ul>
+        <li>
+          <div class="content">10月有矫正牙齿的想法，与老公商量后决定实行！想彻底整顿一下自己的口腔问题</div>
+          <div class="img_boxs">
+            <div class="img_box_list_three clearfix">
+              <div class="one"><img src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt=""></div>
+              <div class="img_box_list_three_right">
+                <div class="two"><img src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt=""></div>
+                <div class="three"><img src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt=""></div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+    <div class="load_more">加载更多</div>
     <div style="height:0.8rem;background:#fff;"></div>
     <div class="message_title" v-if='info'>
       <span>全部回复({{msg.length}})</span>
@@ -44,11 +104,22 @@
         </li>
       </ul>
     </div>
-    <div style="height:1.24rem;"></div>
-    <div class="reply_b">
+    <!-- <div style="height:1.24rem;"></div> -->
+    <!-- <div class="reply_b">
       <div class="con">
         <div class="con_in"><input type="text" placeholder="说说你的看法..." name="" v-model="content"></div>
         <div class="" @click="pushSay">发表</div>
+      </div>
+    </div> -->
+    <div class="editDetail_footer_box">
+      <div class="pinlun"><span>发表评论</span></div>
+      <div class="start">
+        <div class="num">已收藏</div>
+        <img src="../images/start.png" alt="">
+      </div>
+      <div class="good">
+        <div class="num">28</div>
+        <img src="../images/good_b.png" alt="">
       </div>
     </div>
     <loading v-if='!info'></loading>

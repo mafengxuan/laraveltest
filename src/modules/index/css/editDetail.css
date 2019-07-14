@@ -60,7 +60,7 @@
         max-height: 100%;
       }
     }
-    & .info_box {
+    & .info_boxs {
       @apply --flexCenterLeft;
       flex-direction: column;
       margin-left: 0.2rem;

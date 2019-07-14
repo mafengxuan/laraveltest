@@ -3,7 +3,7 @@
     <div class="info_box">
       <div class="top_box">
         <div class="logo_box"><img src="http://thirdwx.qlogo.cn/mmopen/vi_32/Q0j4TwGTfTJVsG7bbdy5scwxYWO1ykRNNhrlvqT5RTRI2rVSsnSibclzosheYHLRO41IjM0tYt5ARIKfZ8OEhzQ/132" alt=""></div>
-        <div class="info_box">
+        <div class="info_boxs">
           <div class="title">蔡黎明</div>
           <div class="time">更新时间：2019-07-03 14:40:51</div>
         </div>

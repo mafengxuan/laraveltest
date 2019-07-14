@@ -140,7 +140,6 @@ export default {
       this.$data.tagsArr = tags;
     },
     tagsChage(value, index, text){
-      console.log(value);
       for(var i=0;i<this.$data.tags[2].data.length;i++){
         if(value == this.$data.tags[2].data[i].value) {
           this.$data.order = this.$data.tags[2].data[i].key;
@@ -152,11 +151,32 @@ export default {
       for(var i=0;i<this.$data.imgList.length;i++){
         this.$data.image.push(this.$data.imgList[i].src);
       }
+      if(!this.$data.title){
+        toast('请选择矫正时间',{delay:1500});
+        return;
+      }
+      if(!this.$data.content){
+        toast('内容不能为空',{delay:1500});
+        return;
+      }
+      if(!this.$data.image){
+        toast('请上传图片',{delay:1500});
+        return;
+      }
+
       detailStore({
         title: this.$data.title,
         content: this.$data.content,
         order: this.$data.order,
         image: this.$data.image
+      }).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            toast(res.data.result,{delay:1500});
+          }else {
+            toast(res.data.errMessage,{delay:1500});
+          }
+        }
       })
     },
   },
