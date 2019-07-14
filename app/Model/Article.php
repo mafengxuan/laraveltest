@@ -44,4 +44,9 @@ class Article extends Model
     {
         return $this->hasMany('App\Model\Detail', 'userId', 'userId')->where('status', 3)->orderBy('order','desc')->orderBy('created_at','desc');
     }
+
+    public function myDetail()
+    {
+        return $this->hasMany('App\Model\Detail', 'userId', 'userId')->orderBy('order','desc')->orderBy('created_at','desc');
+    }
 }
