@@ -124,7 +124,7 @@ class ArticleController extends Controller
     public function showMyArticle()
     {
         //
-        $article = Article::where('userId',session('userId'))->orderBy('status','desc')->with('user')->first();
+        $article = Article::where('userId',session('userId'))->orderBy('status','desc')->with('user')->with('detail')->first();
         return response()->json(Result::ok($article));
     }
 
