@@ -74,15 +74,17 @@ class DetailController extends Controller
         $order = $detail['order'];
         $pid = $detail['pid'];
 
-        $oldDetail = Detail::where('userId',$userId)->where('status',1)->where('id',$pid)->first();
-        if(!empty($oldDetail) && !empty($pid)){
-            $oldDetail->content = $content;
-            $oldDetail->image = $image;
-            $oldDetail->auditTime = date('Y-m-d H:i:s',time());
-            $oldDetail->title = $title;
-            $oldDetail->order = $order;
-            $oldDetail->save();
-            $detail->delete();
+        if(!empty($pid)){
+            $oldDetail = Detail::where('userId',$userId)->where('status',1)->where('id',$pid)->first();
+            if(!empty($oldDetail)){
+                $oldDetail->content = $content;
+                $oldDetail->image = $image;
+                $oldDetail->auditTime = date('Y-m-d H:i:s',time());
+                $oldDetail->title = $title;
+                $oldDetail->order = $order;
+                $oldDetail->save();
+                $detail->delete();
+            }
         }else{
             $detail->status = 1;
             $detail->auditTime = date('Y-m-d H:i:s',time());
