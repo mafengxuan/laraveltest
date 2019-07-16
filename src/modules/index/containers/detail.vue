@@ -14,16 +14,12 @@
       <!-- <div v-html="info.content" class="content"></div>
       <div class="collection" @click="collect">{{info.collected?'已收藏':'收藏'}}</div>
       <div style="clear:both;"></div> -->
-      <div class="label_inner"><span class="bg_r">男</span><span class="bg_r">5岁</span><span class="bg_r">36个月</span><span class="bg_r">钢丝矫正</span></div>
-      <div class="img_box">
-        <div class="list">
-          <img class="img_n" src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt="">
-        </div>
-        <div class="list">
-          <img class="img_n" src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt="">
-        </div>
-        <div class="list">
-          <img class="img_n" src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt="">
+      <div class="label_inner">
+        <span class="bg_r" v-for="(val,key) in info.tag.split(',')" :key="key">{{val}}</span>
+      </div>
+      <div class="img_box" v-if="info.image && info.image.length">
+        <div class="list" v-for="(item,index) in info.image" :key="index">
+          <img class="img_n" :src="'/storage/'+item" alt="">
         </div>
         <div class="list"></div>
       </div>
