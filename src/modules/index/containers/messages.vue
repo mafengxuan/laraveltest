@@ -65,9 +65,6 @@ export default {
           window.event.returnValue = false;
           return false;
       }
-
-      console.log(e.target.dataset);
-
       this.dialog = this.$createDialog({
         type: 'prompt',
         title: '回复',

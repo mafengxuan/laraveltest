@@ -289,7 +289,7 @@ export default {
               this.timer();
               return;
             }
-            this.$router.push('/add');
+            this.$router.push('/editDetail');
           }else {
             toast(res.data.errMessage,{delay:1500});
           }

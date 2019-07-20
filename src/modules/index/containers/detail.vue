@@ -14,7 +14,7 @@
       <!-- <div v-html="info.content" class="content"></div>
       <div class="collection" @click="collect">{{info.collected?'已收藏':'收藏'}}</div>
       <div style="clear:both;"></div> -->
-      <div class="label_inner">
+      <div class="label_inner" v-if="info.tag">
         <span class="bg_r" v-for="(val,key) in info.tag.split(',')" :key="key">{{val}}</span>
       </div>
       <div class="img_box" v-if="info.image && info.image.length">
@@ -25,51 +25,31 @@
       </div>
     </div>
     <div class="editDetail_title">矫正历程</div>
-    <div class="editDetail_list">
-      <div class="title"><img src="../images/time.png" alt="">  <span>矫正第3个月</span></div>
+    <div class="editDetail_list" v-for="(val,key) in info.detail" :key="key">
+      <div class="title"><img src="../images/time.png" alt="">  <span>{{val.title}}</span></div>
       <ul>
         <li>
-          <div class="content">10月有矫正牙齿的想法，与老公商量后决定实行！想彻底整顿一下自己的口腔问题</div>
+          <div class="content" v-html="val.content"></div>
           <div class="img_boxs">
-            <div class="img_box_list">
-              <img src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt="">
+            <div class="img_box_list" v-if='val.image.length == 1'>
+              <img :src="'/storage/'+val.image[0]" alt="">
             </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div class="editDetail_list">
-      <div class="title"><img src="../images/time.png" alt="">  <span>矫正第3个月</span></div>
-      <ul>
-        <li>
-          <div class="content">10月有矫正牙齿的想法，与老公商量后决定实行！想彻底整顿一下自己的口腔问题</div>
-          <div class="img_boxs">
-            <div class="img_box_list_two">
-              <div class="one"><img src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt=""></div>
-              <div class="two"><img src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt=""></div>
+            <div class="img_box_list_two" v-if='val.image.length == 2'>
+              <div class="one"><img :src="'/storage/'+val.image[0]" alt=""></div>
+              <div class="two"><img :src="'/storage/'+val.image[1]" alt=""></div>
             </div>
-          </div>
-        </li>
-      </ul>
-    </div>
-    <div class="editDetail_list">
-      <div class="title"><img src="../images/time.png" alt="">  <span>矫正第3个月</span></div>
-      <ul>
-        <li>
-          <div class="content">10月有矫正牙齿的想法，与老公商量后决定实行！想彻底整顿一下自己的口腔问题</div>
-          <div class="img_boxs">
-            <div class="img_box_list_three clearfix">
-              <div class="one"><img src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt=""></div>
+            <div class="img_box_list_three clearfix" v-if='val.image.length == 3'>
+              <div class="one"><img :src="'/storage/'+val.image[0]" alt=""></div>
               <div class="img_box_list_three_right">
-                <div class="two"><img src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt=""></div>
-                <div class="three"><img src="/storage//2019-07-02/Z3lj8SHDtqjRCsk1QWCW1Px5YfG6JbCaX2rL5oLN.png" alt=""></div>
+                <div class="two"><img :src="'/storage/'+val.image[1]" alt=""></div>
+                <div class="three"><img :src="'/storage/'+val.image[2]" alt=""></div>
               </div>
             </div>
           </div>
         </li>
       </ul>
     </div>
-    <div class="load_more">加载更多</div>
+    <!-- <div class="load_more">加载更多</div> -->
     <div style="height:0.8rem;background:#fff;"></div>
     <div class="message_title" v-if='info'>
       <span>全部回复({{msg.length}})</span>
@@ -107,14 +87,15 @@
         <div class="" @click="pushSay">发表</div>
       </div>
     </div> -->
+    <div style="height: 1.1rem;"></div>
     <div class="editDetail_footer_box">
-      <div class="pinlun"><span>发表评论</span></div>
+      <div class="pinlun" @click="showPrompt()"><span>发表评论</span></div>
       <div class="start">
-        <div class="num">已收藏</div>
+        <div class="num"  @click="collect">{{info.collected?'已收藏':'收藏'}}</div>
         <img src="../images/start.png" alt="">
       </div>
-      <div class="good">
-        <div class="num">28</div>
+      <div class="good"  @click='praise'>
+        <div class="num">{{info.praiseNum}}</div>
         <img src="../images/good_b.png" alt="">
       </div>
     </div>
@@ -126,7 +107,7 @@
 import "../css/detail.css";
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import loading from '../../../common/components/loading';
-import { commentsList,addComments,collect } from '../api/detail';
+import { commentsList,addComments,collect,setPraise } from '../api/detail';
 import toast from '../../../common/components/toast';
 export default {
   components: {
@@ -135,7 +116,8 @@ export default {
   data() {
     return {
       content:'',
-      msg:""
+      msg:"",
+      isPraise: false
     }
   },
   computed: {
@@ -227,6 +209,29 @@ export default {
       collect(parames).then(res => {
         this.setCollect(this.info.collected)
       })
+    },
+    praise() {
+
+    },
+    showPrompt() {
+      var that = this;
+      this.dialog = this.$createDialog({
+        type: 'prompt',
+        title: '回复',
+        prompt: {
+          value: '',
+          placeholder: '请输入'
+        },
+        onConfirm: (en, promptValue) => {
+          if(!promptValue){
+            toast('请输入内容',{delay:1500});
+            return;
+          }
+          this.$data.content = promptValue;
+          that.pushSay();
+        }
+      }).show();
+      return;
     }
   }
 }

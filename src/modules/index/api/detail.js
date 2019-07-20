@@ -11,3 +11,7 @@ export function addComments(data) {
 export function collect(data) {
   return Axios.post('/api/index/collect/'+data.id,data);
 }
+
+export function setPraise(data) {
+  return Axios.post('/api/index/praise/'+data.id,data);
+}

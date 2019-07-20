@@ -43,7 +43,7 @@ import '../css/quillsnow.css';
 import '../css/quillbubble.css';
 import { quillEditor } from 'vue-quill-editor'; //调用编辑器
 import loading from '../../../common/components/loading';
-import { uploadImage,detailStore } from '../api/newAdd';
+import { uploadImage,detailStore,getDetail,detailUpdate } from '../api/newAdd';
 import { showTags } from '../api/personal';
 import toast from '../../../common/components/toast';
 export default {
@@ -164,20 +164,37 @@ export default {
         return;
       }
 
-      detailStore({
-        title: this.$data.title,
-        content: this.$data.content,
-        order: this.$data.order,
-        image: this.$data.image
-      }).then(res => {
-        if(res.status == 200 && res.data){
-          if(res.data.status){
-            toast(res.data.result,{delay:1500});
-          }else {
-            toast(res.data.errMessage,{delay:1500});
+      if(this.$route.query && this.$route.query.id){
+        detailUpdate({
+          id: this.$route.query.id,
+          ontent: this.$data.content,
+          order: this.$data.order,
+          image: this.$data.image
+        }).then(res => {
+          if(res.status == 200 && res.data){
+            if(res.data.status){
+              toast(res.data.result,{delay:1500});
+            }else {
+              toast(res.data.errMessage,{delay:1500});
+            }
           }
-        }
-      })
+        })
+      }else {
+        detailStore({
+          title: this.$data.title,
+          content: this.$data.content,
+          order: this.$data.order,
+          image: this.$data.image
+        }).then(res => {
+          if(res.status == 200 && res.data){
+            if(res.data.status){
+              toast(res.data.result,{delay:1500});
+            }else {
+              toast(res.data.errMessage,{delay:1500});
+            }
+          }
+        })
+      }
     },
   },
   created() {
@@ -192,7 +209,25 @@ export default {
           toast(res.data.errMessage,{delay:1500});
         }
       }
-    })
+    });
+    if(this.$route.query && this.$route.query.id){
+      getDetail(this.$route.query.id).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            this.$data.content = res.data.result.content;
+            this.$data.title = res.data.result.title;
+            for(var i=0;i<res.data.result.image.length;i++) {
+              this.$data.imgList.push({
+                id: i,
+                src: res.data.result.image[i]
+              })
+            }
+          }else {
+            toast(res.data.errMessage,{delay:1500});
+          }
+        }
+      })
+    }
   }
 }
 </script>
