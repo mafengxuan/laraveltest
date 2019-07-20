@@ -113,6 +113,7 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index','middleware' => ['wech
 
     //小文章
     Route::get('/detail/tag','DetailController@tag');
+    Route::get('/detail/{id}','DetailController@show');
     Route::post('/detail/store','DetailController@store');
     Route::post('/detail/update/{id}','DetailController@update');
 

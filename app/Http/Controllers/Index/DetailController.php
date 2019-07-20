@@ -47,9 +47,14 @@ class DetailController extends Controller
      * @param  \App\Model\Detail  $detail
      * @return \Illuminate\Http\Response
      */
-    public function show(Detail $detail)
+    public function show($id)
     {
         //
+        $detail = Detail::find($id);
+        if(!empty($detail['image'])){
+            $detail['image'] = json_decode($detail['image'],true);
+        }
+        return response()->json(Result::ok($detail));
     }
 
     /**
