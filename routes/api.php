@@ -187,5 +187,10 @@ Route::group(['namespace' => 'Admin', 'prefix' => 'admin','middleware' => ['admi
     Route::post('/addReply', 'ReplyController@addReply');
     Route::post('/reply/{replyId}', 'ReplyController@destroy');
 
+    //小模块
+    Route::post('/detail/audit', 'DetailController@audit');
+    Route::post('/detail/reject', 'DetailController@reject');
+
+
 });
 
