@@ -102,7 +102,7 @@ class ArticleController extends Controller
     public function show($id)
     {
         //
-        $article = Article::where('id',$id)->with('user')->with('detail')->first();
+        $article = Article::where('id',$id)->with('user')->with('detail')->with('praise')->first();
 
         if(!empty($article)){
             if(!empty(session('userId'))){
