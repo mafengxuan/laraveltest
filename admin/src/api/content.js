@@ -16,6 +16,14 @@ export function addReply(data) {
   return Axios.post('/api/admin/addReply',data);
 }
 
+export function audit(data) {
+  return Axios.post('/api/admin/detail/audit',data);
+}
+
+export function reject(data) {
+  return Axios.post('/api/admin/detail/reject',data);
+}
+
 // export function relpayMsg(data) {
 //   return Axios.get('/api/admin/commentsList/'+data.id);
 // }

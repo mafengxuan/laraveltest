@@ -2,6 +2,37 @@
   <div class="app-container">
      <el-button type="primary" style="margin-bottom: 20px;" @click="goBack">返回</el-button>
     <div v-html="data.content" class="content"></div>
+
+    <div class="editDetail_title">矫正历程</div>
+    <div class="editDetail_list" v-for="(val,key) in data.audit_detail" :key="key">
+      <div class="title"><img src="../../../images/time.png" alt=""> <span>{{val.title}}</span></div>
+      <ul>
+        <li>
+          <div class="content" v-html="val.content"></div>
+          <div class="img_boxs">
+            <div class="img_box_list" v-if='val.image.length == 1'>
+              <img :src="'/storage/'+val.image[0]" alt="">
+            </div>
+            <div class="img_box_list_two" v-if='val.image.length == 2'>
+              <div class="one"><img :src="'/storage/'+val.image[0]" alt=""></div>
+              <div class="two"><img :src="'/storage/'+val.image[1]" alt=""></div>
+            </div>
+            <div class="img_box_list_three clearfix" v-if='val.image.length == 3'>
+              <div class="one"><img :src="'/storage/'+val.image[0]" alt=""></div>
+              <div class="img_box_list_three_right">
+                <div class="two"><img :src="'/storage/'+val.image[1]" alt=""></div>
+                <div class="three"><img :src="'/storage/'+val.image[2]" alt=""></div>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+      <el-row style="padding-left: 40px;">
+        <div :data-id="val.id" @click="pass($event)" class="el-button el-button--primary is-plain">通过</div>
+        <div :data-id="val.id" @click="bohui($event)" class="el-button el-button--success is-plain">驳回</div>
+      </el-row>
+    </div>
+
     <div class="reply">
       <div class="top"><span>文章留言({{msg.length}})</span></div>
       <ul>
@@ -55,7 +86,7 @@
 
 <script>
 import { Message } from 'element-ui';
-import { articleShow,articleMsg,deleteMsg,addReply } from '../../../api/content';
+import { articleShow,articleMsg,deleteMsg,addReply,audit,reject } from '../../../api/content';
 export default {
   data() {
     return {
@@ -179,6 +210,50 @@ export default {
     },
     goBack() {
       this.$router.go(-1);
+    },
+    pass(e) {
+      audit({
+        id: e.target.dataset.id
+      }).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            Message({
+              message: res.data.result,
+              type: 'success',
+              duration: 1 * 1000
+            })
+            this.getArticle();
+          }else {
+            Message({
+              message: res.data.errMessage,
+              type: 'error',
+              duration: 1 * 1000
+            })
+          }
+        }
+      })
+    },
+    bohui(e) {
+      reject({
+        id: e.target.dataset.id
+      }).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
+            Message({
+              message: res.data.result,
+              type: 'success',
+              duration: 1 * 1000
+            })
+            this.getArticle();
+          }else {
+            Message({
+              message: res.data.errMessage,
+              type: 'error',
+              duration: 1 * 1000
+            })
+          }
+        }
+      })
     }
   }
 }
@@ -261,5 +336,149 @@ export default {
     padding-bottom: 10px;
     font-size: 14px;
     color: #606266;
+  }
+  /* editDetail_title */
+  .editDetail_title {
+    height: 70px;
+    font-size: 30px;
+    color: #000000;
+    background: #fff;
+    line-height: 70px;
+    margin-top: 18px;
+  }
+  .editDetail_list {
+    padding: 0 24px;
+    padding-top: 30px;
+    margin-bottom: 10px;
+  }
+  .editDetail_list .title {
+    font-size: 26px;
+    color: #000000;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+  }
+  .editDetail_list .title img {
+    width: 30px;
+    margin-right: 12px;
+  }
+  .editDetail_list ul {
+    margin-top: 20px;
+  }
+  .editDetail_list ul li {
+    position: relative;
+    width: 620px;
+    background: #fff;
+    padding-bottom: 30px;
+    border-radius: 16px;
+    background: #f2f3f7;
+    list-style:none;
+  }
+  .editDetail_list ul li .content{
+    padding: 0 35px;
+    font-size: 28px;
+    line-height: 40px;
+    color: #000000;
+    padding-top: 24px;
+  }
+  .editDetail_list ul li .content p {
+    padding: 0;
+    margin: 0;
+  }
+  .editDetail_list ul li .img_boxs {
+    width: 550px;
+    line-height: 550px;
+    font-size: 0;
+    margin: 0 auto;
+    margin-top: 15px;
+  }
+  .editDetail_list ul li .img_boxs .img_box_list {
+    width: 550px;
+    height: 550px;
+    line-height: 550px;
+    border-radius: 16px;
+    overflow: hidden;
+  }
+  .editDetail_list ul li .img_boxs .img_box_list img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+  }
+  .editDetail_list ul li .img_boxs .img_box_list_two {
+    width: 550px;
+    margin: 0 auto;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    -webkit-align-items: center;
+    justify-content: space-between;
+    -webkit-justify-content: space-between;
+  }
+  .editDetail_list ul li .img_boxs .img_box_list_two .one,.editDetail_list ul li .img_boxs .img_box_list_two .two {
+    width: 270px;
+    height: 270px;
+    line-height: 270px;
+    font-size: 0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .editDetail_list ul li .img_boxs .img_box_list_two img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+  }
+  .editDetail_list ul li .img_boxs .img_box_list_three {
+    width: 550px;
+    margin: 0 auto;
+  }
+  .editDetail_list ul li .img_boxs .img_box_list_three .one{
+    float: left;
+    width: 340px;
+    height: 410px;
+    line-height: 410px;
+    font-size: 0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .editDetail_list ul li .img_boxs .img_box_list_three .one img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+  }
+  .editDetail_list ul li .img_boxs .img_box_list_three .img_box_list_three_right {
+    float: right;
+    width: 200px;
+  }
+  .editDetail_list ul li .img_boxs .img_box_list_three .img_box_list_three_right .two,.editDetail_list ul li .img_boxs .img_box_list_three .img_box_list_three_right .three {
+    width: 200px;
+    height: 200px;
+    line-height: 200px;
+    font-size: 0;
+    border-radius: 8px;
+    overflow: hidden;
+  }
+  .editDetail_list ul li .img_boxs .img_box_list_three .img_box_list_three_right img {
+    width: 100%;
+    height: 100%;
+    -o-object-fit: cover;
+    object-fit: cover;
+  }
+  .editDetail_list ul li .img_boxs .img_box_list_three .img_box_list_three_right
+   .three  {
+    margin-top: 10px;
+  }
+  .el-button span {
+    display: block;
+    width: 100%;
+    height: 100%;
   }
 </style>
