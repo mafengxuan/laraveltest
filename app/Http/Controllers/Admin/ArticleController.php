@@ -24,12 +24,10 @@ class ArticleController extends Controller
         //
         $article = Article::with('user')->with('auditDetail')->find($id);
         $article['image'] = json_decode($article['image'],true);
-        var_dump($article['audit_detail']);
-        var_dump($article['auditDetail']);
-        if(!empty($article['audit_detail']) && is_array($article['audit_detail'])){
-            foreach ($article['audit_detail'] as $k => $v){
+        if(!empty($article['auditDetail']) && is_array($article['auditDetail'])){
+            foreach ($article['auditDetail'] as $k => $v){
                 var_dump($v['image']);
-                $article['audit_detail'][$k]['image'] = json_decode($v['image'],true);
+                $article['auditDetail'][$k]['image'] = json_decode($v['image'],true);
             }
         }
         
