@@ -24,7 +24,7 @@ class ArticleController extends Controller
         //
         $article = Article::with('user')->with('auditDetail')->find($id);
         $article['image'] = json_decode($article['image'],true);
-        if(!empty($article['auditDetail']) && is_array($article['auditDetail'])){
+        if(!empty($article['auditDetail'])){
             foreach ($article['auditDetail'] as $k => $v){
                 var_dump($v['image']);
                 $article['auditDetail'][$k]['image'] = json_decode($v['image'],true);

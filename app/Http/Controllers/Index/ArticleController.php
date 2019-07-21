@@ -131,9 +131,9 @@ class ArticleController extends Controller
         //
         $article = Article::where('userId',session('userId'))->orderBy('status','desc')->with('user')->with('myDetail')->first();
         $article['image'] = json_decode($article['image'],true);
-        if(!empty($article['my_detail'])){
-            foreach ($article['my_detail'] as $k => $v){
-                $article['my_detail'][$k]['image'] = json_decode($v['image'],true);
+        if(!empty($article['myDetail'])){
+            foreach ($article['myDetail'] as $k => $v){
+                $article['myDetail'][$k]['image'] = json_decode($v['image'],true);
             }
         }
         return response()->json(Result::ok($article));
