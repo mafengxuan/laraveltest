@@ -1,7 +1,16 @@
 <template lang="html">
   <div class="app-container">
-     <el-button type="primary" style="margin-bottom: 20px;" @click="goBack">返回</el-button>
-    <div v-html="data.content" class="content"></div>
+    <el-button type="primary" style="margin-bottom: 20px;" @click="goBack">返回</el-button>
+    <div class="top_box">
+      <div class="logo_box" v-if="data.user">
+        <img :src="data.user.imgUrl" alt="">
+      </div>
+      <div class="info_box">
+        <div class="title" v-if="data.user">{{data.user.nickname}}</div>
+        <div class="time">更新时间：{{data.updated_at}}</div>
+      </div>
+    </div>
+    <div class="detail inner" v-if="data.user">{{data.user.content}}</div>
 
     <div class="editDetail_title">矫正历程</div>
     <div class="editDetail_list" v-for="(val,key) in data.audit_detail" :key="key">
@@ -480,5 +489,63 @@ export default {
     display: block;
     width: 100%;
     height: 100%;
+  }
+  .top_box {
+    width: 100%;
+    height:78px;
+    isplay: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    align-items: center;
+    -webkit-box-pack: start;
+    -ms-flex-pack: start;
+    justify-content: flex-start;
+    margin-top: 16px;
+  }
+  .top_box .logo_box {
+    width: 78px;
+    height: 78px;
+    text-align: center;
+    line-height: 78px;
+    font-size: 0;
+    border-radius: 100%;
+    overflow: hidden;
+  }
+  .top_box .logo_box img {
+    display: inline-block;
+    max-width: 100%;
+    max-height: 100%;
+  }
+  .top_box .info_box {
+    display: flex;
+    display: -webkit-flex;
+    align-items: flex-start;
+    align-items: -webkit-flex-start;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-justify-content: center;
+    flex-direction: column;
+    -webkit-flex-direction: column;
+    margin-left: 0.2rem;
+  }
+  .top_box .info_box .title {
+    font-size: 30px;
+    line-height: 40px;
+  }
+  .top_box .info_box .time {
+    font-size: 24px;
+    line-height: 30px;
+    color: #777777;
+    margin-top: 2px;
+  }
+  .detail.inner {
+    width: 100%;
+    line-height:48px;
+    font-size: 32px;
+    color: #000000;
+    margin-top: 20px;
+    text-align: justify;
   }
 </style>
