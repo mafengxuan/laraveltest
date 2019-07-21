@@ -26,7 +26,6 @@ class ArticleController extends Controller
         $article['image'] = json_decode($article['image'],true);
         if(!empty($article['auditDetail'])){
             foreach ($article['auditDetail'] as $k => $v){
-                var_dump($v['image']);
                 $article['auditDetail'][$k]['image'] = json_decode($v['image'],true);
             }
         }
