@@ -108,7 +108,7 @@ class DetailController extends Controller
         }
         $detail->remark = '';
         $detail->save();
-        return response()->json(Result::ok('添加成功'));
+        return response()->json(Result::ok('修改成功'));
     }
 
     /**
