@@ -39,6 +39,10 @@
         <div class="list"></div>
         <div class="list"></div>
       </div>
+      <div class="btn_box">
+        <div class="push" v-if="!isSave" @click="push">发布</div>
+        <div class="push" v-else @click="updata">保存</div>
+      </div>
     </div>
     <div class="editDetail_title">矫正历程</div>
     <div class="editDetail_list" v-for="(val,key) in info.my_detail" :key="key">
@@ -81,10 +85,6 @@
       </div>
     </div>
     <div style="height: 0.8rem;"></div>
-    <div class="btn_box">
-      <div class="push" v-if="!isSave" @click="push">发布</div>
-      <div class="push" v-else @click="updata">保存</div>
-    </div>
     <div class="Info_dialog" v-if="Infos">
       <div class="Info_dialog_box">
         <div class="close cubeic-close" @click="Infos=false"></div>

@@ -58,6 +58,7 @@ export default {
       title: '',
       order:'',
       image:[],
+      pid: '',
       editorOption:{
         placeholder: '来吧，尽情发挥吧...',
         modules: {
@@ -166,9 +167,11 @@ export default {
 
       if(this.$route.query && this.$route.query.id){
         detailUpdate({
+          title: this.$data.title,
           id: this.$route.query.id,
           content: this.$data.content,
           order: this.$data.order,
+          pid: this.$data.pid,
           image: this.$data.image
         }).then(res => {
           if(res.status == 200 && res.data){
@@ -217,6 +220,7 @@ export default {
             this.$data.content = res.data.result.content;
             this.$data.title = res.data.result.title;
             this.$data.order = res.data.result.order;
+            this.$data.pid = res.data.result.pid;
             for(var i=0;i<res.data.result.image.length;i++) {
               this.$data.imgList.push({
                 id: i,
