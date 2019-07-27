@@ -22,11 +22,11 @@ class ArticleController extends Controller
     public function show($id)
     {
         //
-        $article = Article::with('user')->with('detail')->find($id);
+        $article = Article::with('user')->with('myDetail')->find($id);
         $article['image'] = json_decode($article['image'],true);
-        if(!empty($article['detail'])){
-            foreach ($article['detail'] as $k => $v){
-                $article['detail'][$k]['image'] = json_decode($v['image'],true);
+        if(!empty($article['myDetail'])){
+            foreach ($article['myDetail'] as $k => $v){
+                $article['myDetail'][$k]['image'] = json_decode($v['image'],true);
             }
         }
         
