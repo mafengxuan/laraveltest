@@ -78,7 +78,11 @@ class DetailController extends Controller
     public function update(Request $request, $id)
     {
         //
-        $detail = Detail::where('pid',$id)->where('status',3)->where('userId',session('userId'))->first();
+        $detail = null;
+        if(!empty($request->pid)){
+            $detail = Detail::where('pid',$request->pid)->where('status',3)->where('userId',session('userId'))->first();
+        }
+
         if(empty($detail)){
             $detail = new Detail();
         }
@@ -95,7 +99,9 @@ class DetailController extends Controller
         if(!empty($request->order)){
             $detail->order = $request->order;
         }
-        $detail->pid = $id;
+        if(empty($request->pid)) {
+            $detail->pid = $id;
+        }
         $detail->image = json_encode($images);
         if(!empty($request->post('content'))){
             $detail->content = trim($request->post('content'));
