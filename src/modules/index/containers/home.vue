@@ -219,6 +219,7 @@ export default {
       // }
       this.$data.type = false;
       this.$data.listType = '';
+      this.$data.lists = "";
       this.tagsList(data);
     },
     tagsList(data){
@@ -227,7 +228,7 @@ export default {
           if(res.data.status){
             // this.setTagsList(res.data.result);
             if(res.data.result.data.length < res.data.result.count){
-              that.pullupMsg = '没有更多日记啦';
+              this.pullupMsg = '没有更多日记啦';
               return;
             }
             this.$data.page = 1;

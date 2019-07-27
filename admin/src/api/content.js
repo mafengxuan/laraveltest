@@ -17,11 +17,11 @@ export function addReply(data) {
 }
 
 export function audit(data) {
-  return Axios.post('/api/admin/detail/audit',data);
+  return Axios.post('/api/admin/detail/audit/'+ data.id);
 }
 
 export function reject(data) {
-  return Axios.post('/api/admin/detail/reject',data);
+  return Axios.post('/api/admin/detail/reject/'+data.id,{remark: data.remark});
 }
 
 // export function relpayMsg(data) {

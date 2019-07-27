@@ -167,7 +167,7 @@ export default {
       if(this.$route.query && this.$route.query.id){
         detailUpdate({
           id: this.$route.query.id,
-          ontent: this.$data.content,
+          content: this.$data.content,
           order: this.$data.order,
           image: this.$data.image
         }).then(res => {
@@ -216,6 +216,7 @@ export default {
           if(res.data.status){
             this.$data.content = res.data.result.content;
             this.$data.title = res.data.result.title;
+            this.$data.order = res.data.result.order;
             for(var i=0;i<res.data.result.image.length;i++) {
               this.$data.imgList.push({
                 id: i,

@@ -13,8 +13,14 @@
     <div class="detail inner" v-if="data.user">{{data.user.content}}</div>
 
     <div class="editDetail_title">矫正历程</div>
-    <div class="editDetail_list" v-for="(val,key) in data.audit_detail" :key="key">
-      <div class="title"><img src="../../../images/time.png" alt=""> <span>{{val.title}}</span></div>
+    <div class="editDetail_list" v-for="(val,key) in data.detail" :key="key">
+      <div class="title">
+        <img src="../../../images/time.png" alt="">
+        <span>{{val.title}} </span>
+        <el-tag type="success" v-if="val.status == 1">通过</el-tag>
+        <el-tag type="danger" v-if="val.status == 2">驳回</el-tag>
+        <el-tag v-if="val.status == 3">待审核啊</el-tag>
+      </div>
       <ul>
         <li>
           <div class="content" v-html="val.content"></div>
@@ -37,8 +43,8 @@
         </li>
       </ul>
       <el-row style="padding-left: 40px;">
-        <div :data-id="val.id" @click="pass($event)" class="el-button el-button--primary is-plain">通过</div>
-        <div :data-id="val.id" @click="bohui($event)" class="el-button el-button--success is-plain">驳回</div>
+        <div :data-id="val.id" @click="pass($event)" class="el-button el-button--success">通过</div>
+        <div :data-id="val.id" @click="bohui($event)" class="el-button el-button--danger">驳回</div>
       </el-row>
     </div>
 
@@ -90,6 +96,26 @@
         <el-button type="primary" @click="replayMsgSure">确 定</el-button>
       </span>
     </el-dialog>
+    <el-dialog
+      title="提示"
+      :visible.sync="dialogVisible"
+      width="30%"
+      :before-close="handleClose">
+      <span v-if='type == "audit"'>确定通过</span>
+      <span v-if='type == "reject"'>确定驳回</span>
+      <el-input
+        type="textarea"
+        :rows="2"
+        placeholder="请输入内容"
+        v-model="remark"
+        style="margin-top:20px;"
+        v-if='type == "reject"'>
+      </el-input>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button type="primary" @click="dialogSure">确 定</el-button>
+      </span>
+    </el-dialog>
   </div>
 </template>
 
@@ -110,7 +136,10 @@ export default {
         commentId:"",
         reUserId:"",
         reNickname:''
-      }
+      },
+      id:'',
+      type:'',
+      dialogVisible: false
     }
   },
   created() {
@@ -221,8 +250,28 @@ export default {
       this.$router.go(-1);
     },
     pass(e) {
+      this.$data.id = e.target.dataset.id;
+      this.$data.dialogVisible = true;
+      this.$data.type = 'audit';
+      return;
+    },
+    bohui(e) {
+      this.$data.id = e.target.dataset.id;
+      this.$data.dialogVisible = true;
+      this.$data.type = 'reject';
+      return;
+    },
+    dialogSure() {
+      this.$data.dialogVisible = false;
+      if(this.$data.type == 'audit'){
+        this.fetchAudit();
+      }else if(this.$data.type == 'reject'){
+        this.fetchReject();
+      }
+    },
+    fetchAudit() {
       audit({
-        id: e.target.dataset.id
+        id: this.$data.id
       }).then(res => {
         if(res.status == 200 && res.data){
           if(res.data.status){
@@ -242,9 +291,10 @@ export default {
         }
       })
     },
-    bohui(e) {
+    fetchReject() {
       reject({
-        id: e.target.dataset.id
+        id: this.$data.id,
+        remark: this.$data.remark
       }).then(res => {
         if(res.status == 200 && res.data){
           if(res.data.status){

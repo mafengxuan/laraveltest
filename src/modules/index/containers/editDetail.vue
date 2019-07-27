@@ -13,10 +13,16 @@
         <span class="bg_r" v-for="(val,key) in info.tag.split(',')" :key="key">{{val}}</span>
       </div>
       <input @change="fileChange($event)" type="file" id="upload_file" multiple style="display: none"/>
-      <div class="img_box" v-if="info.image && info.image.length">
-        <div class="list" v-for="(item,index) in imgList" :key="index">
+      <div class="img_box">
+        <div class="list" v-if="info.image && info.image.length" v-for="(item,index) in imgList" :key="index">
           <div class="close cubeic-close" @click="deleImg($event)" :data-index="index"></div>
           <img class="img_n" :src="'/storage'+item" alt="">
+        </div>
+        <div class="list add" @click="chooseType">
+          <div class="add_img">添加封面</div>
+          <div class="add_img_box">
+            <img src="../images/add_b.png" alt="">
+          </div>
         </div>
         <div class="list add" @click="chooseType">
           <div class="add_img">添加封面</div>
