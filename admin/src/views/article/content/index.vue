@@ -13,7 +13,7 @@
     <div class="detail inner" v-if="data.user">{{data.user.content}}</div>
 
     <div class="editDetail_title">矫正历程</div>
-    <div class="editDetail_list" v-for="(val,key) in data.detail" :key="key">
+    <div class="editDetail_list" v-for="(val,key) in data.my_detail" :key="key">
       <div class="title">
         <img src="../../../images/time.png" alt="">
         <span>{{val.title}} </span>
