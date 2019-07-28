@@ -12,7 +12,7 @@
       <div class="label_inner" v-if="info.tag">
         <span class="bg_r" v-for="(val,key) in info.tag.split(',')" :key="key">{{val}}</span>
       </div>
-      <input @change="fileChange($event)" type="file" id="upload_file" multiple style="display: none"/>
+      <input @change="fileChange($event)" type="file" id="upload_file"1 style="display: none"/>
       <div class="img_box">
         <div class="list" v-if="info.image && info.image.length" v-for="(item,index) in imgList" :key="index">
           <div class="close cubeic-close" @click="deleImg($event)" :data-index="index"></div>
@@ -201,6 +201,10 @@ export default {
         mobile: this.$data.mobile,
         doctor: this.$data.doctor
       }).then(res => {
+        if(this.$data.imgList.length < 3){
+          toast('图片必须上传三张',{delay:1000});
+          return;
+        }
         addAticle({
           qrCode:'',
           image: this.$data.imgList,
@@ -222,6 +226,11 @@ export default {
       })
     },
     updata(){
+      console.log(this.$data.imgList)
+      if(this.$data.imgList.length < 3){
+        toast('图片必须上传三张',{delay:1000});
+        return;
+      }
       addAticle({
         qrCode:'',
         image: this.$data.imgList,

@@ -26,7 +26,7 @@
         </div>
         <div class="list" style="height:0;margin:0.padding:0;"></div>
       </div>
-      <input @change="fileChange($event)" type="file" id="upload_file" multiple style="display: none"/>
+      <input @change="fileChange($event)" type="file" id="upload_file" style="display: none"/>
     </div>
     <div style="height:0.8rem;"></div>
     <div class="btn_box">

@@ -223,11 +223,15 @@ export default {
       this.tagsList(data);
     },
     tagsList(data){
+            console.log(123)
       showTagsList(data).then(res => {
         if(res.status == 200 && res.data){
           if(res.data.status){
             // this.setTagsList(res.data.result);
             if(res.data.result.data.length < res.data.result.count){
+              if(res.data.result.data.length > 0){
+                this.$data.lists = res.data.result.data;
+              }
               this.pullupMsg = '没有更多日记啦';
               return;
             }
@@ -291,8 +295,10 @@ export default {
           getList({type:that.$data.listType,page:that.$data.page}).then(res => {
             if(res.status == 200 && res.data){
               if(res.data.status){
-                console.log(res.data.result.data.length)
                 if(res.data.result.data.length < res.data.result.count){
+                  if(res.data.result.data.length){
+                    that.$data.lists = that.$data.lists.concat(res.data.result.data);
+                  }
                   that.pullupMsg = '没有更多日记啦';
                   return;
                 }
