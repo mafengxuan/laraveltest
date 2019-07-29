@@ -75,7 +75,7 @@ class WechatMessage{
                 "first" => '矫正日记提交审核通知',
                 "keyword1" => $nickname,
                 "keyword2" => '矫正日记',
-                "keyword3" => date('Y年m月d日 HH:ii',time()),
+                "keyword3" => date('Y年m月d日 H:i',time()),
                 "remark" => '工作人员会在工作时间48小时内为您审核!',
             ]
         ];
