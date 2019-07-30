@@ -72,7 +72,7 @@
           </div>
           <div class="inner">{{item.content}}</div>
           <div class="reply_con" v-if="item.reply.length">
-            <div v-for="(val,key) in item.reply" :key="key">
+            <div v-for="(val,key) in item.reply" :key="key" @click="replyInfo($event)" :data-reUserId="val.reUserId" :data-reNickname="val.reNickname" :data-commentId="val.commentId" :data-userId="val.userId">
               <i class="c_0">{{val.nickname}}：</i>{{val.content}}
               <!-- <div class="look_to">查看全部评论 ></div> -->
             </div>
@@ -107,7 +107,7 @@
 import "../css/detail.css";
 import { mapGetters, mapActions, mapMutations } from 'vuex';
 import loading from '../../../common/components/loading';
-import { commentsList,addComments,collect,setPraise } from '../api/detail';
+import { commentsList,addComments,collect,setPraise,addReply } from '../api/detail';
 import toast from '../../../common/components/toast';
 export default {
   components: {
@@ -232,6 +232,40 @@ export default {
         }
       }).show();
       return;
+    },
+    replyInfo(event) {
+      this.$createDialog({
+        type: 'prompt',
+        title: '回复',
+        prompt: {
+          value: '',
+          placeholder: '请输入'
+        },
+        onConfirm: (en, promptValue) => {
+          if(!promptValue){
+            toast('请输入内容',{delay:1500});
+            return;
+          }
+
+          addReply({
+            userId: event.target.dataset.userid,
+            commentId: event.target.dataset.commentid,
+            reUserId: event.target.dataset.reuserid,
+            reNickname: event.target.dataset.renickname,
+            content: promptValue
+          }).then(res => {
+            if(res.status == 200 && res.data){
+              if(res.data.status){
+                this.getCommentsList();
+              }else {
+                toast(res.data.errMessage,{delay:1500});
+              }
+              this.$data.content = '';
+            }
+          })
+
+        }
+      }).show();
     }
   }
 }
