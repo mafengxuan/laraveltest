@@ -215,9 +215,12 @@ export default {
     },
     showPrompt() {
       var that = this;
+      if(document.getElementsByClassName('cube-input-field')[0]){
+        document.getElementsByClassName('cube-input-field')[0].value = '';
+      }
       this.dialog = this.$createDialog({
         type: 'prompt',
-        title: '回复',
+        title: '发表评论',
         prompt: {
           value: '',
           placeholder: '请输入'
@@ -234,7 +237,10 @@ export default {
       return;
     },
     replyInfo(event) {
-      this.$createDialog({
+      if(document.getElementsByClassName('cube-input-field')[0]){
+        document.getElementsByClassName('cube-input-field')[0].value = '';
+      }
+      var dialog = this.$createDialog({
         type: 'prompt',
         title: '回复',
         prompt: {
@@ -246,7 +252,6 @@ export default {
             toast('请输入内容',{delay:1500});
             return;
           }
-
           addReply({
             userId: event.target.dataset.userid,
             commentId: event.target.dataset.commentid,
