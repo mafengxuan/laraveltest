@@ -25,9 +25,8 @@ class ReplyController extends Controller
         $reply->userId = session('userId');
         $reply->nickname = session('nickname');
 
-        if($request->reUserId == session('userId')){
-            $reply->content = $request->post('content');
-        }else{
+        $reply->content = $request->post('content');
+        if(!empty($request->reUserId) && !empty($request->reNickname)){
             $reply->content = '回复 '.$request->reNickname.' '.$request->post('content');
         }
 
