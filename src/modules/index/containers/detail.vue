@@ -73,7 +73,7 @@
           <div class="inner">{{item.content}}</div>
           <div class="reply_con" v-if="item.reply.length">
             <div v-for="(val,key) in item.reply" :key="key" @click="replyInfo($event)" :data-reUserId="val.reUserId" :data-reNickname="val.reNickname" :data-commentId="val.commentId" :data-userId="val.userId">
-              <i class="c_0">{{val.nickname}}：</i>{{val.content}}
+              <i class="c_0" :data-reUserId="val.reUserId" :data-reNickname="val.reNickname" :data-commentId="val.commentId" :data-userId="val.userId">{{val.nickname}}：</i>{{val.content}}
               <!-- <div class="look_to">查看全部评论 ></div> -->
             </div>
           </div>
