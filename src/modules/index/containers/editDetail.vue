@@ -12,7 +12,7 @@
       <div class="label_inner" v-if="info.tag">
         <span class="bg_r" v-for="(val,key) in info.tag.split(',')" :key="key">{{val}}</span>
       </div>
-      <input @change="fileChange($event)" type="file" id="upload_file"1 style="display: none"/>
+      <input @change="fileChange($event)" type="file" id="upload_file" style="display: none"/>
       <div class="img_box">
         <div class="list" v-if="info.image && info.image.length" v-for="(item,index) in imgList" :key="index">
           <div class="close cubeic-close" @click="deleImg($event)" :data-index="index"></div>
@@ -45,7 +45,7 @@
       </div>
     </div>
     <div class="editDetail_title">矫正历程</div>
-    <div class="editDetail_list" v-for="(val,key) in info.my_detail" :key="key">
+    <div class="editDetail_list" v-if="info.my_detail" v-for="(val,key) in info.my_detail" :key="key">
       <div class="title"><img src="../images/time.png" alt="">  <span>{{val.title}}</span></div>
       <ul>
         <li>
