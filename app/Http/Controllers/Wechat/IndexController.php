@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers\Wechat;
 
+use App\Helpers\Tool;
 use App\Http\Controllers\Controller;
 use App\Model\UserInfo;
 use Illuminate\Http\Request;
@@ -19,7 +20,7 @@ class IndexController extends Controller {
                 $originalInfo = $openInfo['original'];
                 $users = new UserInfo;
                 $users->openId = $originalInfo['openid'];
-                $users->nickname = $originalInfo['nickname'];
+                $users->nickname = Tool::filter($originalInfo['nickname']);
                     if($originalInfo['sex'] == 1){
                         $users->sex = '男';
                     }else{
