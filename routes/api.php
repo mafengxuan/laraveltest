@@ -63,6 +63,7 @@ Route::group(['namespace' => 'Index', 'prefix' => 'index','middleware' => ['wech
     Route::get('/article/showMyDraft', 'ArticleController@showMyDraft');
 
     Route::get('/article/showListAsTag/{tag}', 'ArticleController@showListAsTag');
+    Route::get('/article/showListAsTag', 'ArticleController@showListNoTag');
 
     Route::get('/article/showTags', 'ArticleController@showTags');
 

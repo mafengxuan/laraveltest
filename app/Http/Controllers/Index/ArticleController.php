@@ -229,6 +229,38 @@ class ArticleController extends Controller
         return response()->json(Result::ok($result));
     }
 
+    public function showListNoTag(Request $request){
+
+
+        $article = Article::where('status',1)->where('isOnline',1);
+        $article = $article->orderBy('created_at','desc');
+
+        $page = $request->page;
+        $result = array();
+        if(empty($page)){
+            $page = 1;
+
+        }
+
+        if($page == 1){
+            $article = $article->forPage($page,10);
+            $result['page'] = 1;
+            $result['count'] = 10;
+        }else{
+            $article = $article->forPage($page,5);
+            $result['page'] = $page;
+            $result['count'] = 5;
+        }
+
+        $article = $article->with('praise')->with('user')->get();
+        foreach($article as $k => $v){
+            $article[$k]['image'] = json_decode($v['image'],true);
+        }
+
+        $result['data'] = $article;
+        return response()->json(Result::ok($result));
+    }
+
     public function showTags(){
 
         $data = \App\Helpers\Tags::$tags;
