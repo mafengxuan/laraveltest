@@ -43,10 +43,10 @@ class WechatLogin
          */
 
         if(empty(session('userId'))){
-            $returnUrl = $_SERVER['HTTP_REFERER'];
+//            $returnUrl = $_SERVER['HTTP_REFERER'];
 ////            return redirect()->action('Wechat\IndexController@index', ['returnUrl'=>$returnUrl]);
-            return redirect()->route('wechat',['returnUrl'=>$returnUrl]);
-//            return response()->json(Result::error(999));
+//            return redirect()->route('wechat',['returnUrl'=>$returnUrl]);
+            return response()->json(Result::error(999));
         }
 //        if(empty(session('userId'))){
 //            $userInfo = UserInfo::find(1);
