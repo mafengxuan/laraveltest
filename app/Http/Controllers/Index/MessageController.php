@@ -62,10 +62,55 @@ class MessageController extends Controller
     }
 
     public function aboutMe(){
-        $userId = session('userId');
+//        $userId = session('userId');
+        $userId = 1;
         $article = Article::where('userId',$userId)->first();
-        $comments = Comment::where('articleId',$article['id'])->orderBy('created_at','desc')->with('article')->with('user')->with('reply')->get()->toArray();
-        return response()->json(Result::ok($comments));
+
+        $data = [];
+
+        $comments = Comment::where('articleId',$article['id'])->orderBy('created_at','desc')->with('user')->get()->toArray();
+
+        foreach ($comments as $k => $v) {
+             $array = [];
+             $array['userId'] =  $v['userId'];
+             $array['nickname'] =  $v['user']['nickname'];
+             $array['imgUrl'] =  $v['user']['imgUrl'];
+             $array['content'] =  $v['content'];
+//             $array['describe'] = $article['content'];
+             $array['reNickname'] = '';
+             $array['reContent'] = '';
+             $array['created_at'] = $v['created_at'];
+             $hasReply = Reply::where('commentId',$v['id'])->where('reUserId',$v['userId'])->first()->toArray();
+             if(!empty($hasReply)){
+                 $array['reNickname'] = $hasReply['nickname'];
+                 $array['reContent'] = $hasReply['content'];
+             }
+
+             $data[] = $array;
+        }
+
+        $replys = Reply::where('reUserId',$userId)->with('user')->with('reInfo')->get();
+
+        foreach ($replys as $k => $v){
+            $array = [];
+            $array['userId'] =  $v['userId'];
+            $array['nickname'] =  $v['user']['nickname'];
+            $array['imgUrl'] =  $v['user']['imgUrl'];
+            $array['content'] =  $v['content'];
+            $array['created_at'] = $v['created_at'];
+            $array['reNickname'] = '';
+            $array['reContent'] = '';
+            if(!empty($v['reInfo'])){
+                $array['reNickname'] = $v['reInfo']['nickname'];
+                $array['reContent'] = $v['reInfo']['content'];
+            }
+
+            $data[] = $array;
+        }
+
+        $data = array_multisort(array_column($data['created_at']), 'DESC', $data);
+
+        return response()->json(Result::ok($data));
     }
     /**
      * Show the form for editing the specified resource.

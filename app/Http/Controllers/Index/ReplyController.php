@@ -22,6 +22,7 @@ class ReplyController extends Controller
         $reply->commentId = $request->commentId;
         $reply->reUserId = $request->reUserId;
         $reply->reNickname = $request->reNickname;
+        $reply->reId = $request->reId;
         $reply->userId = session('userId');
         $reply->nickname = session('nickname');
 

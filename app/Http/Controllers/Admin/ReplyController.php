@@ -27,6 +27,7 @@ class ReplyController extends Controller
         $reply->content = $request->post('content');
         $reply->reUserId = $request->reUserId;
         $reply->reNickname = $request->reNickname;
+        $reply->reId = $request->reId;
         $reply->userId = 1;
         $reply->nickname = '官方回复';
         $reply->save();
@@ -40,7 +41,7 @@ class ReplyController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id){
-        $comment = Reply::destroy($id);
+        $reply = Reply::destroy($id);
         return response()->json(Result::ok('删除成功'));
     }
 }

@@ -24,4 +24,10 @@ class Reply extends Model
     public function user()
     {
         return $this->hasOne('App\Model\UserInfo','userId','userId');
-    }}
+    }
+
+    public function reInfo()
+    {
+        return $this->hasOne('App\Model\Reply','reId','id');
+    }
+}
