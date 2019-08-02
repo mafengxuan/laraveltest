@@ -68,7 +68,7 @@ class MessageController extends Controller
 
         $data = [];
 
-        $comments = Comment::where('articleId',$article['id'])->orderBy('created_at','desc')->with('user')->get()->toArray();
+        $comments = Comment::where('articleId',$article['id'])->orderBy('created_at','desc')->with('user')->get();
 
         foreach ($comments as $k => $v) {
              $array = [];
