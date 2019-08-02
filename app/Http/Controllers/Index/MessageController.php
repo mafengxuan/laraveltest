@@ -80,7 +80,7 @@ class MessageController extends Controller
              $array['reNickname'] = '';
              $array['reContent'] = '';
              $array['created_at'] = $v['created_at'];
-             $hasReply = Reply::where('commentId',$v['id'])->where('reUserId',$v['userId'])->first()->toArray();
+             $hasReply = Reply::where('commentId',$v['id'])->where('reUserId',$v['userId'])->first();
              if(!empty($hasReply)){
                  $array['reNickname'] = $hasReply['nickname'];
                  $array['reContent'] = $hasReply['content'];
