@@ -108,7 +108,7 @@ class MessageController extends Controller
             $data[] = $array;
         }
 
-        $data = array_multisort(array_column($data,'created_at'), 'DESC', $data);
+        $data = array_multisort(array_column($data,'created_at'), SORT_DESC, $data);
 
         return response()->json(Result::ok($data));
     }
