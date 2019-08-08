@@ -46,16 +46,17 @@ class WechatLogin
 //            $returnUrl = $_SERVER['HTTP_REFERER'];
 ////            return redirect()->action('Wechat\IndexController@index', ['returnUrl'=>$returnUrl]);
 //            return redirect()->route('wechat',['returnUrl'=>$returnUrl]);
-            return response()->json(Result::error(999));
+
+//            return response()->json(Result::error(999));
         }
-//        if(empty(session('userId'))){
-//            $userInfo = UserInfo::find(1);
-//            $request->session()->put('userId',$userInfo['userId']);
-//            $request->session()->put('openId',$userInfo['openId']);
-//            $request->session()->put('nickname',$userInfo['nickname']);
-//            $request->session()->put('headimgurl',$userInfo['imgUrl']);
-//            $request->session()->put('mobile',$userInfo['mobile']);
-//        }
+        if(empty(session('userId'))){
+            $userInfo = UserInfo::find(1);
+            $request->session()->put('userId',$userInfo['userId']);
+            $request->session()->put('openId',$userInfo['openId']);
+            $request->session()->put('nickname',$userInfo['nickname']);
+            $request->session()->put('headimgurl',$userInfo['imgUrl']);
+            $request->session()->put('mobile',$userInfo['mobile']);
+        }
 
         return $next($request);
     }
