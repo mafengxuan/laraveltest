@@ -90,8 +90,8 @@
     <div style="height: 1.1rem;"></div>
     <div class="editDetail_footer_box">
       <div class="pinlun" @click="showPrompt()"><span>发表评论</span></div>
-      <div class="start">
-        <div class="num"  @click="collect">{{info.collected?'已收藏':'收藏'}}</div>
+      <div class="start"  @click="collect">
+        <div class="num">{{info.collected?'已收藏':'收藏'}}</div>
         <img src="../images/start.png" alt="">
       </div>
       <div class="good"  @click='praise'>
