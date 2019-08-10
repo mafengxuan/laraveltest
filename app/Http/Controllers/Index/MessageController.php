@@ -76,6 +76,7 @@ class MessageController extends Controller
              $array['imgUrl'] =  $v['user']['imgUrl'];
              $array['content'] =  $v['content'];
              $array['commentId'] =  $v['id'];
+             $array['articleId'] =  $v['articleId'];
              $array['reNickname'] = '';
              $array['reContent'] = '';
              $array['reId'] = 0;
@@ -99,6 +100,7 @@ class MessageController extends Controller
             $array['imgUrl'] =  $v['user']['imgUrl'];
             $array['content'] =  $v['content'];
             $array['commentId'] =  $v['commentId'];
+            $array['articleId'] =  Comment::find($v['commentId'])['articleId'];
             $array['created_at'] = $v['created_at'];
             $array['reNickname'] = '';
             $array['reContent'] = '';
