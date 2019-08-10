@@ -62,8 +62,7 @@ class MessageController extends Controller
     }
 
     public function aboutMe(){
-//        $userId = session('userId');
-        $userId = 1;
+        $userId = session('userId');
         $article = Article::where('userId',$userId)->first();
 
         $data = [];
@@ -77,7 +76,6 @@ class MessageController extends Controller
              $array['imgUrl'] =  $v['user']['imgUrl'];
              $array['content'] =  $v['content'];
              $array['commentId'] =  $v['id'];
-//             $array['describe'] = $article['content'];
              $array['reNickname'] = '';
              $array['reContent'] = '';
              $array['reId'] = 0;
