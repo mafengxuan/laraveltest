@@ -100,12 +100,15 @@ class MessageController extends Controller
             $array['nickname'] =  $v['user']['nickname'];
             $array['imgUrl'] =  $v['user']['imgUrl'];
             $array['content'] =  $v['content'];
+            $array['commentId'] =  $v['commentId'];
             $array['created_at'] = $v['created_at'];
             $array['reNickname'] = '';
             $array['reContent'] = '';
+            $array['reId'] = 0;
             if(!empty($v['reInfo'])){
                 $array['reNickname'] = $v['reInfo']['nickname'];
                 $array['reContent'] = $v['reInfo']['content'];
+                $array['reId'] = $v['reInfo']['id'];
             }
 
             $data[] = $array;
