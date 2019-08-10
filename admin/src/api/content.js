@@ -12,6 +12,10 @@ export function deleteMsg(data) {
   return Axios.post('/api/admin/comment/'+data.id);
 }
 
+export function deleteReply(data) {
+  return Axios.post('/api/admin/reply/'+data.id);
+}
+
 export function addReply(data) {
   return Axios.post('/api/admin/addReply',data);
 }

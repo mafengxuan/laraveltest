@@ -65,11 +65,12 @@
           </div>
           <div style="clear:both;"></div>
           <div class="" v-if="item.reply.length">
-            <div class="huifu" v-for="(val,i) in item.reply">{{val.nickname}}: {{val.content}}</div>
+            <div class="huifu" v-for="(val,i) in item.reply">{{val.nickname}}: {{val.content}} <span class="el-tag el-tag--danger" style="cursor:pointer;" :data-Id="val.id" @click="delReply($event)">删除</span></div>
           </div>
         </li>
       </ul>
     </div>
+    <!-- 删除评论 -->
     <el-dialog
       title="提示"
       :visible.sync="dialogVisible"
@@ -79,6 +80,17 @@
       <span slot="footer" class="dialog-footer">
         <el-button @click="dialogVisible = false">取 消</el-button>
         <el-button type="primary" @click="deleteMsgSure">确 定</el-button>
+      </span>
+    </el-dialog>
+    <!-- 删除回复 -->
+    <el-dialog
+      title="提示"
+      :visible.sync="replyHandle"
+      width="30%">
+      <span>确定删除</span>
+      <span slot="footer" class="dialog-footer">
+        <el-button @click="replyHandle = false">取 消</el-button>
+        <el-button type="primary" @click="deleteRelySure">确 定</el-button>
       </span>
     </el-dialog>
     <el-dialog
@@ -121,7 +133,7 @@
 
 <script>
 import { Message } from 'element-ui';
-import { articleShow,articleMsg,deleteMsg,addReply,audit,reject } from '../../../api/content';
+import { articleShow,articleMsg,deleteMsg,addReply,audit,reject,deleteReply } from '../../../api/content';
 export default {
   data() {
     return {
@@ -139,7 +151,9 @@ export default {
       },
       id:'',
       type:'',
-      dialogVisible: false
+      dialogVisible: false,
+      replyHandle: false,
+      replyId:''
     }
   },
   created() {
@@ -311,6 +325,30 @@ export default {
               duration: 1 * 1000
             })
           }
+        }
+      })
+    },
+    delReply(event) {
+      console.log(event.target.dataset.id)
+      this.$data.replyId = event.target.dataset.id;
+      this.$data.replyHandle = true;
+    },
+    deleteRelySure() {
+      this.$data.replyHandle = false;
+      deleteReply({id:this.$data.replyId}).then(res => {
+        if(res.data.status){
+          Message({
+            message: res.data.result,
+            type: 'success',
+            duration: 1 * 1000
+          })
+          this.getArticle();
+        }else {
+          Message({
+            message: res.data.errMessage,
+            type: 'error',
+            duration: 1 * 1000
+          })
         }
       })
     }

@@ -18,6 +18,7 @@
               <div class="" v-else style="flex: 3;text-align: center;opacity: 0.4;">已领取</div>
             </li>
           </ul>
+          <div class="" v-if="rulerList.length < 1" style="text-align:center;color:#07bed1;padding-bottom:0.3rem;">没有待领取的红包</div>
         </div>
       </div>
     </div>

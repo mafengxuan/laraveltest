@@ -2,14 +2,14 @@
   <div id="messages">
     <ul v-if="messages">
       <li v-for="(item,index) in messages" :key="index">
-        <router-link :to="'/Detail?id='">
+        <router-link :to="'/Detail?id='+item.articleId">
           <div class="top_box">
             <div class="logo_box">
               <img :src="item.imgUrl" alt="">
             </div>
             <div class="info_box">
               <div class="title">{{item.nickname}}</div>
-              <div class="time">{{item.created_at.date}}</div>
+              <div class="time">{{item.created_at}}</div>
             </div>
             <div class="reply_box">
               <div class="reply_btn" @click="showPrompt($event)" :data-reId="item.reId" :data-commentId="item.commentId" :data-reUserId="item.userId" :data-reNickname="item.nickname">回复</div>
