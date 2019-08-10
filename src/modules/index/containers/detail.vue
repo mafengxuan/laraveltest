@@ -72,8 +72,8 @@
           </div>
           <div class="inner">{{item.content}}</div>
           <div class="reply_con" v-if="item.reply.length">
-            <div v-for="(val,key) in item.reply" :key="key" @click="replyInfo($event)" :data-reUserId="val.reUserId" :data-reNickname="val.reNickname" :data-commentId="val.commentId" :data-userId="val.userId">
-              <i class="c_0" :data-reUserId="val.reUserId" :data-reNickname="val.reNickname" :data-commentId="val.commentId" :data-userId="val.userId">{{val.nickname}}：</i>{{val.content}}
+            <div v-for="(val,key) in item.reply" :key="key" @click="replyInfo($event)" :data-reId="val.reId" :data-reUserId="val.reUserId" :data-reNickname="val.reNickname" :data-commentId="val.commentId" :data-userId="val.userId">
+              <i :data-reId="val.reId" class="c_0" :data-reUserId="val.reUserId" :data-reNickname="val.reNickname" :data-commentId="val.commentId" :data-userId="val.userId">{{val.nickname}}：</i>{{val.content}}
             </div>
             <div class="look_to" v-if="item.reply.length > 3" @click="lookAll($event)">查看全部评论 ></div>
           </div>
@@ -94,8 +94,8 @@
         <div class="num">{{info.collected?'已收藏':'收藏'}}</div>
         <img src="../images/start.png" alt="">
       </div>
-      <div class="good"  @click='praise'>
-        <div class="num">{{info.praiseNum}}</div>
+      <div class="good" @click='praise($event)' :data-id="info.id" :data-praise="info.praiseNum">
+        <div ref="praise" class="num">{{info.praiseNum}}</div>
         <img src="../images/good_b.png" alt="">
       </div>
     </div>
@@ -210,8 +210,33 @@ export default {
         this.setCollect(this.info.collected)
       })
     },
-    praise() {
+    praise(event) {
+      var val = this.$refs.praise.innerHTML;
+      const praise = event.currentTarget.dataset.praise;
+      var params = '';
+      if(+praise){
+        params = {
+          id: event.currentTarget.dataset.id,
+          cancel:1
+        }
+        this.$refs.praise.innerHTML = +val - 1;
+        event.currentTarget.setAttribute("data-praise", '0');
+      }else {
+        params = {
+          id: event.currentTarget.dataset.id
+        }
+        this.$refs.praise.innerHTML = +val + 1;
+        event.currentTarget.setAttribute("data-praise", '1');
+      }
+      setPraise(params).then(res => {
+        if(res.status == 200 && res.data){
+          if(res.data.status){
 
+          }else {
+            toast(res.data.errMessage,{delay:1500});
+          }
+        }
+      })
     },
     showPrompt() {
       var that = this;
@@ -257,6 +282,7 @@ export default {
             commentId: event.target.dataset.commentid,
             reUserId: event.target.dataset.reuserid,
             reNickname: event.target.dataset.renickname,
+            reId: event.target.dataset.reid,
             content: promptValue
           }).then(res => {
             if(res.status == 200 && res.data){

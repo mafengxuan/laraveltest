@@ -12,7 +12,7 @@
               <div class="time">{{item.created_at.date}}</div>
             </div>
             <div class="reply_box">
-              <div class="reply_btn" @click="showPrompt($event)" data-commentId="" :data-reUserId="item.userId" :data-reNickname="item.nickname">回复</div>
+              <div class="reply_btn" @click="showPrompt($event)" :data-reId="item.reId" :data-commentId="item.commentId" :data-reUserId="item.userId" :data-reNickname="item.nickname">回复</div>
             </div>
           </div>
           <div class="inner">{{item.content}}</div>
@@ -78,8 +78,10 @@ export default {
             toast('请输入内容',{delay:1500});
             return;
           }
+          console.log(123)
           addReply({
             content: promptValue,
+            reId: e.target.dataset.reid,
             commentId:e.target.dataset.commentid,
             reUserId:e.target.dataset.reuserid,
             reNickname:e.target.dataset.renickname,
