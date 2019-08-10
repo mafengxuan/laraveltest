@@ -546,6 +546,7 @@
           text-align: justify;
         }
         & .reply_con {
+          position: relative;
           float: right;
           width: 6rem;
           padding: 0.16rem 0.22rem;
@@ -555,6 +556,8 @@
           background: #e6e6e6;
           margin-top: 0.12rem;
           margin-bottom: 0.16rem;
+          max-height: 1.72rem;
+          overflow: hidden;
           & span {
             height: 0.74rem;
             overflow: hidden;
@@ -568,9 +571,15 @@
             -webkit-box-orient: vertical;
           }
           & .look_to {
+            width: 100%;
+            bottom: 0;
+            position: absolute;
             font-size: 0.28rem;
             color: #666666;
             margin-top: 0.2rem;
+            padding-bottom: 0.06rem;
+            z-index: 1;
+            background: #e6e6e6;
           }
         }
       }

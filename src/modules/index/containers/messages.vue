@@ -2,22 +2,23 @@
   <div id="messages">
     <ul v-if="messages">
       <li v-for="(item,index) in messages" :key="index">
-        <router-link :to="'/Detail?id='+item.article.id">
+        <router-link :to="'/Detail?id='">
           <div class="top_box">
             <div class="logo_box">
-              <img :src="item.user.imgUrl" alt="">
+              <img :src="item.imgUrl" alt="">
             </div>
             <div class="info_box">
-              <div class="title">{{item.user.nickname}}</div>
-              <div class="time">{{item.user.created_at}}</div>
+              <div class="title">{{item.nickname}}</div>
+              <div class="time">{{item.created_at.date}}</div>
             </div>
             <div class="reply_box">
-              <div class="reply_btn" @click="showPrompt($event)" :data-commentId="item.id" :data-reUserId="item.user.userId" :data-reNickname="item.user.nickname">回复</div>
+              <div class="reply_btn" @click="showPrompt($event)" data-commentId="" :data-reUserId="item.userId" :data-reNickname="item.nickname">回复</div>
             </div>
           </div>
           <div class="inner">{{item.content}}</div>
-          <div class="reply_con" v-if="item.reply.length">
-            <span v-for="(val,i) in item.reply"><i class="c_0" style="color:#07bed1;">{{val.nickname}}：</i>{{val.content}}</span>
+          <div class="reply_con" v-if="item.reContent">
+            <!-- <span v-for="(val,i) in item.reply"><i class="c_0" style="color:#07bed1;">{{val.nickname}}：</i>{{val.content}}</span> -->
+            <span><i class="c_0" style="color:#07bed1;">{{item.reNickname}}：</i>{{item.reContent}}</span>
           </div>
         </router-link>
       </li>

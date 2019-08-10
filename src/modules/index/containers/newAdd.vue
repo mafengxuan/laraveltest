@@ -72,7 +72,10 @@ export default {
       imgNum: '',
       tags:"",
       tagsArr:'',
-      loadings: false
+      loadings: false,
+      status: {
+        prevent: true
+      }
     }
   },
   methods: {
@@ -148,6 +151,10 @@ export default {
       }
     },
     save (){
+      if(!this.$data.status.prevent){
+        return;
+      }
+      this.$data.status.prevent = false;
       this.$data.image = [];
       for(var i=0;i<this.$data.imgList.length;i++){
         this.$data.image.push(this.$data.imgList[i].src);
@@ -181,6 +188,7 @@ export default {
               toast(res.data.errMessage,{delay:1500});
             }
           }
+          this.$data.status.prevent = true;
         })
       }else {
         detailStore({
@@ -196,6 +204,7 @@ export default {
               toast(res.data.errMessage,{delay:1500});
             }
           }
+          this.$data.status.prevent = true;
         })
       }
     },

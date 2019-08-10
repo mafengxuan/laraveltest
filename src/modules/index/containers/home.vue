@@ -26,7 +26,7 @@
                 <div class="time" v-if="item.user">更新时间：{{item.user.updated_at}}</div>
               </div>
             </div>
-            <div class="inner" v-if="item.user" v-html="item.user.content">{{item.content}}</div>
+            <div class="inner" v-if="item.user" v-html="item.content">{{item.content}}</div>
             <div class="label_inner" v-if="item.user">
               <span class="bg_r" v-for="(val,key) in item.tag.split(',')" :key="key">{{val}}</span>
               <!-- <span class="bg_y">23岁</span>

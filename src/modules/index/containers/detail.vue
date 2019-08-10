@@ -50,7 +50,7 @@
       </ul>
     </div>
     <!-- <div class="load_more">加载更多</div> -->
-    <div style="height:0.8rem;background:#fff;"></div>
+    <div style="height:0.8rem;"></div>
     <div class="message_title" v-if='info'>
       <span>全部回复({{msg.length}})</span>
       <!-- <span class="good_box"><img src="../images/icon/good.png" alt=""> <span>{{msg.praiseNum}}</span></span> -->
@@ -74,8 +74,8 @@
           <div class="reply_con" v-if="item.reply.length">
             <div v-for="(val,key) in item.reply" :key="key" @click="replyInfo($event)" :data-reUserId="val.reUserId" :data-reNickname="val.reNickname" :data-commentId="val.commentId" :data-userId="val.userId">
               <i class="c_0" :data-reUserId="val.reUserId" :data-reNickname="val.reNickname" :data-commentId="val.commentId" :data-userId="val.userId">{{val.nickname}}：</i>{{val.content}}
-              <!-- <div class="look_to">查看全部评论 ></div> -->
             </div>
+            <div class="look_to" v-if="item.reply.length > 3" @click="lookAll($event)">查看全部评论 ></div>
           </div>
         </li>
       </ul>
@@ -271,6 +271,15 @@ export default {
 
         }
       }).show();
+    },
+    lookAll(event) {
+      console.log(event.target.parentNode);
+      event.target.style.display = 'none';
+      if(event.target.parentNode){
+        event.target.parentNode.style.maxHeight = 'none';
+      }else if(event.target.parentElement){
+        event.target.parentElement.style.maxHeight = 'none';
+      }
     }
   }
 }
