@@ -80,7 +80,7 @@ class MessageController extends Controller
              $array['reNickname'] = '';
              $array['reContent'] = '';
              $array['reId'] = 0;
-             $array['created_at'] = $v['created_at']->format('Y-m-d H:i:s');;
+             $array['created_at'] = $v['created_at']->format('Y-m-d H:i:s');
              $hasReply = Reply::where('commentId',$v['id'])->where('reUserId',$v['userId'])->first();
              if(!empty($hasReply)){
                  $array['reNickname'] = $hasReply['nickname'];
@@ -101,7 +101,7 @@ class MessageController extends Controller
             $array['content'] =  $v['content'];
             $array['commentId'] =  $v['commentId'];
             $array['articleId'] =  Comment::find($v['commentId'])['articleId'];
-            $array['created_at'] = $v['created_at']->format('Y-m-d H:i:s');;
+            $array['created_at'] = $v['created_at']->format('Y-m-d H:i:s');
             $array['reNickname'] = '';
             $array['reContent'] = '';
             $array['reId'] = 0;
