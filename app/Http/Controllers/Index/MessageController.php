@@ -104,12 +104,10 @@ class MessageController extends Controller
             $array['created_at'] = $v['created_at']->format('Y-m-d H:i:s');
             $array['reNickname'] = '';
             $array['reContent'] = '';
-            $array['reId'] = 0;
+            $array['reId'] = $v['id'];
             if(!empty($v['reInfo'])){
-                var_dump($v['reInfo']);
                 $array['reNickname'] = $v['reInfo']['nickname'];
                 $array['reContent'] = $v['reInfo']['content'];
-                $array['reId'] = $v['reInfo']['id'];
             }
 
             $data[] = $array;
