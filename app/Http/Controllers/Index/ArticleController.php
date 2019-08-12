@@ -5,9 +5,11 @@ namespace App\Http\Controllers\Index;
 use App\Helpers\Result;
 use App\Helpers\WechatMessage;
 use App\Model\Collect;
+use App\Model\Detail;
 use App\Model\Praise;
 use App\Model\Tags;
 use App\Model\UserInfo;
+use App\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Model\Article;
@@ -131,8 +133,10 @@ class ArticleController extends Controller
     {
         //
         $article = Article::where('userId',session('userId'))->orderBy('status','desc')->with('user')->with('myDetail')->first();
+        $userInfo = UserInfo::find(session('userId'));
         if(empty($article)){
-            return response()->json(Result::ok([]));
+            $article['myDetail'] = Detail::where('userId',session('userId'))->orderBy('created_at','desc')->first();
+            $article['user'] = $userInfo;
         }
         $article['image'] = json_decode($article['image'],true);
         if(!empty($article['myDetail'])){
@@ -140,6 +144,11 @@ class ArticleController extends Controller
                 $article['myDetail'][$k]['image'] = json_decode($v['image'],true);
             }
         }
+        $article['tag_remark'] = $userInfo['tag_remark'];
+        $article['tag'] = $userInfo['tag'];
+        $article['content'] = $userInfo['content'];
+
+
         return response()->json(Result::ok($article));
     }
 
