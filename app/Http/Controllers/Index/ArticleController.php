@@ -135,7 +135,7 @@ class ArticleController extends Controller
         $article = Article::where('userId',session('userId'))->orderBy('status','desc')->with('user')->with('myDetail')->first();
         $userInfo = UserInfo::find(session('userId'));
         if(empty($article)){
-            $article['myDetail'] = Detail::where('userId',session('userId'))->orderBy('created_at','desc')->get()->toArray();
+            $article['my_Detail'] = Detail::where('userId',session('userId'))->orderBy('created_at','desc')->get();
             $article['user'] = $userInfo;
             $article['image'] = new \stdClass();
         }else{
@@ -144,6 +144,11 @@ class ArticleController extends Controller
         if(!empty($article['myDetail'])){
             foreach ($article['myDetail'] as $k => $v){
                 $article['myDetail'][$k]['image'] = json_decode($v['image'],true);
+            }
+        }
+        if(!empty($article['my_Detail'])){
+            foreach ($article['my_Detail'] as $k => $v){
+                $article['my_Detail'][$k]['image'] = json_decode($v['image'],true);
             }
         }
         $article['tag_remark'] = $userInfo['tag_remark'];
