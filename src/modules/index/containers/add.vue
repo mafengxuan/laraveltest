@@ -221,7 +221,7 @@ export default {
           if(res.data.result && res.data.result.content){
             this.$data.content = res.data.result.content;
             this.$data.id = res.data.result.id;
-            this.$data.isSave = true;
+            this.$data.isSave = res.data.result.id?true:false;
           }
         }else {
           toast(res.data.errMessage,{delay:1500});
