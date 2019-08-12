@@ -135,7 +135,7 @@ class ArticleController extends Controller
         $article = Article::where('userId',session('userId'))->orderBy('status','desc')->with('user')->with('myDetail')->first();
         $userInfo = UserInfo::find(session('userId'));
         if(empty($article)){
-            $article['myDetail'] = Detail::where('userId',session('userId'))->orderBy('created_at','desc')->get();
+            $article['myDetail'] = Detail::where('userId',session('userId'))->orderBy('created_at','desc')->get()->toArray();
             $article['user'] = $userInfo;
             $article['image'] = new \stdClass();
         }else{
