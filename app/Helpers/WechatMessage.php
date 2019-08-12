@@ -142,8 +142,8 @@ class WechatMessage{
             'url' => 'http://zjrj.bjjskq.com/dist/views/index/index.html#/Messages',
             'data' => [
                 "first" => '您的矫正日记收到一条评论!',
-                "keyword1" => $nickname,
-                "keyword2" => $content,
+                "user" => $nickname,
+                "ask" => $content,
                 "remark" => '点击查看详情',
             ]
         ];
