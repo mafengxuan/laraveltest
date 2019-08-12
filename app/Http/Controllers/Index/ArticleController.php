@@ -137,8 +137,10 @@ class ArticleController extends Controller
         if(empty($article)){
             $article['myDetail'] = Detail::where('userId',session('userId'))->orderBy('created_at','desc')->first();
             $article['user'] = $userInfo;
+            $article['image'] = new \stdClass();
+        }else{
+            $article['image'] = json_decode($article['image'],true);
         }
-        $article['image'] = json_decode($article['image'],true);
         if(!empty($article['myDetail'])){
             foreach ($article['myDetail'] as $k => $v){
                 $article['myDetail'][$k]['image'] = json_decode($v['image'],true);
