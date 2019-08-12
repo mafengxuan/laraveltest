@@ -23,6 +23,8 @@ class CommentController extends Controller
     public function addComments(Request $request)
     {
         //
+        $content = $request->post('content');
+        $nickname = session('nickname');
         $comment = new Comment();
         $comment->articleId = $request->articleId;
         $comment->userId = session('userId');
@@ -32,7 +34,7 @@ class CommentController extends Controller
         Article::where('id', $request->articleId)->increment('commentsNum');
         $article = Article::with('user')->find($request->articleId);
         $openId = $article['user']['openId'];
-        WechatMessage::comment($openId,session('nickname'),$request->post('content'));
+        WechatMessage::comment($openId,$nickname,$content);
         return response()->json(Result::ok('评论成功'));
     }
 
