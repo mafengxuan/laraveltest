@@ -73,12 +73,12 @@
     <!-- 删除评论 -->
     <el-dialog
       title="提示"
-      :visible.sync="dialogVisible"
+      :visible.sync="dialogVisibles"
       width="30%"
       :before-close="handleClose">
       <span>确定删除</span>
       <span slot="footer" class="dialog-footer">
-        <el-button @click="dialogVisible = false">取 消</el-button>
+        <el-button @click="dialogVisibles = false">取 消</el-button>
         <el-button type="primary" @click="deleteMsgSure">确 定</el-button>
       </span>
     </el-dialog>
@@ -152,6 +152,7 @@ export default {
       id:'',
       type:'',
       dialogVisible: false,
+      dialogVisibles: false,
       replyHandle: false,
       replyId:''
     }
@@ -190,10 +191,10 @@ export default {
     },
     deleteMsg(id){
       this.$data.commentId = id;
-      this.$data.dialogVisible = true;
+      this.$data.dialogVisibles = true;
     },
     deleteMsgSure(){
-      this.$data.dialogVisible = false;
+      this.$data.dialogVisibles = false;
       deleteMsg({id:this.$data.commentId}).then(res => {
         if(res.data.status){
           Message({
