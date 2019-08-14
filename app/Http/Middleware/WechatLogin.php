@@ -43,19 +43,19 @@ class WechatLogin
          */
 
         //登录
-//        if(empty(session('userId'))){
-//            return response()->json(Result::error(999));
-//        }
+        if(empty(session('userId'))){
+            return response()->json(Result::error(999));
+        }
 
         //去掉登录
-        if(empty(session('userId'))){
-            $userInfo = UserInfo::find(1);
-            $request->session()->put('userId',$userInfo['userId']);
-            $request->session()->put('openId',$userInfo['openId']);
-            $request->session()->put('nickname',$userInfo['nickname']);
-            $request->session()->put('headimgurl',$userInfo['imgUrl']);
-            $request->session()->put('mobile',$userInfo['mobile']);
-        }
+//        if(empty(session('userId'))){
+//            $userInfo = UserInfo::find(1);
+//            $request->session()->put('userId',$userInfo['userId']);
+//            $request->session()->put('openId',$userInfo['openId']);
+//            $request->session()->put('nickname',$userInfo['nickname']);
+//            $request->session()->put('headimgurl',$userInfo['imgUrl']);
+//            $request->session()->put('mobile',$userInfo['mobile']);
+//        }
 
         return $next($request);
     }

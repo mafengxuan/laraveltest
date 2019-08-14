@@ -44,21 +44,21 @@ class IndexController extends Controller {
 
     public function check(Request $request){
         //登录
-//        if(empty(session('userId'))){
-//            return response()->json(Result::error(999));
-//        }else{
-//            return response()->json(Result::ok());
-//        }
+        if(empty(session('userId'))){
+            return response()->json(Result::error(999));
+        }else{
+            return response()->json(Result::ok());
+        }
 
         //去掉登录
-        if(empty(session('userId'))){
-            $userInfo = UserInfo::find(1);
-            $request->session()->put('userId',$userInfo['userId']);
-            $request->session()->put('openId',$userInfo['openId']);
-            $request->session()->put('nickname',$userInfo['nickname']);
-            $request->session()->put('headimgurl',$userInfo['imgUrl']);
-            $request->session()->put('mobile',$userInfo['mobile']);
-        }
+//        if(empty(session('userId'))){
+//            $userInfo = UserInfo::find(1);
+//            $request->session()->put('userId',$userInfo['userId']);
+//            $request->session()->put('openId',$userInfo['openId']);
+//            $request->session()->put('nickname',$userInfo['nickname']);
+//            $request->session()->put('headimgurl',$userInfo['imgUrl']);
+//            $request->session()->put('mobile',$userInfo['mobile']);
+//        }
         return response()->json(Result::ok());
 
     }
