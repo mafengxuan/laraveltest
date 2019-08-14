@@ -94,15 +94,17 @@ class MessageController extends Controller
 
         foreach ($replys as $k => $v){
             $array = [];
+            $commentsInfo = null;
+            $commentsInfo =  Comment::find($v['commentId']);
             $array['userId'] =  $v['userId'];
             $array['nickname'] =  $v['user']['nickname'];
             $array['imgUrl'] =  $v['user']['imgUrl'];
             $array['content'] =  $v['content'];
             $array['commentId'] =  $v['commentId'];
-            $array['articleId'] =  Comment::find($v['commentId'])['articleId'];
+            $array['articleId'] =  $commentsInfo['articleId'];
             $array['created_at'] = $v['created_at']->format('Y-m-d H:i:s');
             $array['reNickname'] = '';
-            $array['reContent'] = '';
+            $array['reContent'] = $commentsInfo['content'];
             $array['reId'] = $v['id'];
             if(!empty($v['reInfo'])){
                 $array['reNickname'] = $v['reInfo']['nickname'];
