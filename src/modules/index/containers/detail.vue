@@ -70,7 +70,7 @@
               <!-- <div class="reply_btn"><img src="../images/icon/goodD.png" alt=""> <span>1350</span>  </div> -->
             </div>
           </div>
-          <div class="inner">{{item.content}}</div>
+          <div class="inner" @click="replyInfo($event)" :data-reId="0" :data-reUserId="item.user.userId" :data-reNickname="item.user.nickname" :data-commentId="item.id" :data-userId="item.user.userId">{{item.content}}</div>
           <div class="reply_con" v-if="item.reply.length">
             <div v-for="(val,key) in item.reply" :key="key" @click="replyInfo($event)" :data-reId="val.id" :data-reUserId="val.userId" :data-reNickname="val.nickname" :data-commentId="val.commentId" :data-userId="val.userId">
               <i :data-reId="val.id" class="c_0" :data-reUserId="val.userId" :data-reNickname="val.nickname" :data-commentId="val.commentId" :data-userId="val.userId">{{val.nickname}}：</i>{{val.content}}
