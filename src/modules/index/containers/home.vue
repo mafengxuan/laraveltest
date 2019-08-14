@@ -28,7 +28,7 @@
             </div>
             <div class="inner" v-if="item.user" v-html="item.content">{{item.content}}</div>
             <div class="label_inner" v-if="item.user">
-              <span class="bg_r" v-for="(val,key) in item.tag_remark.split(',')" :key="key">{{val}}</span>
+              <span class="bg_r" v-for="(val,key) in item.tag.split(',')" :key="key">{{val}}</span>
               <!-- <span class="bg_y">23岁</span>
               <span class="bg_g">隐适美</span>
               <span class="bg_o">地包天</span>
