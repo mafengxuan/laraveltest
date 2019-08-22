@@ -74,7 +74,7 @@ class IndexController extends Controller {
         $app = app('wechat.official_account');
         $url = 'http://zjrj.bjjskq.com/dist/views/index/index.html#/';
         $app->jssdk->setUrl($url);
-        $sdk = $app->jssdk->buildConfig(array(), $debug = false, $beta = false, $json = true);
+        $sdk = $app->jssdk->buildConfig(array(), $debug = true, $beta = false, $json = true);
         return response()->json(Result::ok($sdk));
     }
 
