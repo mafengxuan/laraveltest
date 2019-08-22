@@ -184,11 +184,16 @@ export default {
           if(res.status == 200 && res.data){
             if(res.data.status){
               toast(res.data.result,{delay:1500});
+              setTimeout(() => {
+                this.$router.go(-1)
+              }, 1500)
             }else {
               toast(res.data.errMessage,{delay:1500});
             }
           }
-          this.$data.status.prevent = true;
+          setTimeout(() => {
+            this.$data.status.prevent = true;
+          }, 1600)
         })
       }else {
         detailStore({
@@ -200,11 +205,16 @@ export default {
           if(res.status == 200 && res.data){
             if(res.data.status){
               toast(res.data.result,{delay:1500});
+              setTimeout(() => {
+                this.$router.go(-1)
+              }, 1500)
             }else {
               toast(res.data.errMessage,{delay:1500});
             }
           }
-          this.$data.status.prevent = true;
+          setTimeout(() => {
+            this.$data.status.prevent = true;
+          }, 1600)
         })
       }
     },

@@ -41,6 +41,7 @@
       padding: 0 0.24rem;
       overflow: hidden;
       background: #fff;
+      padding-bottom: 0.2rem;
       border-bottom: 1px solid #e6e6e6;
       margin-bottom: 0.1rem;
       & .top_box {
