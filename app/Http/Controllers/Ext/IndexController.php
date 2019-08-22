@@ -72,6 +72,7 @@ class IndexController extends Controller {
     public function jssdk()
     {
         $app = app('wechat.official_account');
+        $app->jssdk->setUrl();
         $sdk = $app->jssdk->buildConfig(array(), $debug = false, $beta = false, $json = true);
         return response()->json(Result::ok($sdk));
     }
@@ -81,6 +82,8 @@ class IndexController extends Controller {
         $app = app('wechat.official_account');
         $a = $app->jssdk->getTicket();
         dump($a);
+
+        dump($_SERVER);
         die;
     }
 
