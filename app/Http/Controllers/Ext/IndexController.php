@@ -69,23 +69,14 @@ class IndexController extends Controller {
 
     }
 
-    public function jssdk()
+    public function jssdk(Request $request)
     {
         $app = app('wechat.official_account');
-        $url = 'http://zjrj.bjjskq.com/dist/views/index/index.html#/';
-        $app->jssdk->setUrl($url);
+        $url = $request->url;
+        if (!empty($url)) {
+            $app->jssdk->setUrl($url);
+        }
         $sdk = $app->jssdk->buildConfig(array(), $debug = true, $beta = false, $json = true);
         return response()->json(Result::ok($sdk));
     }
-
-    public function test()
-    {
-        $app = app('wechat.official_account');
-        $a = $app->jssdk->getTicket();
-        dump($a);
-
-        dump($_SERVER);
-        die;
-    }
-
 }

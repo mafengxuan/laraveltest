@@ -20,8 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::group(['namespace' => 'Ext'], function() {
     Route::post('/uploadImage','IndexController@uploadImage');
-    Route::get('/jssdk','IndexController@jssdk');
-    Route::get('/test','IndexController@test');
+    Route::post('/jssdk','IndexController@jssdk');
 });
 
 //后台登陆
