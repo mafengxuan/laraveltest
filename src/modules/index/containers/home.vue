@@ -113,6 +113,7 @@ import loading from '../../../common/components/loading';
 import toast from '../../../common/components/toast';
 import { setPraise,showTagsList,getList,forward } from '../api/home';
 import { throttle } from 'lodash';
+import { wxshareTo } from '../../../common/utils/wxshare';
 export default {
   components: {
     loading
@@ -336,6 +337,16 @@ export default {
     //获取文档完整的高度
     getScrollHeight() {
       return Math.max(document.body.scrollHeight, document.documentElement.scrollHeight);
+    },
+    //微信分享
+    wxShareFun() {
+      var share_data  = {
+        title:"我的牙齿矫正日记",
+        desc:"牙齿矫正的小伙伴们都在这分享自己的矫正日记",
+        imgUrl: '',
+        link: window.location.href
+      };
+      wxshareTo(share_data);
     }
   },
   created() {
@@ -348,6 +359,7 @@ export default {
     }
     this.showTags();
     this.initScroll();
+    this.wxShareFun()
   }
 }
 </script>
