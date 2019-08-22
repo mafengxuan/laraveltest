@@ -19,7 +19,7 @@
         <span>{{val.title}} </span>
         <el-tag type="success" v-if="val.status == 1">通过</el-tag>
         <el-tag type="danger" v-if="val.status == 2">驳回</el-tag>
-        <el-tag v-if="val.status == 3">待审核啊</el-tag>
+        <el-tag v-if="val.status == 3">待审核</el-tag>
       </div>
       <ul>
         <li>

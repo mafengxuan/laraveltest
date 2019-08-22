@@ -14,7 +14,7 @@
       </div>
       <input @change="fileChange($event)" type="file" id="upload_file" style="display: none"/>
       <div class="img_box">
-        <div class="list" v-if="info.image && info.image.length" v-for="(item,index) in imgList" :key="index">
+        <div class="list" v-if="imgList && imgList.length" v-for="(item,index) in imgList" :key="index">
           <div class="close cubeic-close" @click="deleImg($event)" :data-index="index"></div>
           <img class="img_n" :src="'/storage'+item" alt="">
         </div>
@@ -49,6 +49,9 @@
       <div class="title"><img src="../images/time.png" alt="">  <span>{{val.title}}</span></div>
       <ul>
         <li>
+          <div class="li_status li_status1" v-if="val.status == 1">通过</div>
+          <div class="li_status li_status2" v-if="val.status == 2">驳回</div>
+          <div class="li_status li_status3" v-if="val.status == 3">待审核</div>
           <div class="toEditBox">
             <router-link :to="'/NewAdd?id='+val.id">
               <img src="../images/edit.png" alt="">
@@ -138,8 +141,8 @@ export default {
         if(res.status == 200 && res.data){
           if(res.data.status){
             this.$data.info = res.data.result;
-            this.$data.id = res.data.result.id;
-            this.$data.imgList = res.data.result.image;
+            this.$data.id = res.data.result.id?res.data.result.id:'';
+            this.$data.imgList = JSON.stringify(res.data.result.image) == "{}"?[]:res.data.result.image;
             this.$data.isSave = true;
           }else {
             toast(res.data.errMessage,{delay:1500});
@@ -151,9 +154,10 @@ export default {
       document.getElementById('upload_file').click();
     },
     fileChange(el) {
+      var that = this;
       var files = el.target.files[0];
       this.$data.loading = true;
-      if(!/image\/jpeg|image\/png|image\/jpg/.test(files.type)){
+      if(!/image\/jpeg|image\/png|image\/jpg/.test(files && files.type)){
         toast('不支持的图片格式',{delay:1500});
         this.$data.loading = false;
         return;
@@ -168,7 +172,7 @@ export default {
       uploadImage(formData).then(res => {
         if(res.status == 200 && res.data){
           if(res.data.status){
-            this.$data.imgList.push(res.data.result);
+            that.$data.imgList.push(res.data.result);
           }else {
             toast(res.data.errMessage,{delay:1500});
           }

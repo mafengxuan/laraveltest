@@ -245,6 +245,29 @@
         margin: 0 auto;
         padding-bottom: 0.3rem;
         border-radius: 0.16rem;
+        overflow: hidden;
+        & .li_status {
+          width: 1.6rem;
+          text-align: center;
+          height: 0.4rem;
+          line-height: 0.4rem;
+          position: absolute;
+          left: 0;
+          top: 0;
+          font-size: 0.24rem;
+          color: #fff;
+          transform:rotate(-45deg);
+          transform-origin: 50% 200%;
+        }
+        & .li_status1 {
+          background: #67c23a;
+        }
+        & .li_status2 {
+          background: #f56c6c;
+        }
+        & .li_status3 {
+          background: #409eff;
+        }
         & .toEditBox {
           padding: 0.04rem;
           height: 0.38rem;
