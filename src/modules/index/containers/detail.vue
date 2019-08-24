@@ -109,6 +109,8 @@ import { mapGetters, mapActions, mapMutations } from 'vuex';
 import loading from '../../../common/components/loading';
 import { commentsList,addComments,collect,setPraise,addReply } from '../api/detail';
 import toast from '../../../common/components/toast';
+import { wxshareTo } from '../../../common/utils/wxshare';
+import logo from '../images/icon/share.png';
 export default {
   components: {
     loading
@@ -130,6 +132,7 @@ export default {
     this.clearList();
     this.getDetailData();
     this.getCommentsList();
+    this.wxShareFun();
   },
   methods: {
     ...mapActions({
@@ -306,6 +309,18 @@ export default {
       }else if(event.target.parentElement){
         event.target.parentElement.style.maxHeight = 'none';
       }
+    },
+    //微信分享
+    wxShareFun() {
+      var share_data  = {
+        title:"我的牙齿矫正日记",
+        desc:"牙齿矫正的小伙伴们都在这分享自己的矫正日记",
+        imgUrl: logo,
+        link: window.location.href
+      };
+      wxshareTo(share_data,function(){
+
+      });
     }
   }
 }

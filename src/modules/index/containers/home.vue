@@ -114,6 +114,7 @@ import toast from '../../../common/components/toast';
 import { setPraise,showTagsList,getList,forward } from '../api/home';
 import { throttle } from 'lodash';
 import { wxshareTo } from '../../../common/utils/wxshare';
+import logo from '../images/icon/share.png';
 export default {
   components: {
     loading
@@ -343,10 +344,12 @@ export default {
       var share_data  = {
         title:"我的牙齿矫正日记",
         desc:"牙齿矫正的小伙伴们都在这分享自己的矫正日记",
-        imgUrl: '',
+        imgUrl: logo,
         link: window.location.href
       };
-      wxshareTo(share_data);
+      wxshareTo(share_data,function(){
+        
+      });
     }
   },
   created() {

@@ -2,7 +2,7 @@
 微信分享功能封装
 */
 import { wxShare } from '../../modules/index/api/app';
-const wxshareTo = (share_data) => {
+const wxshareTo = (share_data,fu) => {
   wxShare().then(res => {
     if(res.status == 200 && res.data){
       if(res.data.status){
@@ -22,6 +22,7 @@ const wxshareTo = (share_data) => {
                 link: share_data.link, // 分享链接
                 imgUrl: share_data.imgUrl, // 分享图标
                 success: function() {
+                  if(fu){fu();}
                 },
                 cancel: function() {
                 }
@@ -35,6 +36,7 @@ const wxshareTo = (share_data) => {
                 type: '', // 分享类型,music、video或nklink，不填默认为li
                 dataUrl: '', // 如果type是music或video，则要提供数据链接，默认为空
                 success: function() {
+                  if(fu){fu();}
                 },
                 cancel: function() {
                 }

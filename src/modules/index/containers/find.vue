@@ -57,6 +57,8 @@ import '../css/swpier.css';
 import "../css/find.css";
 import { getBanner } from '../api/find';
 import toast from '../../../common/components/toast';
+import { wxshareTo } from '../../../common/utils/wxshare';
+import logo from '../images/icon/share.png';
 export default {
   data() {
     const that = this;
@@ -82,6 +84,7 @@ export default {
   created() {
     window.scrollTo(0,0);
     this.getBannerData();
+    this.wxShareFun();
   },
   methods: {
     getBannerData() {
@@ -96,6 +99,18 @@ export default {
           }
         }
       })
+    },
+    //微信分享
+    wxShareFun() {
+      var share_data  = {
+        title:"我的牙齿矫正日记",
+        desc:"牙齿矫正的小伙伴们都在这分享自己的矫正日记",
+        imgUrl: logo,
+        link: window.location.href
+      };
+      wxshareTo(share_data,function(){
+
+      });
     }
   }
 }
