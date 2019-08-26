@@ -28,6 +28,6 @@ class Reply extends Model
 
     public function reInfo()
     {
-        return $this->hasOne('App\Model\Reply','reId','id');
+        return $this->hasOne('App\Model\Reply','id','reId');
     }
 }
