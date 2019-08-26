@@ -10,7 +10,7 @@
         <div class="time">更新时间：{{data.updated_at}}</div>
       </div>
     </div>
-    <div class="detail inner" v-if="data.user">{{data.user.content}}</div>
+    <div class="detail inner" v-if="data.user">{{data.content}}</div>
 
     <div class="editDetail_title">矫正历程</div>
     <div class="editDetail_list" v-for="(val,key) in data.my_detail" :key="key">
