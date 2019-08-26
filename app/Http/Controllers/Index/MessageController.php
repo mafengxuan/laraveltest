@@ -95,7 +95,7 @@ class MessageController extends Controller
         foreach ($replys as $k => $v){
             $array = [];
             $commentsInfo = null;
-            $commentsInfo =  Comment::find($v['commentId'])->with('user');
+            $commentsInfo =  Comment::find($v['commentId'])->with('user')->toArray();
             $array['userId'] =  $v['userId'];
             $array['nickname'] =  $v['user']['nickname'];
             $array['imgUrl'] =  $v['user']['imgUrl'];
