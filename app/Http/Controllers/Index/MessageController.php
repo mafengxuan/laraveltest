@@ -91,7 +91,6 @@ class MessageController extends Controller
 //        }
 
         $replys = Reply::where('reUserId',$userId)->with('user')->with('reInfo')->get();
-dd($replys);
         foreach ($replys as $k => $v){
             $array = [];
             $commentsInfo = null;
@@ -107,10 +106,10 @@ dd($replys);
             $array['reContent'] = $commentsInfo['content'];
             $array['reId'] = $v['id'];
             if(!empty($v['reInfo'])){
-//                $array['reNickname'] = $v['reInfo']['nickname'];
-//                $array['reContent'] = $v['reInfo']['content'];
-                $array['reNickname'] = '';
-                $array['reContent'] = '';
+                $array['reNickname'] = $v['reInfo']['nickname'];
+                $array['reContent'] = $v['reInfo']['content'];
+//                $array['reNickname'] = '';
+//                $array['reContent'] = '';
             }
 
             $data[] = $array;
