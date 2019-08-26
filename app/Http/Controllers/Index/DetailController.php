@@ -4,7 +4,9 @@ namespace App\Http\Controllers\index;
 
 use App\Helpers\Result;
 use App\Helpers\Tags;
+use App\Model\Article;
 use App\Model\Detail;
+use App\Model\UserInfo;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -38,6 +40,7 @@ class DetailController extends Controller
         $detail->content = trim($request->post('content'));
         $detail->remark = '';
         $detail->save();
+        $this->storeArticle();
         return response()->json(Result::ok('添加成功'));
     }
 
@@ -108,6 +111,7 @@ class DetailController extends Controller
         }
         $detail->remark = '';
         $detail->save();
+        $this->storeArticle();
         return response()->json(Result::ok('修改成功'));
     }
 
@@ -125,5 +129,34 @@ class DetailController extends Controller
     public function tag(){
         $data = Tags::monthTag();
         return response()->json(Result::ok($data));
+    }
+
+    private function storeArticle(){
+        $article = Article::where('userId',session('userId'))->where('status',3)->first();
+        if(empty($article)){
+            $article = new Article();
+
+            $myArticle = Article::where('userId',session('userId'))->where('status',1)->first();
+            if(empty($myArticle)){
+                return;
+            }
+            $article->qrCode = '';
+            $article->userId = session('userId');
+            $article->image = $myArticle['image'];
+
+            $userInfo = UserInfo::find(session('userId'))->toArray();
+            $article->tag = $userInfo['tag'];
+            $article->tag_remark = $userInfo['tag_remark'];
+            $article->content = $userInfo['content'];
+
+            $article->status = 3;
+            $article->isDraft = 0;
+            $article->isOnline = 0;
+            $article->remark = '';
+
+            $article->save();
+
+        }
+        return;
     }
 }
