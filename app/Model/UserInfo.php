@@ -22,6 +22,6 @@ class UserInfo extends Model
 
     public function article()
     {
-        return $this->hasOne('App\Model\Article','userId','userId')->where('status',1);
+        return $this->hasOne('App\Model\Article','userId','userId')->orderBy('status','asc')->limit(1);
     }
 }
