@@ -1,4 +1,4 @@
-<template lang="html">
+<!-- <template lang="html"> -->
   <div id="app">
     <!-- HeaderComponent -->
     <HeaderComponent :showBack='isFooter'></HeaderComponent>
@@ -33,7 +33,7 @@ export default {
         if(res.data.status){
 
         }else {
-          // location.href = '/api/wechat?returnUrl='+ encodeURIComponent(window.location.href);
+          location.href = '/api/wechat?returnUrl='+ encodeURIComponent(window.location.href);
         }
       }
     })

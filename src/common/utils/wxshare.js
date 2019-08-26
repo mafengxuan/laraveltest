@@ -3,7 +3,7 @@
 */
 import { wxShare } from '../../modules/index/api/app';
 const wxshareTo = (share_data,fu) => {
-  wxShare().then(res => {
+  wxShare({url:share_data.link}).then(res => {
     if(res.status == 200 && res.data){
       if(res.data.status){
         var info = JSON.parse(res.data.result);

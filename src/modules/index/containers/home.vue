@@ -13,7 +13,7 @@
       </div>
     </div>
     <!-- 列表 -->
-    <div class="list_box" v-if="lists.length">
+    <div class="list_box" v-if="lists && lists.length">
       <ul>
         <li v-for="(item,index) in lists" :key="index">
           <router-link :to="'/Detail?id='+item.id">
@@ -69,7 +69,7 @@
         <span class="loading-hook">{{pullupMsg}}</span>
       </div>
     </div>
-    <div v-if="!lists.length && listType=='collect'" style="margin-top: 2.2rem;">
+    <div v-if="lists && !lists.length && listType=='collect'" style="margin-top: 2.2rem;">
       <div class="no_tip">您还没有收藏过日记哦</div>
       <div class="no_tip">去   <span class="btn" @click="listTypeChange('new')"> 首页 </span>  看看吧</div>
     </div>
@@ -161,7 +161,7 @@ export default {
       }).then(res => {
         this.$data.lists = this.list.data;
         this.$data.count = this.list.count;
-        if(this.$data.lists.length < this.list.count){
+        if(this.$data.lists && this.$data.lists.length < this.list.count){
           this.pullupMsg = '没有更多日记啦';
         }
       })
@@ -348,7 +348,7 @@ export default {
         link: window.location.href
       };
       wxshareTo(share_data,function(){
-        
+
       });
     }
   },

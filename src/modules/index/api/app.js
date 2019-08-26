@@ -4,6 +4,6 @@ export function checkLogin() {
   return Axios.get('/api/checkLogin');
 }
 
-export function wxShare() {
-  return Axios.get('/api/jssdk');
+export function wxShare(data) {
+  return Axios.post('/api/jssdk',data);
 }
