@@ -177,7 +177,7 @@ export default {
         // this.pullupMsg = '↓松开立即加载更多';
         this.$data.lists = this.list.data;
         this.$data.count = this.list.count;
-        if(this.$data.lists.length < this.list.count){
+        if(this.$data.lists && this.$data.lists.length < this.list.count){
           this.pullupMsg = '没有更多日记啦';
         }
       })
