@@ -95,7 +95,7 @@ class MessageController extends Controller
         foreach ($replys as $k => $v){
             $array = [];
             $commentsInfo = null;
-            $commentsInfo =  Comment::find($v['commentId']);
+            $commentsInfo =  Comment::find($v['commentId'])->with('user');
             $array['userId'] =  $v['userId'];
             $array['nickname'] =  $v['user']['nickname'];
             $array['imgUrl'] =  $v['user']['imgUrl'];
@@ -103,12 +103,14 @@ class MessageController extends Controller
             $array['commentId'] =  $v['commentId'];
             $array['articleId'] =  $commentsInfo['articleId'];
             $array['created_at'] = $v['created_at']->format('Y-m-d H:i:s');
-            $array['reNickname'] = '';
+            $array['reNickname'] = $commentsInfo['user']['nickname'];
             $array['reContent'] = $commentsInfo['content'];
             $array['reId'] = $v['id'];
             if(!empty($v['reInfo'])){
-                $array['reNickname'] = $v['reInfo']['nickname'];
-                $array['reContent'] = $v['reInfo']['content'];
+//                $array['reNickname'] = $v['reInfo']['nickname'];
+//                $array['reContent'] = $v['reInfo']['content'];
+                $array['reNickname'] = '';
+                $array['reContent'] = '';
             }
 
             $data[] = $array;
