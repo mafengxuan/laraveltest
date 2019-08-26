@@ -76,7 +76,7 @@ class IndexController extends Controller {
         if (!empty($url)) {
             $app->jssdk->setUrl($url);
         }
-        $sdk = $app->jssdk->buildConfig(array(), $debug = true, $beta = false, $json = true);
+        $sdk = $app->jssdk->buildConfig(array(), $debug = false, $beta = false, $json = true);
         return response()->json(Result::ok($sdk));
     }
 }
