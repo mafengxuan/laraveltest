@@ -67,28 +67,28 @@ class MessageController extends Controller
 
         $data = [];
 
-//        $comments = Comment::where('articleId',$article['id'])->orderBy('created_at','desc')->with('user')->get();
-//        foreach ($comments as $k => $v) {
-//             $array = [];
-//             $array['userId'] =  $v['userId'];
-//             $array['nickname'] =  $v['user']['nickname'];
-//             $array['imgUrl'] =  $v['user']['imgUrl'];
-//             $array['content'] =  $v['content'];
-//             $array['commentId'] =  $v['id'];
-//             $array['articleId'] =  $v['articleId'];
-//             $array['reNickname'] = '';
-//             $array['reContent'] = '';
-//             $array['reId'] = 0;
-//             $array['created_at'] = $v['created_at']->format('Y-m-d H:i:s');
-//             $hasReply = Reply::where('commentId',$v['id'])->where('reUserId',$v['userId'])->first();
-//             if(!empty($hasReply)){
-//                 $array['reNickname'] = $hasReply['nickname'];
-//                 $array['reContent'] = $hasReply['content'];
-//                 $array['reId'] = $hasReply['id'];
-//             }
-//
-//             $data[] = $array;
-//        }
+        $comments = Comment::where('articleId',$article['id'])->orderBy('created_at','desc')->with('user')->get();
+        foreach ($comments as $k => $v) {
+             $array = [];
+             $array['userId'] =  $v['userId'];
+             $array['nickname'] =  $v['user']['nickname'];
+             $array['imgUrl'] =  $v['user']['imgUrl'];
+             $array['content'] =  $v['content'];
+             $array['commentId'] =  $v['id'];
+             $array['articleId'] =  $v['articleId'];
+             $array['reNickname'] = '';
+             $array['reContent'] = '';
+             $array['reId'] = 0;
+             $array['created_at'] = $v['created_at']->format('Y-m-d H:i:s');
+             $hasReply = Reply::where('commentId',$v['id'])->where('reUserId',$v['userId'])->first();
+             if(!empty($hasReply)){
+                 $array['reNickname'] = $hasReply['nickname'];
+                 $array['reContent'] = $hasReply['content'];
+                 $array['reId'] = $hasReply['id'];
+             }
+
+             $data[] = $array;
+        }
 
         $replys = Reply::where('reUserId',$userId)->with('user')->with('reInfo')->get();
         foreach ($replys as $k => $v){
