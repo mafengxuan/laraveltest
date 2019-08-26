@@ -114,7 +114,7 @@ import toast from '../../../common/components/toast';
 import { setPraise,showTagsList,getList,forward } from '../api/home';
 import { throttle } from 'lodash';
 import { wxshareTo } from '../../../common/utils/wxshare';
-import logo from '../images/icon/share.png';
+import logo from '../images/logo.PNG';
 export default {
   components: {
     loading

@@ -110,7 +110,7 @@ import loading from '../../../common/components/loading';
 import { commentsList,addComments,collect,setPraise,addReply } from '../api/detail';
 import toast from '../../../common/components/toast';
 import { wxshareTo } from '../../../common/utils/wxshare';
-import logo from '../images/icon/share.png';
+import logo from '../images/logo.PNG';
 export default {
   components: {
     loading
